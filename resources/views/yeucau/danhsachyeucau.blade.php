@@ -15,7 +15,6 @@
                 <th>Nội Dung yêu cầu</th>
                 <th>Trạng Thái Yêu Cầu</th>
                 <th>Cập Nhật</th>
-                5165411651
             </tr>
             </thead>
             <tbody>
