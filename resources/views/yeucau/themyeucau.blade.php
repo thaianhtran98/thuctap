@@ -95,7 +95,7 @@
                                     <li style="display:flex">
                                         <input type="checkbox"
                                                onclick=taoluutru({{$nv->id}},{{$nv->id}})
-                                               style="width: 20px;height: 20px" id="{{$nv->id}}" value="{{$nv->id}}">
+                                               style="width: 20px;height: 20px" id="{{$nv->id}}" value="{{$nv->ten_nguoi_thuc_hien}}">
                                         <label class='form-check-label m-l-10'
                                                for='{{$nv->id}}'>{{$nv->ten_nguoi_thuc_hien}}
                                         </label>
@@ -200,7 +200,7 @@
                 "oncomplete": function () {
                     let elementrm = document.getElementById('ngayhoanthanhdukien');
                     elementrm.classList.remove("hasDatepicker");
-                    
+
                     $("#ngayhoanthanhdukien").datepicker({
                         dateFormat: 'dd/mm/yy', minDate: new Date(
                             document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -210,6 +210,7 @@
                 }
             });
         });
+
         $("#ngaytiepnhan").datepicker({dateFormat: 'dd/mm/yyyy', minDate: new Date(1999, 10 - 1, 25)});
 
 
@@ -218,7 +219,7 @@
             let ngaygiaoviec = document.getElementById('ngaygiaoviec');
             ngaydukien.classList.remove("hasDatepicker");
             ngaygiaoviec.classList.remove('hasDatepicker')
-            
+
             $("#ngayhoanthanhdukien").datepicker({
                 dateFormat: 'dd/mm/yy', minDate: new Date(
                     document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -250,7 +251,6 @@
                     Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
             });
             if(ngaydukien.value==='') {
-              
                 $("#ngaygiaoviec").datepicker({
                     dateFormat: 'dd/mm/yy', minDate: new Date(
                         document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -258,7 +258,7 @@
                         Number(document.getElementById('ngaytiepnhan').value.substr(0, 2))),
                 });
             }else {
-                
+
                 $("#ngaygiaoviec").datepicker({
                     dateFormat: 'dd/mm/yy', minDate: new Date(
                         document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -271,6 +271,21 @@
                 });
             }
         })
+
+        $(document).ready(function () {
+            $("#ngaygiaoviec").inputmask("99/99/9999", {
+                "placeholder": "dd/mm/yyyy",
+                'alias': 'date',
+                "oncomplete": function () {
+                    if (document.getElementById('ngaytiepnhan').value > document.getElementById('ngaygiaoviec').value ||
+                        document.getElementById('ngayhoanthanhdukien').value < document.getElementById('ngaygiaoviec').value) {
+                        document.getElementById('ngaygiaoviec').value = '';
+                        alert('Ngày dự kiện hoàn thành phải lớn hơn ngày tiếp nhận');
+                    }
+                }
+            });
+        });
+
 
         document.querySelector('#trang_thai').addEventListener('change', (event) => {
             if (document.getElementById('trang_thai').value == 1) {
