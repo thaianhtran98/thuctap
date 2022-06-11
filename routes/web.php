@@ -19,18 +19,24 @@ Route::get('/', [\App\Http\Controllers\MainController::class, 'index']);
 Route::get('/danhsachdonvi', [\App\Http\Controllers\MainController::class, 'list_dv']);
 Route::get('/themdonvi', [\App\Http\Controllers\MainController::class, 'add_dv']);
 Route::post('/themdonvi', [\App\Http\Controllers\MainController::class, 'store_dv']);
+Route::post('/themdv_ajax', [\App\Http\Controllers\MainController::class, 'store_dv_ajax']);
 Route::post('/dv/change/{donvi}', [\App\Http\Controllers\MainController::class, 'change_active']);
 Route::post('/dv/edit_dv/{donvi}', [\App\Http\Controllers\MainController::class, 'edit_dv']);
 Route::delete('/dv/destroy', [\App\Http\Controllers\MainController::class, 'destroy']);
 
 //Nhân Viên
-Route::get('/danhsachnhanvien', [\App\Http\Controllers\NguoithuchienController::class, 'list_nv']);
+//Route::get('/danhsachnhanvien', [\App\Http\Controllers\NguoithuchienController::class, 'list_nv']);
 Route::get('/themnhanvien', [\App\Http\Controllers\NguoithuchienController::class, 'add_nv']);
 Route::post('/themnhanvien', [\App\Http\Controllers\NguoithuchienController::class, 'store_nv']);
 Route::post('/nv/change/{nguoithuchien}', [\App\Http\Controllers\NguoithuchienController::class, 'change_active']);
 Route::post('/nv/edit_nv/{nguoithuchien}', [\App\Http\Controllers\NguoithuchienController::class, 'edit_nv']);
 Route::delete('/nv/destroy', [\App\Http\Controllers\NguoithuchienController::class, 'destroy']);
 
+//chuc vu nguoi thuc hien
+Route::post('/themchucvu', [\App\Http\Controllers\ChucvuController::class, 'store_cv']);
+Route::post('/cv/change/{chucvu}', [\App\Http\Controllers\ChucvuController::class, 'change_active']);
+Route::post('/cv/edit_cv/{chucvu}', [\App\Http\Controllers\ChucvuController::class, 'edit_cv']);
+Route::delete('/cv/destroy', [\App\Http\Controllers\ChucvuController::class, 'destroy']);
 
 //Chương trình
 Route::get('/danhsachloaichuongtrinh', [\App\Http\Controllers\LoaichuongtrinhController::class, 'list_ct']);
@@ -45,6 +51,6 @@ Route::delete('/ct/destroy', [\App\Http\Controllers\LoaichuongtrinhController::c
 Route::get('/danhsachyeucau', [\App\Http\Controllers\YeucauController::class, 'list_yc']);
 Route::get('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'add_yc']);
 Route::post('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'store_yc']);
-Route::post('/nv/change/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'change_active']);
-Route::post('/nv/edit_nv/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'edit_nv']);
-Route::delete('/nv/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy']);
+//Route::post('/nv/change/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'change_active']);
+//Route::post('/nv/edit_nv/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'edit_nv']);
+//Route::delete('/nv/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy']);

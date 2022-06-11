@@ -1,95 +1,40 @@
 @extends('main')
-
 @section('content')
     <div class="container-xl m-t-50" style="align-content: center">
         @include('alert')
-        <div id="form-add" class="row"
-             style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;left: 32%">
-            <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
-                <label style="font-size: 20px;color: #007bff">
+        @include('nhanvien.giaodienthemnhomnv')
+        @include('nhanvien.giaodienthemnv')
+        <div class="row" style="display: flex">
+            <div style="display: flex;float: right; margin-left: auto;margin-right: 8px;font-size: 20px;margin-bottom: 50px">
+                <button class="btn btn-primary" id="show-add-dv" onclick="show_add_nv()">
                     Thêm Nhân Viên
-                </label>
-            </div>
-            <div class="col-md-12">
-                <form action="" method="POST">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="menu">Tên Nhân Viên</label><font color="red"> (*)</font>
-                                    <input type="text" name="name" class="form-control" id="ten_nv"
-                                           placeholder="Nhập tên đơn vị" required>
-                                    <br>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Kích hoạt</label> <br>
-                                        <div style="display: flex; margin-top: 10px">
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" value="1" type="radio" name="active"
-                                                       checked id="active">
-                                                <label for="active" class="custom-control-label">Có</label>
-                                            </div>
-                                            <div class="custom-control custom-radio m-l-10">
-                                                <input class="custom-control-input" value="0" type="radio" name="active"
-                                                       id="no_active">
-                                                <label for="no_active" class="custom-control-label">Không</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button style="width: 100%;" type="submit" class="btn btn-primary">Thêm Nhân Viên
-                                </button>
-                            </div>
-                            @csrf
-                        </div>
-                    </div>
-                </form>
+                </button>
+                <br>
+                <button class="btn btn-primary m-l-10" id="show-add-dv" onclick="show_add_nhom_nv()">
+                    Thêm Chức Vụ
+                </button>
             </div>
         </div>
-        <hr>
-        <div class="row" style="display: flex">
-            <label style="font-size: 20px;color: #007bff;margin-top: 50px">
-                Danh Sách Nhân Viên
-            </label>
-            <button class="btn btn-primary" style="float: right; margin-left: auto;margin-right: 8px;font-size: 20px;margin-bottom: 50px" id="show-add-dv" onclick="show_add_dv()">
-                Thêm Nhân Viên
-            </button>
-            <script>
-                function show_add_dv() {
-                    document.getElementById('form-add').style.display = 'block';
-                    // document.getElementById('form-add').style.display = 'absolute';
-                    document.getElementById('form-add').style.background = 'white';
-                    document.getElementById('body').style.display = 'block';
-                }
-
-                function page_normal() {
-                    document.getElementById('body').style.display = 'none';
-                    document.getElementById('form-add').style.display = 'none';
-                }
-            </script>
-            <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <label style="font-size: 20px;color: #007bff;">
+                    Danh Sách Nhân Viên
+                </label>
                 @include('nhanvien.danhsachnhanvien')
+            </div>
+            <div style=" border-left: thin solid rgba(87,87,87,0.55);"></div>
+            <div class="col-md-5">
+                <label style="font-size: 20px;color: #007bff;">
+                    Danh Sách Chức Vụ
+                </label>
+                @include('nhanvien.danhsachchucvu')
+                <button class="btn btn-danger btn-sm" type="button" id="button_del_cv" href="#"
+                        onclick="delid_cv()" style="display: none; height: 50px;width: 100px">
+                    <i class="fas fa-trash"></i>
+                </button>
             </div>
         </div>
     </div>
-
-    <script>
-
-        $('#ten_nv').keypress(function (event) {
-            if (event.keyCode == 13 || event.which == 13) {
-                $('#active').focus();
-                event.preventDefault(); //preventDefault() Không load lại form
-            }
-        });
-        $('#active').keypress(function (event) {
-            if (event.keyCode == 13 || event.which == 13) {
-                $('#no_active').focus();
-                event.preventDefault(); //preventDefault() Không load lại form
-            }
-        });
-    </script>
 @endsection
 
 

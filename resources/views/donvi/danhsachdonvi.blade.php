@@ -1,4 +1,4 @@
- <div id="vungtrong" onclick="click_vungtrong()" style="border: 2px">
+ <div style="border: 2px">
      <table class="table">
          <thead style="background: #0c84ff;color: white">
          <tr style="text-align: center">
@@ -12,7 +12,7 @@
              <th>Tình Trạng Hoạt Động</th>
          </tr>
          </thead>
-         <tbody>
+         <tbody style="text-align: center">
          @foreach($donvi as $dv)
              <tr>
                  <td style="line-height: normal">
@@ -66,6 +66,7 @@
          });
 
          @foreach($donvi as $dv)
+
          function showedituutien{{$dv->id}}() {
              document.getElementById('dv_uu_tien_{{$dv->id}}').style.display = 'none';
              document.getElementById('edit_dv_uu_tien_{{$dv->id}}').style.display = 'block';
@@ -74,18 +75,19 @@
          $(document).ready(function () {
              $('#edit_dv_uu_tien_{{$dv->id}}').bind('change',
                  function store_ten() {
-                        dv_uutien =   document.getElementById('dv_uu_tien_{{$dv->id}}');
-                        edit_uutien =  document.getElementById('edit_dv_uu_tien_{{$dv->id}}');
+                     dv_uutien =   document.getElementById('dv_uu_tien_{{$dv->id}}');
+                     edit_uutien =  document.getElementById('edit_dv_uu_tien_{{$dv->id}}');
                      edit_uutien.style.display = 'none';
                      dv_uutien.style.display = 'block';
                      dv_uutien.innerHTML = edit_uutien.value;
                      ten_change = document.getElementById('ten_dv_{{$dv->id}}').innerText;
-                        luyke_change = document.getElementById('luyke_dv_{{$dv->id}}').innerText;
+                     luyke_change = document.getElementById('luyke_dv_{{$dv->id}}').innerText;
                      uutien_change = edit_uutien.value;
                      edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
-                        location.reload();
+                     location.reload();
                     }
                 );
+
             });
 
             function showeditten{{$dv->id}}(){
@@ -102,7 +104,9 @@
                         ten_dv.style.display = 'block';
                         ten_dv.innerHTML = edit_ten.value;
                         ten_change = edit_ten.value;
-                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change);
+                        uutien_change = document.getElementById('dv_uu_tien_{{$dv->id}}').innerText;
+                        luyke_change = document.getElementById('luyke_dv_{{$dv->id}}').innerText;
+                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
                     }
                 );
             });
@@ -122,7 +126,8 @@
                         luyke_dv.innerHTML = edit_luyke.value;
                         ten_change = document.getElementById('ten_dv_{{$dv->id}}').innerText;
                         luyke_change = edit_luyke.value;
-                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change);
+                        uutien_change = document.getElementById('dv_uu_tien_{{$dv->id}}').innerText;
+                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
                     }
                 );
             });
@@ -170,9 +175,11 @@
             }
         }
 
-         function edit_ten_dv(url, ten = '', luyke = '', uutien = '') {
-             // console.log(ten);
-             // console.log(luyke);
+         function edit_ten_dv(url, ten = document.getElementById('ten_dv').value, luyke = document.getElementById('luyke_dv').value,
+                              uutien = document.getElementById('uutien_dv').value) {
+            console.log(ten);
+            console.log(luyke);
+            console.log(uutien);
              $.ajax({
                  type: 'POST',
                  datatype: 'JSON',

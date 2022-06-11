@@ -10,7 +10,7 @@
             <th>Tình Trạng Hoạt Động</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center;">
         @foreach($cts as $ct)
             <tr>
                 <td style="line-height: normal">
