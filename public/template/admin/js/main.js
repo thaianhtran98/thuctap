@@ -26,16 +26,14 @@ function removeRow(id,url){
 
 
 function change_active(active,url){
+    // console.log(url);
     $.ajax({
-        // cache: false,
         type: 'POST',
         datatype: 'JSON',
         data: { active },
         url: url,
         success:function (result){
             if(result.error === true){
-                // alert('Vui lòng xóa lại');
-                // location.reload();
             }else {
                 // alert('Xóa thành công');
                 // location.reload();
@@ -59,8 +57,6 @@ function change_active(active,url){
         }
     })
 }
-
-
 //upload file
 
 $('#upload').change(function (){

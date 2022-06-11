@@ -2,19 +2,20 @@
 
 namespace App\Service;
 
+use App\Models\chucvu;
 use App\Models\nguoithuchien;
 use Illuminate\Support\Facades\Session;
 
-class NguoithuchienService
+class ChucvuService
 {
     public function create($request)
     {
         try {
-            nguoithuchien::create([
-                'ten_nguoi_thuc_hien' => (string)$request->input('ten_nv'),
+            chucvu::create([
+                'ten_chuc_vu' => (string)$request->input('ten_cv'),
                 'hoat_dong' => (int)$request->input('hoat_dong'),
             ]);
-            Session::flash('success', 'Thêm  thành công ' . $request->input('ten_nv'));
+            Session::flash('success', 'Thêm  thành công chức vụ ' . $request->input('ten_cv'));
         } catch (\Exception $err) {
             Session::flash('error', $err->getMessage());
             return false;
@@ -22,26 +23,30 @@ class NguoithuchienService
         return true;
     }
 
+    public function getchucvu(){
+        return chucvu::orderBy('id')->get();
+    }
+
     public function getnhanvien()
     {
-        return nguoithuchien::orderBy('id')->get();
+        return chucvu::orderBy('id')->get();
     }
 
     public function getnhanvienactive()
     {
-        return nguoithuchien::where('hoat_dong', 1)->orderBy('id')->get();
+        return chucvu::where('hoat_dong', 1)->orderBy('id')->get();
     }
 
-    public function change_active($nguoithuchien)
+    public function change_active($chucvu)
     {
         try {
-            if ((int)$nguoithuchien->hoat_dong == 1) {
-                $nguoithuchien->hoat_dong = 0;
-                $nguoithuchien->save();
+            if ((int)$chucvu->hoat_dong == 1) {
+                $chucvu->hoat_dong = 0;
+                $chucvu->save();
                 return true;
             } else {
-                $nguoithuchien->hoat_dong = 1;
-                $nguoithuchien->save();
+                $chucvu->hoat_dong = 1;
+                $chucvu->save();
                 return true;
             }
         } catch (\Exception $err) {
@@ -50,11 +55,11 @@ class NguoithuchienService
         }
     }
 
-    public function edit($nguoithuchien, $request)
+    public function edit($chucvu, $request)
     {
         try {
-            $nguoithuchien->ten_nguoi_thuc_hien = (string)$request->input('ten');
-            $nguoithuchien->save();
+            $chucvu->ten_chuc_vu = (string)$request->input('ten');
+            $chucvu->save();
         } catch (\Exception $err) {
             return false;
         }
@@ -64,10 +69,10 @@ class NguoithuchienService
     {
         try {
             $id = $request->input('id');
-            $nguoithuchien = nguoithuchien::where('id', $id)->first();
-            Session::flash('success', 'Xóa thành công ' . $nguoithuchien->ten_nguoi_thuc_hien);
-            if ($nguoithuchien) {
-                nguoithuchien::where('id', $id)->delete();
+            $chucvu = chucvu::where('id', $id)->first();
+            Session::flash('success', 'Xóa thành công ' . $chucvu->ten_chuc_vu);
+            if ($chucvu) {
+                chucvu::where('id', $id)->delete();
             }
 
             return true;
@@ -76,4 +81,5 @@ class NguoithuchienService
             return false;
         }
     }
+
 }

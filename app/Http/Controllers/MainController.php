@@ -41,6 +41,19 @@ class MainController extends Controller
         return redirect()->back();
     }
 
+    public function store_dv_ajax(Request $request){
+        $result = $this->donviservice->create_ajax($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'lct'=>$result
+            ]);
+    }
+
     public function change_active(donvi $donvi)
     {
         $result = $this->donviservice->change_active($donvi);
