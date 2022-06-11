@@ -51,6 +51,8 @@ Route::delete('/ct/destroy', [\App\Http\Controllers\LoaichuongtrinhController::c
 Route::get('/danhsachyeucau', [\App\Http\Controllers\YeucauController::class, 'list_yc']);
 Route::get('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'add_yc']);
 Route::post('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'store_yc']);
+Route::post('/capnhat_pagethem/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'update_pagethem']);
+Route::post('/themthuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'store_thuoctinh_yc']);
 //Route::post('/nv/change/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'change_active']);
 //Route::post('/nv/edit_nv/{nguoithuchien}', [\App\Http\Controllers\YeucauController::class, 'edit_nv']);
 //Route::delete('/nv/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy']);

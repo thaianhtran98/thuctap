@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\yeucauton;
 use App\Service\DonviService;
 use App\Service\LoaichuongtrinhService;
 use App\Service\NguoithuchienService;
@@ -34,8 +35,42 @@ class YeucauController extends Controller
 
     public function store_yc(Request $request)
     {
-        $this->yeucauservice->create($request);
-        return redirect()->back();
+        $result= $this->yeucauservice->create($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'id_yc'=>$result
+            ]);
+    }
+
+    public function update_pagethem(yeucauton $yeucauton, Request $request)
+    {
+        $result= $this->yeucauservice->update_yc($yeucauton,$request);
+        if ($result==false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+            ]);
+    }
+
+    public function store_thuoctinh_yc(Request $request){
+        $result= $this->yeucauservice->create_thuoctinh($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'id_yc'=>$result
+            ]);
     }
 
     public function list_yc()
@@ -45,5 +80,7 @@ class YeucauController extends Controller
             'ycs' => $this->yeucauservice->getyeucau(),
         ]);
     }
+
+
 
 }

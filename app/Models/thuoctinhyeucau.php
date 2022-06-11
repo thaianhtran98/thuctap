@@ -9,8 +9,9 @@ class thuoctinhyeucau extends Model
 {
     use HasFactory;
     protected $fillable =[
-      'ten_thuoc_tinh',
-      'kieu_thuoc_tinh',
-      'noi_dung_thuoc_tinh',
+        'id_yc',
+        'ten_thuoc_tinh',
+        'kieu_thuoc_tinh',
+        'noi_dung_thuoc_tinh',
     ];
 }

@@ -5,16 +5,26 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="/template/admin/Inputmask/dist/inputmask.js"></script>
+    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+    {{--    <script type="text/javascript" src="/template/admin/js/jquery.inputmask.bundle.min.js"></script>--}}
+    {{--    <script type="text/javascript" src="/template/js/"></script>--}}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        sessionStorage.clear();
+        sessionStorage.setItem('ok',0);
+    </script>
 @endsection
 @section('content')
     <div class="container-xl m-t-50">
         @include('yeucau.giaodienthemdv')
         @include('yeucau.giaodienthemlct')
+        @include('yeucau.giaodienaddyc')
         @include('alert')
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Thêm Yêu Cầu
         </label>
-        <form action="" method="POST">
+{{--        <form action="" method="POST">--}}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -60,13 +70,13 @@
                     <div class="form-group">
                         <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
                         <input type="text" name="ten_yeu_cau" class="form-control" id="ten_yeu_cau"
-                               placeholder="Enter tên yêu cầu">
+                               placeholder="Enter tên yêu cầu" required>
                     </div>
 
                     <div class="form-group">
                         <label for="menu">Nội Dung Yêu Cầu</label><font color="red"> (*)</font>
                         <textarea class="form-control" id="noi_dung_yc" name="noi_dung_yc"
-                                  placeholder="Nhập nội dung yêu cầu"></textarea>
+                                  placeholder="Nhập nội dung yêu cầu" required></textarea>
                     </div>
 
                     <div class="form-group">
@@ -149,27 +159,106 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="menu">Yêu Cầu Thêm</label><br>
-                        <button type="button" onclick="show_add_lct()">
+                        <label for="menu">Yêu Cầu Khác</label>
+                        <table style="text-align: center;width: 100%;visibility: hidden" id="table_yc_plus" class="table" >
+                            <thead style="background: #0c84ff;color: white">
+                                <tr>
+                                    <th>
+                                        Tên Yêu Cầu
+                                    </th>
+                                    <th>
+                                        Nội Dung Yêu Cầu
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="cac_yeu_cau_them">
+
+                            </tbody>
+                        </table>
+                        <button type="button" onclick="show_add_new_yc()">
                                 <span style="font-size: 25px;color: #007bff;">
                                     <i class="fas fa-plus-square"></i>
                                 </span>
                         </button>
                     </div>
 
+
                     <div>
-                        <button type="submit" class="btn btn-primary m-t-50" style="float: right">Thêm Yêu Cầu</button>
+                        <button onclick="them_yeu_cau()" id="them" class="btn btn-primary m-t-50 m-l-10" style="float: right">Thêm Yêu Cầu</button>
+                    </div>
+                    <div>
+                        <button onclick="cap_nhat_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right ; display: none">Thêm Yêu Cầu</button>
                     </div>
                 </div>
             </div>
             @csrf
-        </form>
     </div>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-{{--    <script type="text/javascript" src="/template/admin/js/jquery.inputmask.bundle.min.js"></script>--}}
-{{--    <script type="text/javascript" src="/template/js/"></script>--}}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script>
+    function them_yeu_cau(){
+        var id_don_vi = document.getElementById('id_don_vi').value;
+        var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
+        var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
+        var noi_dung_yc = document.getElementById('noi_dung_yc').value;
+        var trang_thai = document.getElementById('trang_thai').value;
+        var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
+        var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
+        var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
+        if (ten_yeu_cau!='' && noi_dung_yc!=''){
+            $.ajax({
+                type: 'POST',
+                datatype: 'JSON',
+                data: {id_don_vi, id_loai_chuong_trinh,
+                    ngayhoanthanhdukien,ngaygiaoviec,
+                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
+                url: '/themyeucau',
+                success:function (result){
+                    if(result.error === false){
+                        location.reload();
+                    }else {
+                        location.reload();
+                    }
+                }
+            })
+        }else {
+            alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
+        }
+    }
+
+    function cap_nhat_yeu_cau(){
+        var id_don_vi = document.getElementById('id_don_vi').value;
+        var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
+        var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
+        var noi_dung_yc = document.getElementById('noi_dung_yc').value;
+        var trang_thai = document.getElementById('trang_thai').value;
+        var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
+        var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
+        var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
+        var id_yc = sessionStorage.getItem('yc_id');
+        if (ten_yeu_cau!='' && noi_dung_yc!=''){
+            $.ajax({
+                type: 'POST',
+                datatype: 'JSON',
+                data: {id_don_vi, id_loai_chuong_trinh,
+                    ngayhoanthanhdukien,ngaygiaoviec,
+                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
+                url: '/capnhat_pagethem/'+id_yc,
+                success:function (result){
+                    if(result.error === false){
+                        location.reload();
+                    }else {
+                        location.reload();
+                    }
+                }
+            })
+        }else {
+            alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
+        }
+    }
+
+</script>
+
+{{--    Xử lý ngày tháng năm và bấm enter--}}
     <script>
         let d = new Date();
         let year = d.getFullYear();
@@ -318,7 +407,6 @@
                 }
             });
         });
-
         // $("#timeStartPicker").mask("99:99:99");
 
         $('#id_don_vi').keypress(function (event) {
@@ -359,9 +447,11 @@
         });
 
     </script>
+
+
+{{--  Add thành viên vào dự án  --}}
     <script>
         let i = 0;
-
         function taoluutru(name, id) {
             if (document.getElementById(name).checked === true) {
                 sessionStorage.setItem(name, id)

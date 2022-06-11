@@ -1,6 +1,6 @@
 {{--@include('alert')--}}
 <div id="form-add-dv" class="row"
-     style="display: none;background-color: rgba(46,52,57,0.33);left: 25%; position: absolute;z-index: 10000">
+     style="display: none;background-color: rgba(46,52,57,0.33);margin-left: 15%; position: absolute;z-index: 10000;">
     <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
         <label style="font-size: 20px;color: #007bff">
             Thêm Đơn Vị
@@ -43,13 +43,6 @@
         document.getElementById('form-add-dv').style.display = 'block';
         document.getElementById('form-add-dv').style.background = 'white';
         document.getElementById('body').style.display = 'block';
-    }
-
-    function page_normal() {
-        document.getElementById('body').style.display = 'none';
-        document.getElementById('form-add-dv').style.display = 'none';
-        document.getElementById('form-add').style.display = 'none';
-
     }
 </script>
 
@@ -98,7 +91,7 @@
                     document.getElementById('form-add-dv').style.display = 'none';
                     alert('Thêm đơn vị '+ result.lct.ten_don_vi +' thành công')
                 }else {
-                    alert('Tên đơn vị đã tồn tại hoặc không phù hợp')
+                    alert('Tên đơn vị đã tồn tại hoặc không phù hợp');
                 }
             }
         })

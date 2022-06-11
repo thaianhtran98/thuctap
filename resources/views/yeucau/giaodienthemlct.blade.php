@@ -1,6 +1,6 @@
 {{--@include('alert')--}}
 <div id="form-add" class="row"
-     style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;left: 32%">
+     style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;left: 43%">
     <div class="col-md-12 m-b--12 m-t-12" style="text-align: center">
         <label style="font-size: 20px;color: #007bff">
             Thêm Chương Trình
@@ -30,12 +30,6 @@
         document.getElementById('form-add').style.display = 'block';
         document.getElementById('form-add').style.background = 'white';
         document.getElementById('body').style.display = 'block';
-    }
-
-    function page_normal() {
-        document.getElementById('body').style.display = 'none';
-        document.getElementById('form-add').style.display = 'none';
-        document.getElementById('form-add-dv').style.display = 'none';
     }
 
     $('#ten_ct').keypress(function (event) {

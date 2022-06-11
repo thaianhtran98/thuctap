@@ -15,7 +15,6 @@
                 <th>Nội Dung yêu cầu</th>
                 <th>Trạng Thái Yêu Cầu</th>
                 <th>Cập Nhật</th>
-                đâsdasdasdas
             </tr>
             </thead>
             <tbody>
