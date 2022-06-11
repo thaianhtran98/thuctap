@@ -20,17 +20,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="menu">Lũy Kế Đầu Kỳ</label>
-                            <input type="text" name="luyke" class="form-control" id="luyke_dv"
+                            <input type="number" name="luyke" class="form-control" id="luyke_dv"
                                    placeholder="Nhập lũy kế đầu kỳ">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Ưu tiên</label><font color="red"> (*)</font>
-                                <input type="text" class="form-control" name="uutien" id="uutien_dv"
+                                <input type="number " class="form-control" name="uutien" id="uutien_dv"
                                        placeholder="Nhập độ ưu tiên">
                             </div>
                         </div>
-                        <button style="width: 100%;" onclick="" id="add_dv" class="btn btn-primary">Thêm Đơn Vị</button>
+                        <button style="width: 100%;" onclick="add_dv()" id="add_dv" class="btn btn-primary">Thêm Đơn Vị</button>
 
                     </div>
                 </div>
@@ -73,27 +73,32 @@
         }
     });
 
-    function add_ct(){
-        console.log(document.getElementById('ten_ct').value)
-        add(document.getElementById('ten_ct').value);
+    function add_dv(){
+        console.log(document.getElementById('ten_dv').value)
+        let tendonvi =document.getElementById('ten_dv').value;
+        let luyke =document.getElementById('luyke_dv').value;
+        let uutien =document.getElementById('uutien_dv').value;
+        add_dv_post(tendonvi,luyke,uutien);
     }
 
-    function add( ten = '') {
+    function add_dv_post( ten = '',luyke='0',uutien='') {
         $.ajax({
             type: 'POST',
             datatype: 'JSON',
-            data: {ten},
+            data: {ten, luyke, uutien},
             url: '/themdv_ajax',
             success:function (result){
                 if(result.error === false){
                     $('#id_don_vi').append($('<option>', {
                         value: result.lct.id,
-                        text: result.lct.ten_chuong_trinh,
+                        text: result.lct.ten_don_vi,
+                        selected:true,
                     }));
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add-dv').style.display = 'none';
+                    alert('Thêm đơn vị '+ result.lct.ten_don_vi +' thành công')
                 }else {
-                    console.log('lỗi')
+                    alert('Tên đơn vị đã tồn tại hoặc không phù hợp')
                 }
             }
         })

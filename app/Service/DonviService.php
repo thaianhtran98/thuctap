@@ -17,11 +17,27 @@ class DonviService
                 'hoat_dong' => (int)$request->input('active'),
             ]);
             Session::flash('success', 'Thêm  thành công ' . $request->input('name'));
+
         }catch (\Exception $err){
             Session::flash('error',$err->getMessage());
             return false;
         }
         return true;
+    }
+
+
+    public function create_ajax($request){
+        try{
+            donvi::create([
+                'ten_don_vi' => (string)$request->input('ten'),
+                'luy_ke_dau_ky' => (integer)$request->input('luyke'),
+                'uu_tien' => (integer)$request->input('uutien'),
+                'hoat_dong' => 1,
+            ]);
+            return donvi::where('ten_don_vi',$request->input('ten'))->first();
+        }catch (\Exception $err){
+            return false;
+        }
     }
 
     public function getdonvi(){

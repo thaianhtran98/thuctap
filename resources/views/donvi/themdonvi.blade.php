@@ -25,13 +25,13 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="menu">Lũy Kế Đầu Kỳ</label>
-                                    <input type="text" name="luyke" class="form-control" id="luyke_dv"
+                                    <input type="number" name="luyke" class="form-control" id="luyke_dv"
                                            placeholder="Nhập lũy kế đầu kỳ">
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Ưu tiên</label><font color="red"> (*)</font>
-                                        <input type="text" class="form-control" name="uutien" id="uutien_dv"
+                                        <input type="number" class="form-control" name="uutien" id="uutien_dv"
                                                placeholder="Nhập độ ưu tiên">
                                     </div>
                                 </div>

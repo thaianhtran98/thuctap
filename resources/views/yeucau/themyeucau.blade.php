@@ -16,7 +16,6 @@
         </label>
         <form action="" method="POST">
             <div class="row">
-                {{--                <div class="col-md-1"></div>--}}
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="menu">Đơn Vị</label><font color="red"> (*)</font>
@@ -114,6 +113,12 @@
                             </div>
                         </div>
                         <div class="form-control pl-4 " style=" width: 100%;min-height: 50px;height: auto">
+                            <div class="row" style="text-align: left">
+                                <div class="col-md-6">Tên</div>
+                                <div class="col-md-4">Chức vụ</div>
+                                <div class="col-md-2"style="text-align: center">Xóa</div>
+                            </div>
+                            <hr>
                             <ul id="danhsachchon">
 
                             </ul>
@@ -364,22 +369,54 @@
                 var li = document.createElement("li");
                 var btn = document.createElement("button");
                 var input = document.createElement('input');
+                var select = document.createElement('select');
+                var row = document.createElement('div');
+                var col1 = document.createElement('div');
+                var col2 = document.createElement('div');
+                var col3 = document.createElement('div');
                 var hr = document.createElement('hr');
-                li.appendChild(document.createTextNode(document.getElementById(sessionStorage.getItem(name)).value));
                 li.setAttribute("id", 'nv_id' + sessionStorage.getItem(name));
+                row.setAttribute('class','row');
+                row.setAttribute('style','vertical-align: middle; height:40px;line-height:40px');
+                col1.setAttribute('style','vertical-align: middle;text-align:left');
+                col2.setAttribute('style','vertical-align: middle;text-align:left ');
+                col3.setAttribute('style','vertical-align: middle;text-align:center ');
+                col1.setAttribute('class','col-md-6');
+                col2.setAttribute('class','col-md-4');
+                col3.setAttribute('class','col-md-2');
+                col1.appendChild(document.createTextNode(document.getElementById(sessionStorage.getItem(name)).value));
                 btn.setAttribute("id", 'del_nv_id' + sessionStorage.getItem(name));
                 btn.setAttribute("class", 'btn btn-danger');
-                btn.appendChild(document.createTextNode('Xóa'));
+                btn.appendChild(document.createTextNode('X'));
+                select.setAttribute('id',sessionStorage.getItem(name)+'_id_nhom');
                 input.setAttribute("name", 'nv_id[]');
                 input.setAttribute("id", 'nv_input' + sessionStorage.getItem(name));
-                li.appendChild(btn);
+                li.appendChild(row)
+                row.appendChild(col1)
+                row.appendChild(col2)
+                row.appendChild(col3)
+                col3.appendChild(btn);
                 li.appendChild(input);
+                col2.appendChild(select);
+                var option = document.createElement('option');
+                var option1 = document.createElement('option');
+                var option2 = document.createElement('option');
+                option.setAttribute('value','1');
+                option.appendChild(document.createTextNode('Nhóm trưởng'));
+                option1.setAttribute('value','2');
+                option1.appendChild(document.createTextNode('Nhóm phó'));
+                option2.setAttribute('value','3');
+                option2.appendChild(document.createTextNode('Thành viên'));
+                select.appendChild(option);
+                select.appendChild(option1);
+                select.appendChild(option2);
                 li.appendChild(hr);
                 ul.appendChild(li);
                 document.getElementById('nv_input' + sessionStorage.getItem(name)).style.display = 'none';
                 document.getElementById('nv_input' + sessionStorage.getItem(name)).value = sessionStorage.getItem(name);
-                document.getElementById('del_nv_id' + sessionStorage.getItem(name)).style.right = 0;
-                document.getElementById('del_nv_id' + sessionStorage.getItem(name)).style.float = 'right';
+                // document.getElementById('del_nv_id' + sessionStorage.getItem(name)).style.right = 0;
+                // document.getElementById('del_nv_id' + sessionStorage.getItem(name)).style.float = 'right';
+                // document.getElementById('del_nv_id' + sessionStorage.getItem(name)).style.textAlign = 'center';
                 document.getElementById('del_nv_id' + sessionStorage.getItem(name)).onclick = function () {
                     removeli(sessionStorage.getItem(name))
                 };

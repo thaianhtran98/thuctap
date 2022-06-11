@@ -62,10 +62,11 @@
                     $('#id_loai_chuong_trinh').append($('<option>', {
                         value: result.lct.id,
                         text: result.lct.ten_chuong_trinh,
+                        selected: true
                     }));
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add').style.display = 'none';
-                    alert('Thêm '+ result.lct.ten_chuong_trinh +' chương trình thành công')
+                    alert('Thêm chương trình '+ result.lct.ten_chuong_trinh +' thành công')
                 }else {
                     alert('Tên chương trình đã tồn tại hoặc không phù hợp')
                 }
