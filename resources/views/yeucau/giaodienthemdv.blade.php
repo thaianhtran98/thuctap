@@ -26,7 +26,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Ưu tiên</label><font color="red"> (*)</font>
-                                <input type="number " class="form-control" name="uutien" id="uutien_dv"
+                                <input type="number" class="form-control" name="uutien" id="uutien_dv"
                                        placeholder="Nhập độ ưu tiên">
                             </div>
                         </div>

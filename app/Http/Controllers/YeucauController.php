@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\yeucauton;
+use App\Service\ChucvuService;
 use App\Service\DonviService;
 use App\Service\LoaichuongtrinhService;
 use App\Service\NguoithuchienService;
@@ -15,13 +16,15 @@ class YeucauController extends Controller
     protected $chuongtrinhservice;
     protected $yeucauservice;
     protected $nguoithuchienservice;
+    protected $chucvuservice;
 
-    public function __construct(NguoithuchienService $nguoithuchienService, DonviService $donviService, LoaichuongtrinhService $loaichuongtrinhService, YeucauService $yeucauService)
+    public function __construct(ChucvuService $chucvuService,NguoithuchienService $nguoithuchienService, DonviService $donviService, LoaichuongtrinhService $loaichuongtrinhService, YeucauService $yeucauService)
     {
         $this->donviservice = $donviService;
         $this->chuongtrinhservice = $loaichuongtrinhService;
         $this->yeucauservice = $yeucauService;
         $this->nguoithuchienservice = $nguoithuchienService;
+        $this->chucvuservice = $chucvuService;
     }
 
     public function add_yc(){
@@ -30,12 +33,27 @@ class YeucauController extends Controller
             'dvs' => $this->donviservice->getdonviactive(),
             'cts' => $this->chuongtrinhservice->getlctactive(),
             'nvs' => $this->nguoithuchienservice->getnhanvienactive(),
+            'chucvues'=>$this->chucvuservice->getchucvu_active(),
         ]);
     }
 
     public function store_yc(Request $request)
     {
         $result= $this->yeucauservice->create($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'id_yc'=>$result
+            ]);
+    }
+
+    public function store_tam_yc(Request $request)
+    {
+        $result= $this->yeucauservice->create_tam($request);
         if ($result===false)
             return response()->json([
                 'error'=> true,
@@ -69,7 +87,7 @@ class YeucauController extends Controller
         else
             return response()->json([
                 'error'=> false,
-                'id_yc'=>$result
+                'id_thuoctinh'=>$result->id
             ]);
     }
 
@@ -81,6 +99,26 @@ class YeucauController extends Controller
         ]);
     }
 
+    public function destroy(Request $request){
+        return $this->yeucauservice->destroy($request);
+    }
 
+    public function destroy_yck(Request $request){
+        return $this->yeucauservice->destroy_yck($request);
+    }
+
+    public function edit_yeucau(Request $request,yeucauton $yeucauton){
+        return view('yeucau.edityeucau', [
+            'title' => 'Cập Nhật Yêu Cầu'.$yeucauton->ten_yeu_cau,
+            'yeucau'=>$yeucauton,
+            'dvs' => $this->donviservice->getdonviactive(),
+            'cts' => $this->chuongtrinhservice->getlctactive(),
+            'nvs' => $this->nguoithuchienservice->getnhanvienactive(),
+            'chucvues'=>$this->chucvuservice->getchucvu_active(),
+            'chitiet'=>$this->yeucauservice->getchitiet($yeucauton->id),
+            'loaingay'=>$this->yeucauservice->getloaingay($yeucauton->id),
+            'yeucaukhac'=>$this->yeucauservice->getyeucaukhac($yeucauton->id)
+        ]);
+    }
 
 }

@@ -32,7 +32,7 @@ class ChucvuService
         return chucvu::orderBy('id')->get();
     }
 
-    public function getnhanvienactive()
+    public function getchucvu_active()
     {
         return chucvu::where('hoat_dong', 1)->orderBy('id')->get();
     }

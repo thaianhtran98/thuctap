@@ -48,19 +48,24 @@
                         @endif
                     </td>
                     <td>
+                        <a href="/yc/edit/{{$yc->id}}">
                         <span style="color: #0a58ca">
                             <i class="fas fa-edit"></i>
                         </span>
+                        </a>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <button class="btn btn-danger btn-sm" type="button" id="button_del" href="#" onclick="delid()"
+                style="display: none; height: 50px;width: 100px">
+            <i class="fas fa-trash"></i>
+        </button>
     </div>
 @endsection
 @section('footer')
     <script>
-
         function delall() {
             var $iddel = document.getElementsByName('del_id[]');
             var $delall = document.getElementsByName('del_all');
@@ -95,7 +100,7 @@
 
                 for ($i = 0; $i < $iddel.length; $i++) {
                     if ($iddel[$i].checked === true) {
-                        removeRow($iddel[$i].value, '/nv/destroy');
+                        removeRow($iddel[$i].value, '/yc/destroy');
                     }
                 }
             }
