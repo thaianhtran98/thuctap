@@ -103,7 +103,7 @@
                                 @foreach($nvs as $nv)
                                     <li style="display:flex">
                                         <input type="checkbox"
-                                               onclick=taoluutru({{$nv->id}},{{$nv->id}})
+                                               onclick=taoluutru('nv_{{$nv->id}}',{{$nv->id}})
                                                style="width: 20px;height: 20px" id="{{$nv->id}}" value="{{$nv->ten_nguoi_thuc_hien}}">
                                         <label class='form-check-label m-l-10'
                                                for='{{$nv->id}}'>{{$nv->ten_nguoi_thuc_hien}}
@@ -143,7 +143,7 @@
                     <div class="form-group">
                         <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
                         <input type="text" name="ngaytiepnhan" data-inputmask="'alias': 'date'" id="ngaytiepnhan"
-                               class="form-control" placeholder="dd/mm/yyyy">
+                               class="form-control" value="" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="form-group" id="form_ngaygiaoviec" style="display: none">
@@ -168,6 +168,12 @@
                                     </th>
                                     <th>
                                         Nội Dung Yêu Cầu
+                                    </th>
+                                    <th>
+                                        Xóa
+                                    </th>
+                                    <th>
+                                        Sửa
                                     </th>
                                 </tr>
                             </thead>
@@ -204,13 +210,23 @@
         var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
         var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
         var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
+        var nv_id = [];
+        var cv_id = [];
+        @foreach($nvs as $nv)
+            if(sessionStorage.getItem('nv_{{$nv->id}}')){
+                nv_id.push(sessionStorage.getItem('nv_{{$nv->id}}'));
+            }
+            if(sessionStorage.getItem('chucvu_{{$nv->id}}')){
+                cv_id.push(sessionStorage.getItem('chucvu_{{$nv->id}}'))
+            }
+        @endforeach
         if (ten_yeu_cau!='' && noi_dung_yc!=''){
             $.ajax({
                 type: 'POST',
                 datatype: 'JSON',
                 data: {id_don_vi, id_loai_chuong_trinh,
                     ngayhoanthanhdukien,ngaygiaoviec,
-                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
+                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
                 url: '/themyeucau',
                 success:function (result){
                     if(result.error === false){
@@ -235,13 +251,23 @@
         var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
         var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
         var id_yc = sessionStorage.getItem('yc_id');
+        var nv_id = [];
+        var cv_id = [];
+        @foreach($nvs as $nv)
+        if(sessionStorage.getItem('nv_{{$nv->id}}')){
+            nv_id.push(sessionStorage.getItem('nv_{{$nv->id}}'));
+        }
+        if(sessionStorage.getItem('chucvu_{{$nv->id}}')){
+            cv_id.push(sessionStorage.getItem('chucvu_{{$nv->id}}'))
+        }
+        @endforeach
         if (ten_yeu_cau!='' && noi_dung_yc!=''){
             $.ajax({
                 type: 'POST',
                 datatype: 'JSON',
                 data: {id_don_vi, id_loai_chuong_trinh,
                     ngayhoanthanhdukien,ngaygiaoviec,
-                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
+                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
                 url: '/capnhat_pagethem/'+id_yc,
                 success:function (result){
                     if(result.error === false){
@@ -272,6 +298,7 @@
         }
         ngaytiepnhan = document.getElementById('ngaytiepnhan');
         document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
+        document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
 
         $("#ngayhoanthanhdukien").datepicker({
             dateFormat: 'dd/mm/yy', minDate: new Date(
@@ -382,7 +409,7 @@
 
 
         document.querySelector('#trang_thai').addEventListener('change', (event) => {
-            if (document.getElementById('trang_thai').value == 1) {
+            if (document.getElementById('trang_thai').value > 0) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
@@ -453,7 +480,7 @@
     <script>
         let i = 0;
         function taoluutru(name, id) {
-            if (document.getElementById(name).checked === true) {
+            if (document.getElementById(id).checked === true) {
                 sessionStorage.setItem(name, id)
                 var ul = document.getElementById("danhsachchon");
                 var li = document.createElement("li");
@@ -479,6 +506,7 @@
                 btn.setAttribute("class", 'btn btn-danger');
                 btn.appendChild(document.createTextNode('X'));
                 select.setAttribute('id',sessionStorage.getItem(name)+'_id_nhom');
+                // select.setAttribute('onchange',change_chuc_vu());
                 input.setAttribute("name", 'nv_id[]');
                 input.setAttribute("id", 'nv_input' + sessionStorage.getItem(name));
                 li.appendChild(row)
@@ -488,18 +516,12 @@
                 col3.appendChild(btn);
                 li.appendChild(input);
                 col2.appendChild(select);
-                var option = document.createElement('option');
-                var option1 = document.createElement('option');
-                var option2 = document.createElement('option');
-                option.setAttribute('value','1');
-                option.appendChild(document.createTextNode('Nhóm trưởng'));
-                option1.setAttribute('value','2');
-                option1.appendChild(document.createTextNode('Nhóm phó'));
-                option2.setAttribute('value','3');
-                option2.appendChild(document.createTextNode('Thành viên'));
-                select.appendChild(option);
-                select.appendChild(option1);
-                select.appendChild(option2);
+                @foreach($chucvues as $cv)
+                    var option{{$cv->id}} = document.createElement('option');
+                    option{{$cv->id}}.setAttribute('value','{{$cv->id}}');
+                    option{{$cv->id}}.appendChild(document.createTextNode('{{$cv->ten_chuc_vu}}'));
+                    select.appendChild(option{{$cv->id}});
+                @endforeach
                 li.appendChild(hr);
                 ul.appendChild(li);
                 document.getElementById('nv_input' + sessionStorage.getItem(name)).style.display = 'none';
@@ -510,9 +532,14 @@
                 document.getElementById('del_nv_id' + sessionStorage.getItem(name)).onclick = function () {
                     removeli(sessionStorage.getItem(name))
                 };
+                document.getElementById(sessionStorage.getItem(name)+'_id_nhom').onchange = function () {
+                    sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),document.getElementById(sessionStorage.getItem(name)+'_id_nhom').value);
+                };
+                sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),{{$chucvues[0]->id}});
             } else {
                 let li_rm = document.querySelector('#nv_id' + sessionStorage.getItem(name))
                 li_rm.remove();
+                sessionStorage.removeItem('chucvu_'+sessionStorage.getItem(name));
                 sessionStorage.removeItem(name);
             }
         };
@@ -522,7 +549,8 @@
             let li_rm = document.querySelector('#nv_id' + song_id);
             btn_rm.remove();
             li_rm.remove();
-            sessionStorage.removeItem(song_id);
+            sessionStorage.removeItem('nv_'+song_id);
+            sessionStorage.removeItem('chucvu_'+song_id);
             document.getElementById(song_id).checked = false;
         }
     </script>

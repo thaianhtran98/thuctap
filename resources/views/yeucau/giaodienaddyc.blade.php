@@ -40,7 +40,7 @@
                         <div  class="form-group">
                             <label>Nội Dung Thuộc Tính</label><font color="red"> (*)</font>
                             <div id="noi_dung_theo_kieu">
-{{--                                <input type="text" name="name_tt" class="form-control" id="noidung_tt" placeholder="Nhập nội dung" required>--}}
+                                <input type="text" name="name_tt" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,26 @@
 
 </script>
 
+
 <script>
+    function del_yck(id){
+        $.ajax({
+            type: 'DELETE',
+            datatype: 'JSON',
+            data: { id },
+            url: '/yck/destroy',
+            success:function (result){
+                if(result.error === true){
+                    alert('Vui lòng xóa lại');
+                    // location.reload();
+                }else {
+                    alert('Xóa thành công');
+                    document.querySelector('#yeucauthem'+id).remove();
+                }
+            }
+        })
+    }
+
     function add_tt_post(){
         var id_yc = sessionStorage.getItem('yc_id');
         var ten_thuoc_tinh = document.getElementById('ten_thuoc_tinh').value;
@@ -167,10 +186,30 @@
                     var tr = document.createElement('tr');
                     var td_ten = document.createElement('td');
                     var td_noidung = document.createElement('td');
+                    var td_xoa = document.createElement('td');
+                    var td_sua = document.createElement('td');
+                    var span_xoa =  document.createElement('span');
+                    var span_sua =  document.createElement('span');
+                    var i_xoa =  document.createElement('i');
+                    var i_sua =  document.createElement('i');
+                    tr.setAttribute('id','yeucauthem'+result.id_thuoctinh);
                     td_ten.appendChild(document.createTextNode(ten_thuoc_tinh));
+                    td_ten.setAttribute('id','tenthuoctinh'+result.id_thuoctinh);
                     td_noidung.appendChild(document.createTextNode(noi_dung_thuoc_tinh));
+                   //xóa thuộc tính yêu cầu
+                    i_xoa.setAttribute('class','fas fa-trash');
+                    i_xoa.setAttribute('onclick','del_yck('+result.id_thuoctinh+')');
+                    span_xoa.appendChild(i_xoa);
+                    td_xoa.appendChild(span_xoa);
+                    //Sửa thuộc tính yêu cầu
+                    i_sua.setAttribute('class','fas fa-edit');
+                    i_sua.setAttribute('onclick','edit_yck('+result.id_thuoctinh+')');
+                    span_sua.appendChild(i_sua);
+                    td_sua.appendChild(span_sua);
                     tr.appendChild(td_ten);
                     tr.appendChild(td_noidung);
+                    tr.appendChild(td_xoa);
+                    tr.appendChild(td_sua);
                     tbody.appendChild(tr);
                     page_normal();
                 }
@@ -198,7 +237,7 @@
                 data: {id_don_vi, id_loai_chuong_trinh,
                     ngayhoanthanhdukien,ngaygiaoviec,
                     ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
-                url: '/themyeucau',
+                url: '/addtamyc',
                 success:function (result){
                     if(result.error == false){
                         alert("Lưu thành công");
@@ -234,6 +273,8 @@
             document.getElementById('body').style.display = 'block';
         }
     }
+
+
 
     function page_normal() {
         document.getElementById('body').style.display = 'none';

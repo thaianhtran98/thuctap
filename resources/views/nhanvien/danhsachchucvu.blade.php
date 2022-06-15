@@ -30,7 +30,6 @@
                         <span id="cv-no-{{$cv->id}}" class="btn btn-danger btn-xs" onclick="change_active_cv(0, '/cv/change/{{$cv->id}}')">No</span>
                         @endif
                     </div>
-
                 </td>
             </tr>
         @endforeach

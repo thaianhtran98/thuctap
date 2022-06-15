@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nguoithuchienyeucau', function (Blueprint $table) {
-            $table->foreignId('yeucauton_id')->constrained();
-            $table->foreignId('nguoithuchien_id')->constrained();
+        Schema::create('chitietyeucaus', function (Blueprint $table) {
+            $table->id();
+            $table->integer('id_yc');
+            $table->integer('id_nguoithuchien');
+            $table->integer('id_chucvu');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nguoithuchienyeucaus');
+        Schema::dropIfExists('chitietyeucaus');
     }
 };
