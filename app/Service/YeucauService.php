@@ -86,7 +86,7 @@ class YeucauService
     }
 
 
-    public function update_yc($yeucauton,$request){
+    public function luu_lai_yc($yeucauton,$request){
         try{
             $yeucauton->ten_yeu_cau = (string)$request->input('ten_yeu_cau');
             $yeucauton->id_loai_chuong_trinh = (integer)$request->input('id_loai_chuong_trinh');
@@ -134,6 +134,7 @@ class YeucauService
 
             $nv_id = $request->input('nv_id');
             $cv_id = $request->input('cv_id');
+            chitietyeucau::where('id_yc',$yeucauton->id)->delete();
             if($nv_id!=null){
                 foreach ($nv_id as $key => $nv_id){
                     chitietyeucau::create([
@@ -142,9 +143,7 @@ class YeucauService
                         'id_chucvu'=>(integer)$cv_id[$key],
                     ]);
                 }
-
             }
-
             Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
         }catch (\Exception $err){
             Session::flash('error', $err->getMessage());
@@ -206,19 +205,6 @@ class YeucauService
                     ]);
                 }
 
-//                $nv_id = $request->input('nv_id');
-//                $cv_id = $request->input('cv_id');
-//                if($nv_id!=null){
-//                    foreach ($nv_id as $key => $nv_id){
-//                        chitietyeucau::create([
-//                            'id_yc'=>(integer)$yc->id,
-//                            'id_nguoithuchien'=>(integer)$nv_id,
-//                            'id_chucvu'=>(integer)$cv_id[$key],
-//                        ]);
-//                    }
-//
-//                }
-
                 Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
                 return $yc;
             }
@@ -226,6 +212,71 @@ class YeucauService
             Session::flash('error', $err->getMessage());
             return false;
         }
+    }
+
+    public function update_yc($yeucauton,$request){
+        try{
+            $yeucauton->ten_yeu_cau = (string)$request->input('ten_yeu_cau');
+            $yeucauton->id_loai_chuong_trinh = (integer)$request->input('id_loai_chuong_trinh');
+            $yeucauton->id_don_vi = (integer)$request->input('id_don_vi');
+            $yeucauton->trang_thai = (integer)$request->input('trang_thai');
+            $yeucauton->noi_dung_yc = (string)$request->input('noi_dung_yc');
+            $yeucauton->save();
+
+
+
+
+            if ($request->input('ngaytiepnhan')!=''){
+                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
+                loaingay::where('id_yc', $yeucauton->id)
+                    ->update(['ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0]]);
+            }
+
+            if ($request->input('ngaygiaoviec')!=''){
+                $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
+                loaingay::where('id_yc', $yeucauton->id)
+                    ->update(['ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0]]);
+            }
+
+            if ($request->input('ngayhoanthanh')!=''){
+                $ngayhoanthanh=explode('/',$request->input('ngayhoanthanh'));
+                loaingay::where('id_yc', $yeucauton->id)
+                    ->update(['ngayhoanthanh' => $ngayhoanthanh[2] . '/' . $ngayhoanthanh[1] . '/' . $ngayhoanthanh[0]]);
+            }
+
+            if ($request->input('ngayhostfix')!=''){
+                $ngayhostfix=explode('/',$request->input('ngayhostfix'));
+                loaingay::where('id_yc', $yeucauton->id)
+                    ->update(['ngayhostfix' => $ngayhostfix[2] . '/' . $ngayhostfix[1] . '/' . $ngayhostfix[0]]);
+            }
+
+            if ($request->input('ngayhoanthanhdukien')!=''){
+                $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
+                loaingay::where('id_yc', $yeucauton->id)
+                    ->update(['ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0]]);
+            }
+
+            $nv_id = $request->input('nv_id');
+            $cv_id = $request->input('cv_id');
+            chitietyeucau::where('id_yc',$yeucauton->id)->delete();
+            if($nv_id!=null){
+                foreach ($nv_id as $key => $nv_id){
+                    chitietyeucau::create([
+                        'id_yc'=>(integer)$yeucauton->id,
+                        'id_nguoithuchien'=>(integer)$nv_id,
+                        'id_chucvu'=>(integer)$cv_id[$key],
+                    ]);
+                }
+
+            }
+
+            Session::flash('success', 'Cập nhật thành công yêu cầu ' . $request->input('ten_yeu_cau'));
+        }catch (\Exception $err){
+            Session::flash('error', $err->getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     public function create_thuoctinh($request){
@@ -244,6 +295,20 @@ class YeucauService
             return thuoctinhyeucau::where('id_yc',$request->input('id_yc'))
                 ->where('ten_thuoc_tinh',$request->input('ten_thuoc_tinh'))
                 ->first();
+        }catch (\Exception $err){
+            return false;
+        }
+    }
+
+
+    public function edit_thuoctinh($request){
+        try{
+            $thuoctinhyc = thuoctinhyeucau::where('id',$request->input('id_thuoc_tinh'))->first();
+            $thuoctinhyc->ten_thuoc_tinh = $request->input('ten_thuoc_tinh');
+            $thuoctinhyc->kieu_thuoc_tinh = $request->input('kieu_thuoc_tinh');
+            $thuoctinhyc->noi_dung_thuoc_tinh = $request->input('noi_dung_thuoc_tinh');
+            $thuoctinhyc->save();
+            return $thuoctinhyc;
         }catch (\Exception $err){
             return false;
         }

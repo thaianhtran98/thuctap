@@ -20,6 +20,7 @@
         @include('yeucau.giaodienthemdv')
         @include('yeucau.giaodienthemlct')
         @include('yeucau.giaodienaddyc')
+        @include('yeucau.giaodienedit_yeucaukhac')
         @include('alert')
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Thêm Yêu Cầu
@@ -193,7 +194,7 @@
                         <button onclick="them_yeu_cau()" id="them" class="btn btn-primary m-t-50 m-l-10" style="float: right">Thêm Yêu Cầu</button>
                     </div>
                     <div>
-                        <button onclick="cap_nhat_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right ; display: none">Thêm Yêu Cầu</button>
+                        <button onclick="luu_lai_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right ; display: none">Thêm Yêu Cầu</button>
                     </div>
                 </div>
             </div>
@@ -221,27 +222,48 @@
             }
         @endforeach
         if (ten_yeu_cau!='' && noi_dung_yc!=''){
-            $.ajax({
-                type: 'POST',
-                datatype: 'JSON',
-                data: {id_don_vi, id_loai_chuong_trinh,
-                    ngayhoanthanhdukien,ngaygiaoviec,
-                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
-                url: '/themyeucau',
-                success:function (result){
-                    if(result.error === false){
-                        location.reload();
-                    }else {
-                        location.reload();
+            if(trang_thai!=0 && nv_id.length !=0){
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: {id_don_vi, id_loai_chuong_trinh,
+                        ngayhoanthanhdukien,ngaygiaoviec,
+                        ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
+                    url: '/themyeucau',
+                    success:function (result){
+                        if(result.error === false){
+                            location.reload();
+                        }else {
+                            location.reload();
+                        }
                     }
-                }
-            })
+                })
+            }else if(trang_thai==0){
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: {id_don_vi, id_loai_chuong_trinh,
+                        ngayhoanthanhdukien,ngaygiaoviec,
+                        ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
+                    url: '/themyeucau',
+                    success:function (result){
+                        if(result.error === false){
+                            location.reload();
+                        }else {
+                            location.reload();
+                        }
+                    }
+                })
+            }
+            else {
+                alert('Vui lòng chọn nhân viên thực hiện yêu cầu')
+            }
         }else {
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
     }
 
-    function cap_nhat_yeu_cau(){
+    function luu_lai_yeu_cau(){
         var id_don_vi = document.getElementById('id_don_vi').value;
         var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
@@ -298,7 +320,8 @@
         }
         ngaytiepnhan = document.getElementById('ngaytiepnhan');
         document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
-        document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
+
+
 
         $("#ngayhoanthanhdukien").datepicker({
             dateFormat: 'dd/mm/yy', minDate: new Date(
@@ -407,19 +430,32 @@
             });
         });
 
-
         document.querySelector('#trang_thai').addEventListener('change', (event) => {
             if (document.getElementById('trang_thai').value > 0) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
+                let d = new Date();
+                let year = d.getFullYear();
+                let month = d.getMonth() + 1;
+                let day = d.getDate();
+                if (Number(day) < 10) {
+                    day = '0' + day;
+                }
+                if (Number(month) < 10) {
+                    month = '0' + month;
+                }
+                document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
             } else {
+                var id_yc = sessionStorage.getItem('yc_id')
+                sessionStorage.clear();
+                sessionStorage.setItem('ok',1);
+                sessionStorage.setItem('yc_id',id_yc);
                 document.getElementById('form_ngaygiaoviec').style.display = 'none';
                 document.getElementById('addnv').style.display = 'none';
                 document.getElementById('nv_selected').style.display = 'none';
             }
         })
-
 
         //
         $(document).ready(function () {
