@@ -447,7 +447,8 @@
                 }
                 document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
             } else {
-                var id_yc = sessionStorage.getItem('yc_id')
+                var id_yc = sessionStorage.getItem('yc_id');
+                document.getElementById('ngaygiaoviec').value = '';
                 sessionStorage.clear();
                 sessionStorage.setItem('ok',1);
                 sessionStorage.setItem('yc_id',id_yc);

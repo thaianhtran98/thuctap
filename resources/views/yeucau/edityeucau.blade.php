@@ -445,6 +445,27 @@
                 });
             }
         })
+        document.querySelector('#ngayhoanthanh').addEventListener('mouseover', (event) => {
+            // let ngaydukien = document.getElementById('ngayhoanthanhdukien');
+            // let ngaygiaoviec = document.getElementById('ngaygiaoviec');
+            $("#ngayhoanthanh").datepicker({
+                dateFormat: 'dd/mm/yy', minDate: new Date(
+                    document.getElementById('ngaygiaoviec').value.substr(6, 4),
+                    document.getElementById('ngaygiaoviec').value.substr(3, 2)-1,
+                    Number(document.getElementById('ngaygiaoviec').value.substr(0, 2))),
+            });
+        })
+
+
+        document.querySelector('#ngayhostfix').addEventListener('mouseover', (event) => {
+            let ngayhoanthanh = document.getElementById('ngayhoanthanh');
+            $("#ngayhostfix").datepicker({
+                dateFormat: 'dd/mm/yy', minDate: new Date(
+                    document.getElementById('ngayhoanthanh').value.substr(6, 4),
+                    document.getElementById('ngayhoanthanh').value.substr(3, 2)-1,
+                    Number(document.getElementById('ngayhoanthanh').value.substr(0, 2))),
+            });
+        });
 
         $(document).ready(function () {
             $("#ngaygiaoviec").inputmask("99/99/9999", {
@@ -468,6 +489,32 @@
                     if (document.getElementById('ngayhoanthanhdukien').value < document.getElementById('ngaytiepnhan').value) {
                         document.getElementById('ngayhoanthanhdukien').value = '';
                         alert('Ngày dự kiện hoàn thành phải lớn hơn ngày tiếp nhận');
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#ngayhoanthanh").inputmask("99/99/9999", {
+                "placeholder": "dd/mm/yyyy",
+                "oncomplete": function () {
+                    console.log(document.getElementById('ngaytiepnhan').value);
+                    if (document.getElementById('ngayhoanthanh').value <  document.getElementById('ngaygiaoviec').value) {
+                        document.getElementById('ngayhoanthanh').value = '';
+                        alert('Ngày hoàn thành phải lớn hơn ngày giao việc');
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#ngayhostfix").inputmask("99/99/9999", {
+                "placeholder": "dd/mm/yyyy",
+                "oncomplete": function () {
+                    console.log(document.getElementById('ngayhostfix').value);
+                    if (document.getElementById('ngayhostfix').value < document.getElementById('ngayhoanthanh').value) {
+                        document.getElementById('ngayhostfix').value = '';
+                        alert('Ngày hostfix phải lớn hơn hoặc bằng với ngày hoàn thành');
                     }
                 }
             });
@@ -533,7 +580,7 @@
         @endif
     </script>
 
-    {{--  Add thành viên vào dự án  --}}
+    {{--  Add thành viên vào dự án && hiển thị ngày theo trạng thái --}}
     <script>
         let i = 0;
         function taoluutru(name, id) {
@@ -609,37 +656,84 @@
         }
 
         $(document).ready(function () {
-            if (document.getElementById('trang_thai').value > 0) {
+            if (document.getElementById('trang_thai').value==1 || document.getElementById('trang_thai').value==2) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
-            } else {
+            }else if(document.getElementById('trang_thai').value==0) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'none';
                 document.getElementById('form_ngayhoanthanh').style.display = 'none';
                 document.getElementById('form_ngayhostfix').style.display = 'none';
                 document.getElementById('addnv').style.display = 'none';
                 document.getElementById('nv_selected').style.display = 'none';
             }
-        });
-
-        document.querySelector('#trang_thai').addEventListener('change', (event) => {
-            var ngaygiaoviec = '{{$loaingay->ngaygiaoviec}}';
-            console.log(ngaygiaoviec);
-            if (document.getElementById('trang_thai').value > 0 && ngaygiaoviec!='') {
+             if(document.getElementById('trang_thai').value==3){
+                document.getElementById('form_ngaygiaoviec').style.display = 'block';
+                document.getElementById('form_ngayhoanthanh').style.display = 'block';
+                // document.getElementById('form_ngayhostfix').style.display = 'block';
+                document.getElementById('addnv').style.display = 'block';
+                document.getElementById('nv_selected').style.display = 'block';
+            }
+            if(document.getElementById('trang_thai').value==4){
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('form_ngayhoanthanh').style.display = 'block';
                 document.getElementById('form_ngayhostfix').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
             }
-            else if(document.getElementById('trang_thai').value > 0 && ngaygiaoviec=='' ){
+        });
+
+        let d = new Date();
+        let year = d.getFullYear();
+        let month = d.getMonth() + 1;
+        let day = d.getDate();
+        if (Number(day) < 10) {
+            day = '0' + day;
+        }
+        if (Number(month) < 10) {
+            month = '0' + month;
+        }
+        document.querySelector('#trang_thai').addEventListener('change', (event) => {
+            var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
+            var ngayhoanthanh = document.getElementById('ngayhoanthanh').value;
+            var ngayhostfix = document.getElementById('ngayhostfix').value;
+            console.log(ngayhostfix);
+            if (document.getElementById('trang_thai').value == 3) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
-                // document.getElementById('form_ngayhoanthanh').style.display = 'block';
-                // document.getElementById('form_ngayhostfix').style.display = 'block';
+                document.getElementById('form_ngayhoanthanh').style.display = 'block';
+                if(ngayhoanthanh==''){
+                    document.getElementById('ngayhoanthanh').value = day + '/' + month + '/' + year;
+                }else {
+                    document.getElementById('ngayhoanthanh').value =ngayhoanthanh;
+                }
+                if(ngayhostfix==''){
+                    document.getElementById('ngayhostfix').value = '';
+                }else {
+                    document.getElementById('ngayhostfix').value = ngayhostfix;
+                }
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
-            }
-            else {
+                document.getElementById('form_ngayhostfix').style.display = 'none';
+            }else if(document.getElementById('trang_thai').value == 4){
+                document.getElementById('form_ngaygiaoviec').style.display = 'block';
+                document.getElementById('form_ngayhoanthanh').style.display = 'block';
+                document.getElementById('form_ngayhostfix').style.display = 'block';
+                if(ngayhostfix==''){
+                    document.getElementById('ngayhostfix').value = day + '/' + month + '/' + year;
+                }else {
+                    document.getElementById('ngayhostfix').value = ngayhostfix;
+                }
+                if(ngayhoanthanh==''){
+                    document.getElementById('ngayhoanthanh').value = day + '/' + month + '/' + year;
+                }
+                document.getElementById('addnv').style.display = 'block';
+                document.getElementById('nv_selected').style.display = 'block';
+            } else if(document.getElementById('trang_thai').value > 0 && ngaygiaoviec=='' ){
+                document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
+                document.getElementById('form_ngaygiaoviec').style.display = 'block';
+                document.getElementById('addnv').style.display = 'block';
+                document.getElementById('nv_selected').style.display = 'block';
+            } else if(document.getElementById('trang_thai').value==0) {
                 sessionStorage.clear();
                 sessionStorage.setItem('ok',1);
                 sessionStorage.setItem('yc_id',{{$yeucau->id}});
@@ -648,6 +742,9 @@
                 document.getElementById('form_ngayhostfix').style.display = 'none';
                 document.getElementById('addnv').style.display = 'none';
                 document.getElementById('nv_selected').style.display = 'none';
+                document.getElementById('ngaygiaoviec').value ='';
+                document.getElementById('ngayhoanthanh').value ='';
+                document.getElementById('ngayhostfix').value ='';
             }
         })
 
