@@ -67,7 +67,7 @@ class YeucauController extends Controller
 
     public function update_pagethem(yeucauton $yeucauton, Request $request)
     {
-        $result= $this->yeucauservice->update_yc($yeucauton,$request);
+        $result= $this->yeucauservice->luu_lai_yc($yeucauton,$request);
         if ($result==false)
             return response()->json([
                 'error'=> true,
@@ -80,6 +80,19 @@ class YeucauController extends Controller
 
     public function store_thuoctinh_yc(Request $request){
         $result= $this->yeucauservice->create_thuoctinh($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'id_thuoctinh'=>$result->id
+            ]);
+    }
+
+    public function edit_thuoctinh_yc(Request $request){
+        $result= $this->yeucauservice->edit_thuoctinh($request);
         if ($result===false)
             return response()->json([
                 'error'=> true,
@@ -119,6 +132,18 @@ class YeucauController extends Controller
             'loaingay'=>$this->yeucauservice->getloaingay($yeucauton->id),
             'yeucaukhac'=>$this->yeucauservice->getyeucaukhac($yeucauton->id)
         ]);
+    }
+
+    public function store_edit_yeucau(Request $request,yeucauton $yeucauton){
+        $result =  $this->yeucauservice->update_yc($yeucauton,$request);
+        if ($result==false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+            ]);
     }
 
 }

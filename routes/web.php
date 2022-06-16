@@ -53,7 +53,11 @@ Route::get('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'add_y
 Route::post('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'store_yc']);
 Route::post('/addtamyc', [\App\Http\Controllers\YeucauController::class, 'store_tam_yc']);
 Route::post('/capnhat_pagethem/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'update_pagethem']);
-Route::post('/themthuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'store_thuoctinh_yc']);
 Route::get('/yc/edit/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'edit_yeucau']);
+Route::post('/yc/capnhatyeucau/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'store_edit_yeucau']);
 Route::delete('/yc/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy']);
+
+//Yêu cầu thêm
+Route::post('/themthuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'store_thuoctinh_yc']);
+Route::post('/suathuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'edit_thuoctinh_yc']);
 Route::delete('/yck/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy_yck']);

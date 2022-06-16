@@ -203,7 +203,7 @@
                     td_xoa.appendChild(span_xoa);
                     //Sửa thuộc tính yêu cầu
                     i_sua.setAttribute('class','fas fa-edit');
-                    i_sua.setAttribute('onclick','edit_yck('+result.id_thuoctinh+')');
+                    i_sua.setAttribute('onclick','show_edit_yck('+result.id_thuoctinh+',"'+ten_thuoc_tinh+'","'+kieu_thuoc_tinh+'","'+noi_dung_thuoc_tinh+'")');
                     span_sua.appendChild(i_sua);
                     td_sua.appendChild(span_sua);
                     tr.appendChild(td_ten);
@@ -212,15 +212,18 @@
                     tr.appendChild(td_sua);
                     tbody.appendChild(tr);
                     page_normal();
+                    document.getElementById('ten_thuoc_tinh').value ='';
+                    document.getElementById('kieu_thuoc_tinh').value=0;
+                    document.getElementById('noi_dung_thuoc_tinh').value ='';
                 }
                 else {
-                    alert('Thêm thất bại')
+                    alert('Yêu cầu này đã tồn tại')
                 }
             }
         });
     }
 
-    function add_yeu_cau(){
+    function luu_tam_yeu_cau(){
         var id_don_vi = document.getElementById('id_don_vi').value;
         var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
@@ -264,7 +267,7 @@
     function show_add_new_yc() {
         if(sessionStorage.getItem('ok')!=1){
             if(confirm('Để thêm thuộc tính phải lưu lại yêu cầu này?')){
-                add_yeu_cau();
+                luu_tam_yeu_cau();
             }
         }else {
             sessionStorage.setItem('ok',1);
@@ -279,10 +282,10 @@
     function page_normal() {
         document.getElementById('body').style.display = 'none';
         document.getElementById('form_add_new_yc').style.display = 'none';
-        document.getElementById('form_add_new_yc').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
         document.getElementById('form-add-dv').style.display = 'none';
         document.getElementById('form-add-dv').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
+        document.getElementById('form_edit_yck').style.display = 'none';
     }
 </script>
