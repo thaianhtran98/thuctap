@@ -40,4 +40,20 @@
     <!--===============================================================================================-->
 </head>
 
+<style>
+    table{
+        border:1px solid #767677;
+    }
+    th{
+        border:1px solid #767677;
+    }
+    td{
+        border:1px solid #767677;
+    }
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #767677;
+        border-top: 1px solid #767677;
+    }
+</style>
 @yield('head')

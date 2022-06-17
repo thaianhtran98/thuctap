@@ -2,10 +2,10 @@
     <table class="table"  style="text-align: center">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
-            <th style="line-height: normal">
-                <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">
-                Xóa
-            </th>
+{{--            <th style="line-height: normal">--}}
+{{--                <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">--}}
+{{--                Xóa--}}
+{{--            </th>--}}
             <th>Tên Nhân Viên</th>
             <th>Tình Trạng Hoạt Động</th>
         </tr>
@@ -13,10 +13,10 @@
         <tbody id="list_nv">
         @foreach($nvs as $nv)
             <tr>
-                <td style="line-height: normal">
-                    <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"
-                           value="{{$nv->id}}">
-                </td>
+{{--                <td style="line-height: normal">--}}
+{{--                    <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"--}}
+{{--                           value="{{$nv->id}}">--}}
+{{--                </td>--}}
                 <td ondblclick="showeditten{{$nv->id}}()">
                     <a id="ten_dv_{{$nv->id}}" style="display: block">{{$nv->ten_nguoi_thuc_hien}}</a>
                     <input id="edit_ten_dv_{{$nv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"

@@ -2,10 +2,10 @@
     <table class="table">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
-            <th style="line-height: normal">
-                <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">
-                Xóa
-            </th>
+{{--            <th style="line-height: normal">--}}
+{{--                <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">--}}
+{{--                Xóa--}}
+{{--            </th>--}}
             <th>Chương Trình</th>
             <th>Tình Trạng Hoạt Động</th>
         </tr>
@@ -13,10 +13,10 @@
         <tbody style="text-align: center;">
         @foreach($cts as $ct)
             <tr>
-                <td style="line-height: normal">
-                    <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"
-                           value="{{$ct->id}}">
-                </td>
+{{--                <td style="line-height: normal">--}}
+{{--                    <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"--}}
+{{--                           value="{{$ct->id}}">--}}
+{{--                </td>--}}
                 <td ondblclick="showeditten{{$ct->id}}()">
                     <a id="ten_dv_{{$ct->id}}" style="display: block">{{$ct->ten_chuong_trinh}}</a>
                     <input id="edit_ten_dv_{{$ct->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"

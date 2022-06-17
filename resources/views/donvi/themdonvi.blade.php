@@ -62,12 +62,12 @@
             </div>
         </div>
         <hr>
-        <div class="row" style="display: flex">
+        <div class="row" style="display: flex;margin-bottom: 10px">
             <label style="font-size: 20px;color: #007bff">
                 Danh Sách Đơn Vị
             </label>
-            <button class="btn btn-primary" style="float: right;
-             margin-left: auto;margin-right: 8px;font-size: 20px" id="show-add-dv" onclick="show_add_dv()">
+            <button class="btn btn-primary" style="float: right;margin-bottom: 10px;
+             margin-left: auto;margin-right: 8px;" id="show-add-dv" onclick="show_add_dv()">
                 Thêm đơn vị
             </button>
             <script>

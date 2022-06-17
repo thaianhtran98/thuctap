@@ -61,3 +61,6 @@ Route::delete('/yc/destroy', [\App\Http\Controllers\YeucauController::class, 'de
 Route::post('/themthuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'store_thuoctinh_yc']);
 Route::post('/suathuoctinhyc', [\App\Http\Controllers\YeucauController::class, 'edit_thuoctinh_yc']);
 Route::delete('/yck/destroy', [\App\Http\Controllers\YeucauController::class, 'destroy_yck']);
+
+// báo cáo
+Route::get('/baocao',[\App\Http\Controllers\BaocaoController::class,'index']);
