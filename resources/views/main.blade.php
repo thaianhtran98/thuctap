@@ -14,6 +14,10 @@
 </div>
 
 @include('footer')
-
+{{--<script>--}}
+{{--    if (location.href.includes('thuctap.test/themyeucau')==false){--}}
+{{--        sessionStorage.clear();--}}
+{{--    }--}}
+{{--</script>--}}
 </body>
 </html>

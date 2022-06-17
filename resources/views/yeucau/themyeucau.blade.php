@@ -2,15 +2,11 @@
 @section('head')
     <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script type="text/javascript" src="/template/admin/Inputmask/dist/inputmask.js"></script>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    {{--    <script type="text/javascript" src="/template/admin/js/jquery.inputmask.bundle.min.js"></script>--}}
-    {{--    <script type="text/javascript" src="/template/js/"></script>--}}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="/template/admin/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
+        var donvi = sessionStorage.getItem('donvi');
+        var ct = sessionStorage.getItem('ct');
         sessionStorage.clear();
         sessionStorage.setItem('ok',0);
     </script>
@@ -31,7 +27,7 @@
                     <div class="form-group">
                         <label for="menu">Đơn Vị</label><font color="red"> (*)</font>
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-10">
                                 <select class="form-control" name="id_don_vi" id="id_don_vi" >
                                     @foreach($dvs as $dv)
                                         <option value="{{$dv->id}}">{{$dv->ten_don_vi}}</option>
@@ -45,13 +41,20 @@
                                 </span>
                                 </button>
                             </div>
+                            <div class="col-md-1">
+                                <button type="button" onclick="neo_donvi()">
+                                <span id="neo_donvi" style="font-size: 25px;color: black;">
+                                    <i class="fas fa-anchor"></i>
+                                </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="menu">Chương Trình</label><font color="red"> (*)</font>
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-10">
                                 <select class="form-control" name="id_loai_chuong_trinh" id="id_loai_chuong_trinh" >
                                     @foreach($cts as $ct)
                                         <option value="{{$ct->id}}">{{$ct->ten_chuong_trinh}}</option>
@@ -65,8 +68,16 @@
                                 </span>
                                 </button>
                             </div>
+                            <div class="col-md-1">
+                                <button type="button" onclick="neo_ct()">
+                                <span id="neo_ct" style="font-size: 25px;color: black;">
+                                    <i class="fas fa-anchor"></i>
+                                </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="form-group">
                         <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
@@ -143,8 +154,8 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
-                        <input type="text" name="ngaytiepnhan" data-inputmask="'alias': 'date'" id="ngaytiepnhan"
-                               class="form-control" value="" placeholder="dd/mm/yyyy">
+                        <input type="text" name="ngaytiepnhan" id="ngaytiepnhan"
+                               class="form-control" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="form-group" id="form_ngaygiaoviec" style="display: none">
@@ -318,26 +329,11 @@
         if (Number(month) < 10) {
             month = '0' + month;
         }
-        ngaytiepnhan = document.getElementById('ngaytiepnhan');
+
+        // ngaytiepnhan = document.getElementById('ngaytiepnhan');
         document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
 
-
-
-        $("#ngayhoanthanhdukien").datepicker({
-            dateFormat: 'dd/mm/yy', minDate: new Date(
-                document.getElementById('ngaytiepnhan').value.substr(6, 4),
-                document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
-                Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
-        });
-        $("#ngaygiaoviec").datepicker({
-            dateFormat: 'dd/mm/yy', minDate: new Date(
-                document.getElementById('ngaytiepnhan').value.substr(6, 4),
-                document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
-                Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)))
-        });
-
         $(document).ready(function () {
-            // $("#ngaytiepnhan").extendAliases();
             $("#ngaytiepnhan").inputmask("99/99/9999", {
                 "placeholder": "dd/mm/yyyy",
                 'alias': 'date',
@@ -355,7 +351,29 @@
             });
         });
 
-        $("#ngaytiepnhan").datepicker({dateFormat: 'dd/mm/yyyy', minDate: new Date(1999, 10 - 1, 25)});
+        $("#ngayhoanthanhdukien").datepicker({
+            dateFormat: 'dd/mm/yy', minDate: new Date(
+                document.getElementById('ngaytiepnhan').value.substr(6, 4),
+                document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
+                Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
+        });
+
+
+        document.querySelector('#ngayhoanthanhdukien').addEventListener('mouseover', (event) => {
+            let ngaytiepnhan = document.getElementById('ngaytiepnhan');
+            ngaytiepnhan.classList.remove("hasDatepicker");
+            $("#ngaytiepnhan").datepicker({dateFormat: 'dd/mm/yyyy',
+                // minDate: new Date(1999, 10 - 1, 25)
+            });
+        })
+
+        $("#ngaygiaoviec").datepicker({
+            dateFormat: 'dd/mm/yy', minDate: new Date(
+                document.getElementById('ngaytiepnhan').value.substr(6, 4),
+                document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
+                Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)))
+        });
+
 
 
         document.querySelector('#ngayhoanthanhdukien').addEventListener('mouseover', (event) => {
@@ -590,5 +608,48 @@
             sessionStorage.removeItem('chucvu_'+song_id);
             document.getElementById(song_id).checked = false;
         }
+    </script>
+
+    <script>
+        if(donvi){
+            sessionStorage.setItem('donvi',donvi);
+            document.getElementById('neo_donvi').style.color = 'dodgerblue';
+            document.getElementById('id_don_vi').value = donvi;
+        }if(ct){
+            document.getElementById('neo_ct').style.color = 'dodgerblue';
+            sessionStorage.setItem('ct',ct);
+            document.getElementById('id_loai_chuong_trinh').value = ct;
+        }
+        function neo_donvi(){
+            var donvi = document.getElementById('neo_donvi');
+            if(donvi.style.color === 'dodgerblue'){
+                sessionStorage.removeItem('donvi');
+                donvi.style.color = 'black';
+            }else{
+                sessionStorage.setItem('donvi',document.getElementById('id_don_vi').value);
+                donvi.style.color = 'dodgerblue';
+            }
+        }
+        function neo_ct(){
+            var ct = document.getElementById('neo_ct');
+            if(ct.style.color === 'dodgerblue'){
+                sessionStorage.removeItem('ct');
+                ct.style.color = 'black';
+            }else{
+                sessionStorage.setItem('ct',document.getElementById('id_loai_chuong_trinh').value);
+                ct.style.color = 'dodgerblue';
+            }
+        }
+
+        document.querySelector('#id_don_vi').addEventListener('change', (event) => {
+            if(sessionStorage.getItem('donvi')){
+                sessionStorage.setItem('donvi',document.getElementById('id_don_vi').value);
+            }
+        })
+        document.querySelector('#id_loai_chuong_trinh').addEventListener('change', (event) => {
+            if(sessionStorage.getItem('ct')){
+                sessionStorage.setItem('ct',document.getElementById('id_loai_chuong_trinh').value);
+            }
+        })
     </script>
 @endsection

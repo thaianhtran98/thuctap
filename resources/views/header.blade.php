@@ -97,7 +97,7 @@
 
     .main-menu > li:hover {
         text-decoration: none;
-        background: rgba(34, 34, 34, 0.91);
+        background: #004f9d;
     }
     .main-menu > li {
         text-decoration: none;
@@ -107,7 +107,7 @@
 
 </style>
 <div class="wrap-menu-desktop"
-     style="width: 100% ;background: rgba(2,82,192,0.96);margin-top: -1px;position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+     style="width: 100% ;background: #0266c7;margin-top: -1px;position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
     <nav class="limiter-menu-desktop">
         <!-- Logo desktop -->
         <a href="/" class="logo" style="margin-right: 0px">
@@ -118,10 +118,10 @@
         <div style="width: 100%;font-weight: bold;padding: 0px">
             <ul class="main-menu" style="width: 100%">
                 <li class="active-menu" style="display: inline;width: 25%;text-align: center">
-                    <a href="/">
+                    <a href="/baocao">
                         <button
                             style="width: 100%;height: 100%;size: auto; color: #f8f8f8;font-family: Arial,sans-serif,Roboto; font-size: 20px;">
-                            Trang Chủ
+                            Báo cáo
                         </button>
                     </a>
                 </li>

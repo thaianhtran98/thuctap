@@ -15,4 +15,5 @@ class donvi extends Model
         'uu_tien',
         'hoat_dong',
     ];
+
 }

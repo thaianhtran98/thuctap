@@ -1,5 +1,6 @@
 @extends('main')
 @section('content')
+    @include('alert')
     <div class="container-xl m-t-50">
         <table class="table">
             <thead style="background: #0c84ff;color: white">
@@ -105,6 +106,5 @@
                 }
             }
         }
-
     </script>
 @endsection

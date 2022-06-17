@@ -1,34 +1,35 @@
- <div style="border: 2px">
-     <table class="table">
-         <thead style="background: #0c84ff;color: white">
+ <div>
+     <table class="table" >
+         <thead style="background: #0c84ff;color: white;">
          <tr style="text-align: center">
-             <th style="line-height: normal">
-                 <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">
-                 Xóa
-             </th>
-             <th>Độ Ưu Tiên</th>
+{{--             <th style="line-height: normal">--}}
+{{--                 <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">--}}
+{{--                 Xóa--}}
+{{--             </th>--}}
+             <th>STT</th>
              <th>Tên Đơn Vị</th>
+             <th >Độ Ưu Tiên</th>
              <th>Lũy Kế Đầu Kỳ</th>
              <th>Tình Trạng Hoạt Động</th>
          </tr>
          </thead>
          <tbody style="text-align: center">
-         @foreach($donvi as $dv)
+         @foreach($donvi as $key => $dv)
              <tr>
-                 <td style="line-height: normal">
-                     <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"
-                            value="{{$dv->id}}">
-                 </td>
-                 <td ondblclick="showedituutien{{$dv->id}}()">
-                     <a id="dv_uu_tien_{{$dv->id}}" style="display: block">{{$dv->uu_tien}}</a>
-                     <input id="edit_dv_uu_tien_{{$dv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"
-                            value="{{$dv->uu_tien}}">
+                 <td>
+                     {{$key+1}}
                  </td>
                  <td ondblclick="showeditten{{$dv->id}}()">
                      <a id="ten_dv_{{$dv->id}}" style="display: block">{{$dv->ten_don_vi}}</a>
                      <input id="edit_ten_dv_{{$dv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"
                             value="{{$dv->ten_don_vi}}">
                  </td>
+                 <td ondblclick="showedituutien{{$dv->id}}()">
+                     <a id="dv_uu_tien_{{$dv->id}}" style="display: block">{{$dv->uu_tien}}</a>
+                     <input id="edit_dv_uu_tien_{{$dv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"
+                            value="{{$dv->uu_tien}}">
+                 </td>
+
                  <td style="text-align: center" ondblclick="showeditluyke{{$dv->id}}()" id="luyke_dv">
                      <a id="luyke_dv_{{$dv->id}}" style="display: block">{{$dv->luy_ke_dau_ky}}</a>
                      <input id="edit_luyke_dv_{{$dv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"
