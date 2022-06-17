@@ -26,8 +26,4 @@ class yeucauton extends Model
     {
         return $this->hasOne(loaichuongtrinh::class, 'id', 'id_loai_chuong_trinh');
     }
-
-    public function nth_yc(){
-        return $this->belongsToMany(nguoithuchien::class,'nguoithuchienyeucau','yeucauton_id','nguoithuchien_id');
-    }
 }

@@ -60,7 +60,6 @@
                     }));
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add').style.display = 'none';
-                    document.getElementById('ten_ct').value = '';
                     alert('Thêm chương trình '+ result.lct.ten_chuong_trinh +' thành công')
                 }else {
                     alert('Tên chương trình đã tồn tại hoặc không phù hợp')

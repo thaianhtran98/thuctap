@@ -4,5 +4,4 @@
     <br>
     <br>
     Home
-    {{$week}}
 @endsection

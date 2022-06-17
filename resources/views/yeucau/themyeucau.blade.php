@@ -303,6 +303,7 @@
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
     }
+
 </script>
 
 {{--    Xử lý ngày tháng năm và bấm enter--}}
