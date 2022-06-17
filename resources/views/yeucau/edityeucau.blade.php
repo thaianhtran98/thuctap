@@ -4,7 +4,7 @@
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
     {{--    <script type="text/javascript" src="/template/admin/js/jquery.inputmask.bundle.min.js"></script>--}}
     {{--    <script type="text/javascript" src="/template/js/"></script>--}}
-    <link rel="stylesheet" href="/template/admin/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
         sessionStorage.clear();
@@ -18,6 +18,20 @@
     </script>
 @endsection
 @section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success"
+                 id="thanhcong"
+                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: 200px;text-align: center">
+                Thành công
+            </div>
+            <div  class="alert alert-danger"
+                  id="thatbai"
+                  style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: 200px;text-align: center">
+                Thất bại
+            </div>
+        </div>
+    </div>
     <div class="container-xl m-t-50" STYLE="align-items: center">
         @include('yeucau.giaodienthemdv')
         @include('yeucau.giaodienthemlct')
@@ -185,31 +199,31 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
-                    <input type="text" name="ngaytiepnhan" data-inputmask="'alias': 'date'" id="ngaytiepnhan"
+                    <input type="text" name="ngaytiepnhan" data-inputmask="'alias': 'date'" id="ngaytiepnhan" autocomplete="off"
                            class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
                 <div class="form-group" id="form_ngaygiaoviec" style="display: none">
                     <label for="menu">Ngày Giao Việc</label>
-                    <input type="text" id="ngaygiaoviec" data-inputmask="'alias': 'date'"
+                    <input type="text" id="ngaygiaoviec" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngaygiaoviec" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
                 <div class="form-group">
                     <label for="menu">Ngày Hoàn Thành Dự Kiến</label>
-                    <input type="text" id="ngayhoanthanhdukien" data-inputmask="'alias': 'date'"
+                    <input type="text" id="ngayhoanthanhdukien" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngayhoanthanhdukien" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
                 <div class="form-group"id="form_ngayhoanthanh" style="display: none">
                     <label for="menu">Ngày Hoàn Thành</label>
-                    <input type="text" id="ngayhoanthanh" data-inputmask="'alias': 'date'"
+                    <input type="text" id="ngayhoanthanh" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngayhoanthanh" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
                 <div class="form-group"id="form_ngayhostfix" style="display: none">
                     <label for="menu">Ngày Hostfix</label>
-                    <input type="text" id="ngayhostfix" data-inputmask="'alias': 'date'"
+                    <input type="text" id="ngayhostfix" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngayhostfix" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
@@ -341,6 +355,10 @@
 
     {{--    Xử lý ngày tháng năm và bấm enter--}}
     <script>
+        $("#ngaytiepnhan").datepicker({
+            dateFormat: 'dd/mm/yy',
+        });
+
         $("#ngayhoanthanhdukien").datepicker({
             dateFormat: 'dd/mm/yy', minDate: new Date(
                 document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -560,19 +578,24 @@
 {{--    Load ngày tháng năm--}}
     <script>
         @if($loaingay->ngaytiepnhan!=null)
-        document.getElementById('ngaytiepnhan').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngaytiepnhan)->format('d/m/Y')}}'
+        document.getElementById('ngaytiepnhan').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngaytiepnhan)->format('d/m/Y')}}';
+        sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
         @endif
         @if($loaingay->ngaygiaoviec!=null)
         document.getElementById('ngaygiaoviec').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+        sessionStorage.setItem('ngaygiaoviec',document.getElementById('ngaygiaoviec').value);
         @endif
         @if($loaingay->ngayhoanthanhdukien!=null)
         document.getElementById('ngayhoanthanhdukien').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngayhoanthanhdukien)->format('d/m/Y')}}'
+        sessionStorage.setItem('ngayhoanthanhdukien',document.getElementById('ngayhoanthanhdukien').value);
         @endif
         @if($loaingay->ngayhoanthanh!=null)
         document.getElementById('ngayhoanthanh').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngayhoanthanh)->format('d/m/Y')}}'
+        sessionStorage.setItem('ngayhoanthanh',document.getElementById('ngayhoanthanh').value);
         @endif
         @if($loaingay->ngayhostfix!=null)
         document.getElementById('ngayhostfix').value ='{{DateTime::createFromFormat('Y-m-d',$loaingay->ngayhostfix)->format('d/m/Y')}}'
+        sessionStorage.setItem('ngayhostfix',document.getElementById('ngayhostfix').value);
         @endif
     </script>
 
@@ -690,22 +713,22 @@
             month = '0' + month;
         }
         document.querySelector('#trang_thai').addEventListener('change', (event) => {
-            var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
-            var ngayhoanthanh = document.getElementById('ngayhoanthanh').value;
-            var ngayhostfix = document.getElementById('ngayhostfix').value;
+            var ngaygiaoviec = sessionStorage.getItem('ngaygiaoviec');
+            var ngayhoanthanh = sessionStorage.getItem('ngayhoanthanh');
+            var ngayhostfix = sessionStorage.getItem('ngayhostfix');
             console.log(ngayhostfix);
             if (document.getElementById('trang_thai').value == 3) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('form_ngayhoanthanh').style.display = 'block';
-                if(ngayhoanthanh==''){
+                if(ngayhoanthanh==null){
                     document.getElementById('ngayhoanthanh').value = day + '/' + month + '/' + year;
                 }else {
-                    document.getElementById('ngayhoanthanh').value =ngayhoanthanh;
+                    document.getElementById('ngayhoanthanh').value = sessionStorage.getItem('ngayhoanthanh') ;
                 }
-                if(ngayhostfix==''){
+                if(ngayhostfix==null){
                     document.getElementById('ngayhostfix').value = '';
                 }else {
-                    document.getElementById('ngayhostfix').value = ngayhostfix;
+                    document.getElementById('ngayhostfix').value = sessionStorage.getItem('ngayhostfix');
                 }
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
@@ -714,17 +737,17 @@
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('form_ngayhoanthanh').style.display = 'block';
                 document.getElementById('form_ngayhostfix').style.display = 'block';
-                if(ngayhostfix==''){
-                    document.getElementById('ngayhostfix').value = day + '/' + month + '/' + year;
-                }else {
-                    document.getElementById('ngayhostfix').value = ngayhostfix;
-                }
-                if(ngayhoanthanh==''){
+                if(ngayhoanthanh==null){
                     document.getElementById('ngayhoanthanh').value = day + '/' + month + '/' + year;
+                }
+                if(ngayhostfix==null){
+                    document.getElementById('ngayhostfix').value = document.getElementById('ngayhoanthanh').value;
+                }else {
+                    document.getElementById('ngayhostfix').value = sessionStorage.getItem('ngayhostfix');
                 }
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
-            } else if(document.getElementById('trang_thai').value > 0 && ngaygiaoviec=='' ){
+            } else if(document.getElementById('trang_thai').value > 0 && ngaygiaoviec==null ){
                 document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';

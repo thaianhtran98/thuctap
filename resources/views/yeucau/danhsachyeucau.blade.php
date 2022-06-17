@@ -2,6 +2,13 @@
 @section('content')
     @include('alert')
     <div class="container-xl m-t-50">
+        <div class="row">
+            <div class="col-12">
+                <a href="/themyeucau"> <button class="btn btn-primary" style="float: right;margin-bottom: 10px; margin-left: auto;margin-right: 8px;" id="show-add-dv" >
+                        Thêm Yêu Cầu
+                    </button></a>
+            </div>
+        </div>
         <table class="table">
             <thead style="background: #0c84ff;color: white">
             <tr style="text-align: center">
@@ -21,7 +28,7 @@
             <tbody>
             @foreach($ycs as $yc)
                 <tr style="text-align: center">
-                    <td style="line-height: normal">
+                    <td style="line-height: normal;text-align: center">
                         <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px"
                                value="{{$yc->id}}">
                     </td>

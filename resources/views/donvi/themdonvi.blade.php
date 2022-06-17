@@ -68,7 +68,7 @@
             </label>
             <button class="btn btn-primary" style="float: right;margin-bottom: 10px;
              margin-left: auto;margin-right: 8px;" id="show-add-dv" onclick="show_add_dv()">
-                Thêm đơn vị
+                Thêm Đơn Vị
             </button>
             <script>
                 function show_add_dv() {

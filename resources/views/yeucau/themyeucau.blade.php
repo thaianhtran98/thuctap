@@ -2,7 +2,7 @@
 @section('head')
     <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/template/admin/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
         var donvi = sessionStorage.getItem('donvi');
@@ -12,12 +12,27 @@
     </script>
 @endsection
 @section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success"
+                 id="thanhcong"
+                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                Thành công
+            </div>
+            <div  class="alert alert-danger"
+                 id="thatbai"
+                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                Thất bại
+            </div>
+        </div>
+    </div>
+
     <div class="container-xl m-t-50">
         @include('yeucau.giaodienthemdv')
         @include('yeucau.giaodienthemlct')
         @include('yeucau.giaodienaddyc')
         @include('yeucau.giaodienedit_yeucaukhac')
-        @include('alert')
+{{--        @include('alert')--}}
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Thêm Yêu Cầu
         </label>
@@ -26,7 +41,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="menu">Đơn Vị</label><font color="red"> (*)</font>
-                        <div class="row">
+                        <div class="row" style="line-height: 25px;" >
                             <div class="col-md-10">
                                 <select class="form-control" name="id_don_vi" id="id_don_vi" >
                                     @foreach($dvs as $dv)
@@ -36,14 +51,14 @@
                             </div>
                             <div class="col-md-1">
                                 <button type="button" onclick="show_add_dv()">
-                                <span style="font-size: 25px;color: #007bff;">
+                                <span style="font-size: 25px;color: dodgerblue;">
                                     <i class="fas fa-plus-square"></i>
                                 </span>
                                 </button>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" onclick="neo_donvi()">
-                                <span id="neo_donvi" style="font-size: 25px;color: black;">
+                                <span id="neo_donvi" style="font-size: 20px;color: black;">
                                     <i class="fas fa-anchor"></i>
                                 </span>
                                 </button>
@@ -53,7 +68,7 @@
 
                     <div class="form-group">
                         <label for="menu">Chương Trình</label><font color="red"> (*)</font>
-                        <div class="row">
+                        <div class="row" style="line-height: 25px;">
                             <div class="col-md-10">
                                 <select class="form-control" name="id_loai_chuong_trinh" id="id_loai_chuong_trinh" >
                                     @foreach($cts as $ct)
@@ -63,14 +78,14 @@
                             </div>
                             <div class="col-md-1">
                                 <button type="button" onclick="show_add_lct()">
-                                <span style="font-size: 25px;color: #007bff;">
+                                <span style="font-size: 25px;color: dodgerblue;">
                                     <i class="fas fa-plus-square"></i>
                                 </span>
                                 </button>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" onclick="neo_ct()">
-                                <span id="neo_ct" style="font-size: 25px;color: black;">
+                                <span id="neo_ct" style="font-size: 20px;color: black;">
                                     <i class="fas fa-anchor"></i>
                                 </span>
                                 </button>
@@ -96,9 +111,6 @@
                         <select class="form-control" name="trang_thai" id="trang_thai">
                             <option value="0">Tiếp Nhận</option>
                             <option value="1">Giao Việc</option>
-                            {{--                            <option value="2">Đang Code</option>--}}
-                            {{--                            <option value="3">Đã Hoàn Thành</option>--}}
-                            {{--                            <option value="5">Đã Hostfix/Upcode</option>--}}
                         </select>
                     </div>
 
@@ -154,19 +166,19 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
-                        <input type="text" name="ngaytiepnhan" id="ngaytiepnhan"
+                        <input type="text" name="ngaytiepnhan" id="ngaytiepnhan" autocomplete="off"
                                class="form-control" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="form-group" id="form_ngaygiaoviec" style="display: none">
                         <label for="menu">Ngày Giao Việc</label>
-                        <input type="text" id="ngaygiaoviec" data-inputmask="'alias': 'date'"
+                        <input type="text" id="ngaygiaoviec" data-inputmask="'alias': 'date'" autocomplete="off"
                                name="ngaygiaoviec" class="form-control" placeholder="dd/mm/yyyy">
                     </div>
 
                     <div class="form-group">
                         <label for="menu">Ngày Hoàn Thành Dự Kiến</label>
-                        <input type="text" id="ngayhoanthanhdukien" data-inputmask="'alias': 'date'"
+                        <input type="text" id="ngayhoanthanhdukien" data-inputmask="'alias': 'date'" autocomplete="off"
                                name="ngayhoanthanhdukien" class="form-control" placeholder="dd/mm/yyyy">
                     </div>
 
@@ -194,7 +206,7 @@
                             </tbody>
                         </table>
                         <button type="button" onclick="show_add_new_yc()">
-                                <span style="font-size: 25px;color: #007bff;">
+                                <span style="font-size: 25px;color: dodgerblue;">
                                     <i class="fas fa-plus-square"></i>
                                 </span>
                         </button>
@@ -330,10 +342,12 @@
             month = '0' + month;
         }
 
-        // ngaytiepnhan = document.getElementById('ngaytiepnhan');
-        document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
+        $("#ngaytiepnhan").datepicker({
+            dateFormat: 'dd/mm/yy',
+        });
 
         $(document).ready(function () {
+            document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
             $("#ngaytiepnhan").inputmask("99/99/9999", {
                 "placeholder": "dd/mm/yyyy",
                 'alias': 'date',
@@ -359,13 +373,23 @@
         });
 
 
-        document.querySelector('#ngayhoanthanhdukien').addEventListener('mouseover', (event) => {
-            let ngaytiepnhan = document.getElementById('ngaytiepnhan');
-            ngaytiepnhan.classList.remove("hasDatepicker");
-            $("#ngaytiepnhan").datepicker({dateFormat: 'dd/mm/yyyy',
-                // minDate: new Date(1999, 10 - 1, 25)
+        $(document).ready(function () {
+            $("#ngaytiepnhan_test").inputmask("99/99/9999", {
+                "placeholder": "dd/mm/yyyy",
+                'alias': 'date',
+                "oncomplete": function () {
+                    let elementrm = document.getElementById('ngayhoanthanhdukien');
+                    elementrm.classList.remove("hasDatepicker");
+
+                    $("#ngayhoanthanhdukien").datepicker({
+                        dateFormat: 'dd/mm/yy', minDate: new Date(
+                            document.getElementById('ngaytiepnhan').value.substr(6, 4),
+                            document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
+                            Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
+                    });
+                }
             });
-        })
+        });
 
         $("#ngaygiaoviec").datepicker({
             dateFormat: 'dd/mm/yy', minDate: new Date(
@@ -373,8 +397,6 @@
                 document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                 Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)))
         });
-
-
 
         document.querySelector('#ngayhoanthanhdukien').addEventListener('mouseover', (event) => {
             let ngaydukien = document.getElementById('ngayhoanthanhdukien');
@@ -388,7 +410,6 @@
                     document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                     Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
             });
-
             $("#ngaygiaoviec").datepicker({
                 dateFormat: 'dd/mm/yy', minDate: new Date(
                     document.getElementById('ngaytiepnhan').value.substr(6, 4),
@@ -420,7 +441,6 @@
                         Number(document.getElementById('ngaytiepnhan').value.substr(0, 2))),
                 });
             }else {
-
                 $("#ngaygiaoviec").datepicker({
                     dateFormat: 'dd/mm/yy', minDate: new Date(
                         document.getElementById('ngaytiepnhan').value.substr(6, 4),

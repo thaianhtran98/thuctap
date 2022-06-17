@@ -810,11 +810,11 @@ body .ui-tooltip {
 .ui-widget-header {
     border: 1px solid #aaaaaa;
     background: rgba(12, 132, 255, 0.87) 50% 50% repeat-x;
-    color: #222222;
+    color: white;
     font-weight: bold;
 }
 .ui-widget-header a {
-    color: #222222;
+    color: #FFFFFFFF;
 }
 
 /* Interaction states
@@ -823,9 +823,9 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
     border: 1px solid #d3d3d3;
-    background: #e6e6e6 url(http://code.jquery.com/ui/1.10.3/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+    background: rgba(12, 132, 255, 0.87);
     font-weight: normal;
-    color: #555555;
+    color: #FFFFFFFF;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -854,9 +854,9 @@ body .ui-tooltip {
 .ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
-    border: 1px solid #aaaaaa;
-    background: #0c84ff ;
-    font-weight: normal;
+    border: 2px solid #ff0202;
+    background: rgb(255, 234, 0);
+    font-weight: bold;
     color: #212121;
 }
 .ui-state-active a,

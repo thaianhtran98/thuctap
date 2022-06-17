@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
                         <input type="text" name="name_tt" class="form-control" id="ten_thuoc_tinh"
-                               placeholder="Nhập tên đơn vị" required>
+                               placeholder="Nhập tên tên yêu cầu" required>
                         <br>
                     </div>
                 </div>
@@ -146,7 +146,6 @@
 
 </script>
 
-
 <script>
     function del_yck(id){
         $.ajax({
@@ -156,10 +155,17 @@
             url: '/yck/destroy',
             success:function (result){
                 if(result.error === true){
-                    alert('Vui lòng xóa lại');
-                    // location.reload();
+                    document.getElementById('thatbai').innerText = 'Xóa thất bại'
+                    document.getElementById('thatbai').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thatbai').style.display = 'none';
+                    }, 1500);
                 }else {
-                    alert('Xóa thành công');
+                    document.getElementById('thanhcong').innerText = 'Xóa thành công'
+                    document.getElementById('thanhcong').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thanhcong').style.display = 'none';
+                    }, 1500);
                     document.querySelector('#yeucauthem'+id).remove();
                 }
             }
@@ -180,7 +186,11 @@
             url: '/themthuoctinhyc',
             success:function (result){
                 if(result.error === false){
-                    alert('Thêm thành công')
+                    document.getElementById('thanhcong').innerText = 'Thêm thành công yêu cầu ' + ten_thuoc_tinh;
+                    document.getElementById('thanhcong').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thanhcong').style.display = 'none';
+                    }, 1500);
                     document.getElementById('table_yc_plus').style.visibility = 'visible';
                     var tbody = document.getElementById("cac_yeu_cau_them");
                     var tr = document.createElement('tr');
@@ -217,7 +227,11 @@
                     document.getElementById('noi_dung_thuoc_tinh').value ='';
                 }
                 else {
-                    alert('Yêu cầu này đã tồn tại')
+                    document.getElementById('thatbai').innerText = 'Yêu cầu đã tồn tại';
+                    document.getElementById('thatbai').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thatbai').style.display = 'none';
+                    }, 1500);
                 }
             }
         });
@@ -243,7 +257,11 @@
                 url: '/addtamyc',
                 success:function (result){
                     if(result.error == false){
-                        alert("Lưu thành công");
+                        document.getElementById('thanhcong').innerText = 'Lưu thành công yêu cầu chính ' + ten_yeu_cau;
+                        document.getElementById('thanhcong').style.display = 'block';
+                        setTimeout(function(){
+                            document.getElementById('thanhcong').style.display = 'none';
+                        }, 1500);
                         document.getElementById('them').style.display ='none';
                         document.getElementById('cap_nhat').style.display ='block';
                         sessionStorage.setItem('yc_id',result.id_yc.id);
@@ -252,14 +270,17 @@
                         document.getElementById('form_add_new_yc').style.background = 'white';
                         document.getElementById('body').style.display = 'block';
                     }else {
-                        alert("Lưu thất bại");
+                        document.getElementById('thatbai').innerText = 'Thêm thất bại';
+                        document.getElementById('thatbai').style.display = 'block';
+                        setTimeout(function(){
+                            document.getElementById('thatbai').style.display = 'none';
+                        }, 1500);
                     }
                 }
             });
         }else {
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
-
     }
 
 

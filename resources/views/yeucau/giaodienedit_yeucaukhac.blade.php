@@ -65,7 +65,11 @@
             url: '/suathuoctinhyc',
             success:function (result){
                 if(result.error === false){
-                    alert('Sửa thành công yêu cầu ' + ten_thuoc_tinh)
+                    document.getElementById('thanhcong').innerText = 'Sửa thành công yêu cầu ' + ten_thuoc_tinh;
+                    document.getElementById('thanhcong').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thanhcong').style.display = 'none';
+                    }, 1500);
                     document.getElementById('table_yc_plus').style.visibility = 'visible';
                     var tbody = document.getElementById("cac_yeu_cau_them");
                     var tr = document.createElement('tr');
@@ -100,7 +104,11 @@
                     page_normal();
                 }
                 else {
-                    alert('Thêm thất bại')
+                    document.getElementById('thatbai').innerText = 'Sửa thất bại';
+                    document.getElementById('thatbai').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thatbai').style.display = 'none';
+                    }, 1500);
                 }
             }
         });

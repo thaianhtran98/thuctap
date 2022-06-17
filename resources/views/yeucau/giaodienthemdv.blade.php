@@ -89,9 +89,17 @@
                     }));
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add-dv').style.display = 'none';
-                    alert('Thêm đơn vị '+ result.lct.ten_don_vi +' thành công')
+                    document.getElementById('thanhcong').innerText = 'Thêm thành công đơn vị'+ result.lct.ten_don_vi ;
+                    document.getElementById('thanhcong').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thanhcong').style.display = 'none';
+                    }, 1500);
                 }else {
-                    alert('Tên đơn vị đã tồn tại hoặc không phù hợp');
+                    document.getElementById('thatbai').innerText = 'Tên đơn vị đã tồn tại hoặc không phù hợp';
+                    document.getElementById('thatbai').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thatbai').style.display = 'none';
+                    }, 1500);
                 }
             }
         })
