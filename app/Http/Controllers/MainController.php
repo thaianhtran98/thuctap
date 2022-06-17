@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\donvi;
+use App\Service\BaocaoService;
 use App\Service\DonviService;
 use Illuminate\Http\Request;
 
@@ -10,15 +11,18 @@ class MainController extends Controller
 {
 
     protected $donviservice;
+    protected $baocaoservice;
 
-    public function __construct(DonviService $donviService)
+    public function __construct(DonviService $donviService,BaocaoService $baocaoService)
     {
         $this->donviservice = $donviService;
+        $this->baocaoservice = $baocaoService;
     }
 
     public function index(){
         return view('home',[
            'title'=>'HOME',
+            'week'=>$this->baocaoservice->getweek(),
         ]);
     }
 

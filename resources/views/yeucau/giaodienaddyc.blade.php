@@ -40,7 +40,7 @@
                         <div  class="form-group">
                             <label>Nội Dung Thuộc Tính</label><font color="red"> (*)</font>
                             <div id="noi_dung_theo_kieu">
-                                <input type="text" name="name_tt" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>
+                                <input type="text" name="noi_dung_thuoc_tinh" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>
                             </div>
                         </div>
                     </div>
@@ -284,7 +284,7 @@
         document.getElementById('form_add_new_yc').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
         document.getElementById('form-add-dv').style.display = 'none';
-        document.getElementById('form-add-dv').style.display = 'none';
+        // document.getElementById('form-add-dv').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
         document.getElementById('form_edit_yck').style.display = 'none';
     }

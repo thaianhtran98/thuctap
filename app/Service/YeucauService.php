@@ -75,7 +75,6 @@ class YeucauService
                     }
 
                 }
-
                 Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
                 return $yc;
             }

@@ -37,6 +37,20 @@ class YeucauController extends Controller
         ]);
     }
 
+    public function store_tam_yc(Request $request)
+    {
+        $result= $this->yeucauservice->create_tam($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+                'id_yc'=>$result
+            ]);
+    }
+
     public function store_yc(Request $request)
     {
         $result= $this->yeucauservice->create($request);
@@ -51,19 +65,6 @@ class YeucauController extends Controller
             ]);
     }
 
-    public function store_tam_yc(Request $request)
-    {
-        $result= $this->yeucauservice->create_tam($request);
-        if ($result===false)
-            return response()->json([
-                'error'=> true,
-            ]);
-        else
-            return response()->json([
-                'error'=> false,
-                'id_yc'=>$result
-            ]);
-    }
 
     public function update_pagethem(yeucauton $yeucauton, Request $request)
     {
