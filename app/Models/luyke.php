@@ -12,9 +12,8 @@ class luyke extends Model
     protected $fillable = [
         'id_don_vi',
         'luy_ke_hang_tuan',
-//        'tuan',
-//        'thang',
-//        'nam',
+        'tuan',
+        'nam',
     ];
 
     public function luyke_donvi(){

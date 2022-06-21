@@ -109,6 +109,7 @@
                         removeRow($iddel[$i].value, '/ct/destroy');
                     }
                 }
+                location.reload();
             }
         }
 

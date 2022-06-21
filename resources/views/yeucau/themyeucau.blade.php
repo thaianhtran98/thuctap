@@ -32,7 +32,7 @@
         @include('yeucau.giaodienthemlct')
         @include('yeucau.giaodienaddyc')
         @include('yeucau.giaodienedit_yeucaukhac')
-{{--        @include('alert')--}}
+        @include('alert')
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Thêm Yêu Cầu
         </label>
@@ -231,6 +231,7 @@
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
         var noi_dung_yc = document.getElementById('noi_dung_yc').value;
         var trang_thai = document.getElementById('trang_thai').value;
+        console.log(trang_thai);
         var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
         var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
         var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
@@ -244,7 +245,7 @@
                 cv_id.push(sessionStorage.getItem('chucvu_{{$nv->id}}'))
             }
         @endforeach
-        if (ten_yeu_cau!='' && noi_dung_yc!=''){
+        if (ten_yeu_cau!=='' && noi_dung_yc!==''){
             if(trang_thai!=0 && nv_id.length !=0){
                 $.ajax({
                     type: 'POST',
@@ -285,6 +286,8 @@
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
     }
+
+
 
     function luu_lai_yeu_cau(){
         var id_don_vi = document.getElementById('id_don_vi').value;
@@ -549,7 +552,6 @@
         });
 
     </script>
-
 
 {{--  Add thành viên vào dự án  --}}
     <script>

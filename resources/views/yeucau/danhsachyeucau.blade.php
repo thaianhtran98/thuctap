@@ -111,6 +111,7 @@
                         removeRow($iddel[$i].value, '/yc/destroy');
                     }
                 }
+                location.reload();
             }
         }
     </script>

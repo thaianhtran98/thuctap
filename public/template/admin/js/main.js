@@ -10,15 +10,6 @@ function removeRow(id,url){
             datatype: 'JSON',
             data: { id },
             url: url,
-            success:function (result){
-                if(result.error === true){
-                    // alert('Vui lòng xóa lại');
-                    location.reload();
-                }else {
-                    // alert('Xóa thành công');
-                    location.reload();
-                }
-            }
         })
 }
 

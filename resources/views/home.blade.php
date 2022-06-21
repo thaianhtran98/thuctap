@@ -4,4 +4,5 @@
     <br>
     <br>
     Home
+    {{$s}}/{{$e}}
 @endsection

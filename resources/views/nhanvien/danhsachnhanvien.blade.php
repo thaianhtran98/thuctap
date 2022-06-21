@@ -180,6 +180,7 @@
                     removeRow($iddel[$i].value, '/nv/destroy');
                 }
             }
+            location.reload();
         }
     }
 </script>

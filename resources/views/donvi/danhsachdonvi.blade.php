@@ -173,6 +173,7 @@
                         removeRow($iddel[$i].value, '/dv/destroy');
                     }
                 }
+                location.reload();
             }
         }
 

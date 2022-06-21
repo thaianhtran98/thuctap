@@ -17,14 +17,8 @@ class BaocaoController extends Controller
     }
 
     public function index(){
-        $year = date('Y' ,time());
-        $month = date('m' ,time());
-        $week = date('W' ,time());
         return view('baocao.baocao',[
             'title'=>'Báo Cáo',
-            'tuan'=>$week,
-            'thang'=>$month,
-            'nam'=>$year,
             'donvi'=>$this->baocaoservice->baocaoyeucau(),
         ]);
     }

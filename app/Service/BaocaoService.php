@@ -9,19 +9,10 @@ use Illuminate\Support\Facades\View;
 
 class BaocaoService
 {
-//
-//    public function gettuantheonamhientai($year){
-//        return luyke::DISTINCT()->select('tuan')->orderBy('tuan')->where('nam',$year)->get();
-//    }
-//    public function getthangtheonamhientai($year){
-//        return luyke::DISTINCT()->select('thang')->orderBy('thang')->where('nam',$year)->get();
-//    }
-//    public function getnam(){
-//        return luyke::DISTINCT()->select('nam')->orderBy('nam')->get();
-//    }
+
 
     public function baocaoyeucau(){
-        return DB::table('baocaoyeucaudonvi')->orderBy('uu_tien')->get();
+        return DB::table('yeucautrongtuan')->orderBy('uu_tien')->get();
     }
 
 }

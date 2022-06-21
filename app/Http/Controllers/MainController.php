@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\donvi;
 use App\Service\DonviService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -17,8 +18,16 @@ class MainController extends Controller
     }
 
     public function index(){
+        $dto = new \DateTime();
+        $dto->setISODate(2022, 25);
+        $ngaydau = $dto->format('Y-m-d');
+        $dto->modify('+6 days');
+        $ngaycuoi = $dto->format('Y-m-d');
+
         return view('home',[
            'title'=>'HOME',
+            's'=>$ngaydau,
+            'e'=>$ngaycuoi
         ]);
     }
 

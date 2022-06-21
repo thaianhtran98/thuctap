@@ -33,8 +33,6 @@
 {{--                    @endforeach--}}
 {{--                </select>--}}
 {{--            </div>--}}
-
-
 {{--        </div>--}}
         <table class="table">
             <thead style="background: #0c84ff;color: white">
@@ -54,9 +52,6 @@
                         <td>{{$key+1}}</td>
                         <td>{{$dv->ten_don_vi}}</td>
                         <td>{{$dv->luy_ke_dau_ky}}</td>
-                        <td>{{$dv->luy_ke_hang_tuan}}</td>
-{{--                        <td>{{$dv->luy_ke_dau_ky}}</td>--}}
-{{--                        <td  style="text-align: center" >{{$dv->luy_ke_dau_ky}}</td>--}}
 {{--                        <td>{{$dv->luy_ke_hang_tuan}}</td>--}}
                     </tr>
                 @endforeach

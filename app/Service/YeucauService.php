@@ -8,6 +8,7 @@ use App\Models\loaingay;
 use App\Models\luyke;
 use App\Models\thuoctinhyeucau;
 use App\Models\yeucauton;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class YeucauService
@@ -80,66 +81,60 @@ class YeucauService
                     }
                 }
 
-//                add vào lũy kế
-                $donvi = $yc->yc_dv->id;
-                $luykedauky = $yc->yc_dv->luy_ke_dau_ky;
-
-                $luyke_donvi = luyke::where('id_don_vi', $donvi)->first();
-
-                if ($luyke_donvi) {
-                    $luyke = luyke::find($luyke_donvi->id);
-                    $luyke->luy_ke_hang_tuan += 1;
-                    $luyke->save();
-                } else {
-                    luyke::create([
-                        'id_don_vi' => (integer)$donvi,
-                        'luy_ke_hang_tuan' => (integer)$luykedauky + 1,
-                    ]);
-                }
-
 
 //                Lấy tuần trong ngày
 //                $thang =$ngaytiepnhan[1];
-//                $nam = $ngaytiepnhan[2];
-//                $ngaytiepnhan =  $ngaytiepnhan[2] . '-' . $ngaytiepnhan[1] . '-' . $ngaytiepnhan[0];
-//                $tuan = date('W',strtotime($ngaytiepnhan));
-////              $donvi = donvi::where('id',$yc->id_don_vi)->first();
-//                $donvi = $yc->yc_dv->id;
-//                $luykedauky = $yc->yc_dv->luy_ke_dau_ky;
-//                $luyke_donvi = luyke::where('id_don_vi',$donvi)
-//                    ->where('tuan',$tuan)
-//                    ->where('thang',$thang)
-//                    ->where('nam',$nam)->first();
-//
-//                if($luyke_donvi){
-//                    $luyke= luyke::find($luyke_donvi->id);
-//                    $luy_ke_hang_tuan = (integer)$luyke->luy_ke_hang_tuan;
-//                    $luyke->luy_ke_hang_tuan +=1;
-//                    $luyke->save();
-//                }else{
-//                    $luyke_donvi = luyke::where('id_don_vi',$donvi)
-//                        ->where('tuan','<>',$tuan)
-//                        ->where('thang',$thang)
-//                        ->where('nam',$nam)
-//                        ->orderByDesc('id')->first();
-//                    if($luyke_donvi){
-//                        $max = luyke::orderBy('luy_ke_hang_tuan')->where('id_don_vi',$donvi)->where('thang',$thang)
-//                            ->where('nam',$nam)->first();
-//                        luyke::create([
-//                            'id_don_vi'=>(integer)$donvi,
-//                            'luy_ke_hang_tuan' =>(integer)$max->luy_ke_hang_tuan + 1,
-//                            'tuan'=>(integer)$tuan,
-//                            'thang'=>(integer)$thang,
-//                            'nam'=>(integer)$nam,
-//                        ]);
-//                    }else{
-//                        luyke::create([
-//                            'id_don_vi'=>(integer)$donvi,
-//                            'luy_ke_hang_tuan' =>(integer)$luykedauky + 1,
-//                            'tuan'=>(integer)$tuan,
-//                            'thang'=>(integer)$thang,
-//                            'nam'=>(integer)$nam,
-//                        ]);
+                $nam = $ngaytiepnhan[2];
+                $ngaytiepnhan =  $ngaytiepnhan[2] . '-' . $ngaytiepnhan[1] . '-' . $ngaytiepnhan[0];
+                $tuan = date('W',strtotime($ngaytiepnhan));
+                $donvi = $yc->yc_dv->id;
+                $luykedauky = $yc->yc_dv->luy_ke_dau_ky;
+
+                $luyke_donvi = luyke::where('id_don_vi',$donvi)->first();
+
+                if($luyke_donvi){
+                    $luyke_donvi = luyke::where('id_don_vi',$donvi)
+                        ->where('nam',$nam)
+                        ->first();
+                    if($luyke_donvi){
+                        $luyke_donvi = luyke::where('id_don_vi',$donvi)
+                            ->where('tuan',$tuan)
+                            ->where('nam',$nam)
+                            ->first();
+                        if($luyke_donvi){
+                            $luyke_donvi->luy_ke_hang_tuan +=1;
+                            $luyke_donvi->save();
+                            $cacluykesau =  luyke::where('id_don_vi',$donvi)->where('tuan','>',$tuan)->where('nam',$nam)->OrWhere('nam','>',$nam)->get();
+                            foreach ($cacluykesau as $luyke){
+                                $luyke->luy_ke_hang_tuan +=1;
+                                $luyke->save();
+                            }
+                        }else{
+                            $max_luyke = luyke::orderByDesc('luy_ke_hang_tuan')->where('id_don_vi',$donvi)->first();
+                            luyke::create([
+                                'id_don_vi'=>(integer)$donvi,
+                                'tuan'=>(integer)$tuan,
+                                'nam'=>(integer)$nam,
+                                'luy_ke_hang_tuan'=>(integer)$max_luyke->luy_ke_hang_tuan+1,
+                            ]);
+                        }
+                    }else{
+                        $max_luyke = luyke::orderByDesc('luy_ke_hang_tuan')->where('id_don_vi',$donvi)->first();
+                        luyke::create([
+                            'id_don_vi'=>(integer)$donvi,
+                            'tuan'=>(integer)$tuan,
+                            'nam'=>(integer)$nam,
+                            'luy_ke_hang_tuan'=>(integer)$max_luyke->luy_ke_hang_tuan+1,
+                        ]);
+                    }
+                }else{
+                    luyke::create([
+                        'id_don_vi'=>(integer)$donvi,
+                        'tuan'=>(integer)$tuan,
+                        'nam'=>(integer)$nam,
+                        'luy_ke_hang_tuan'=>(integer)$luykedauky+1,
+                    ]);
+                }
 
                 Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
                 return $yc;
@@ -209,6 +204,66 @@ class YeucauService
                     ]);
                 }
             }
+
+
+
+//                Lấy tuần trong ngày
+//                $thang =$ngaytiepnhan[1];
+            //                Lấy tuần trong ngày
+//                $thang =$ngaytiepnhan[1];
+            $nam = $ngaytiepnhan[2];
+            $ngaytiepnhan =  $ngaytiepnhan[2] . '-' . $ngaytiepnhan[1] . '-' . $ngaytiepnhan[0];
+            $tuan = date('W',strtotime($ngaytiepnhan));
+            $donvi = $yeucauton->yc_dv->id;
+            $luykedauky = $yeucauton->yc_dv->luy_ke_dau_ky;
+
+            $luyke_donvi = luyke::where('id_don_vi',$donvi)->first();
+
+            if($luyke_donvi){
+                $luyke_donvi = luyke::where('id_don_vi',$donvi)
+                    ->where('nam',$nam)
+                    ->first();
+                if($luyke_donvi){
+                    $luyke_donvi = luyke::where('id_don_vi',$donvi)
+                        ->where('tuan',$tuan)
+                        ->where('nam',$nam)
+                        ->first();
+                    if($luyke_donvi){
+                        $luyke_donvi->luy_ke_hang_tuan +=1;
+                        $luyke_donvi->save();
+                        $cacluykesau =  luyke::where('id_don_vi',$donvi)->where('tuan','>',$tuan)->get();
+                        foreach ($cacluykesau as $luyke){
+                            $luyke->luy_ke_hang_tuan +=1;
+                            $luyke->save();
+                        }
+                    }else{
+                        $max_luyke = luyke::orderByDesc('luy_ke_hang_tuan')->where('id_don_vi',$donvi)->first();
+                        luyke::create([
+                            'id_don_vi'=>(integer)$donvi,
+                            'tuan'=>(integer)$tuan,
+                            'nam'=>(integer)$nam,
+                            'luy_ke_hang_tuan'=>(integer)$max_luyke->luy_ke_hang_tuan+1,
+                        ]);
+                    }
+                }else{
+                    $max_luyke = luyke::orderByDesc('luy_ke_hang_tuan')->where('id_don_vi',$donvi)->first();
+                    luyke::create([
+                        'id_don_vi'=>(integer)$donvi,
+                        'tuan'=>(integer)$tuan,
+                        'nam'=>(integer)$nam,
+                        'luy_ke_hang_tuan'=>(integer)$max_luyke->luy_ke_hang_tuan+1,
+                    ]);
+                }
+            }else{
+                luyke::create([
+                    'id_don_vi'=>(integer)$donvi,
+                    'tuan'=>(integer)$tuan,
+                    'nam'=>(integer)$nam,
+                    'luy_ke_hang_tuan'=>(integer)$luykedauky+1,
+                ]);
+            }
+
+
             Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
         }catch (\Exception $err){
             Session::flash('error', $err->getMessage());
@@ -287,8 +342,6 @@ class YeucauService
             $yeucauton->trang_thai = (integer)$request->input('trang_thai');
             $yeucauton->noi_dung_yc = (string)$request->input('noi_dung_yc');
             $yeucauton->save();
-
-
 
 
             if ($request->input('ngaytiepnhan')!=''){
@@ -382,7 +435,7 @@ class YeucauService
 
     public function getyeucau()
     {
-        return yeucauton::orderBy('id')->get();
+        return yeucauton::orderBy('id_don_vi')->orderBy('id')->get();
     }
 
     public function getchitiet($id_yc){
@@ -403,9 +456,80 @@ class YeucauService
             $yc = yeucauton::where('id', $id)->first();
             $loaingay = loaingay::where('id_yc',$id)->first();
             $tuan = date('W',strtotime($loaingay->ngaytiepnhan));
+            $nam = date('Y',strtotime($loaingay->ngaytiepnhan));
             Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
 
             if ($yc) {
+                $luykefirst = luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan','<',$tuan)->orderByDesc('tuan')->first();
+                $luyke= luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->first();
+                if($luykefirst){
+                    if($luyke->luy_ke_hang_tuan >= $luykefirst->luy_ke_hang_tuan){
+                        $luyke->luy_ke_hang_tuan -=1 ;
+                        $luyke->save();
+                        if($luyke->luy_ke_hang_tuan == $luykefirst->luy_ke_hang_tuan || $luyke->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+                        }
+                        $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->orderByDesc('tuan')->get();
+                        foreach ($cacluykesau as $luykes){
+                            $luykes->luy_ke_hang_tuan -=1;
+                            $luykes->save();
+                            if($luykes->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+                                luyke::where('id',$luykes->id)->delete();
+                            }
+                        }
+                    }else{
+                        luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+                    }
+                }else{
+                    if($luyke->luy_ke_hang_tuan > 0 || $luyke->luy_ke_hang_tuan > $yc->yc_dv->luy_ke_dau_ky ){
+                        $luyke->luy_ke_hang_tuan -=1 ;
+                        $luyke->save();
+                        if($luyke->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky){
+                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+                        }
+                        $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->orderByDesc('tuan')->get();
+                        foreach ($cacluykesau as $luykes){
+                            $luykes->luy_ke_hang_tuan -=1;
+                            $luykes->save();
+                            if($luykes->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+                                luyke::where('id',$luykes->id)->delete();
+                            }
+                        }
+                    }else{
+                        luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+                    }
+                }
+//
+//                else{
+//                    $luykefirst = DB::table('luyke_theonam')->where('id_don_vi',$yc->id_don_vi)->where('nam','<',$nam)->first();
+//                    $luyke= luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->first();
+//                    if($luykefirst){
+//                        if($luyke->luy_ke_hang_tuan > $luykefirst->luy_ke_hang_tuan){
+//                            $luyke->luy_ke_hang_tuan -=1 ;
+//                            $luyke->save();
+//                            $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->get();
+//                            foreach ($cacluykesau as $luykes){
+//                                $luykes->luy_ke_hang_tuan -=1;
+//                                $luykes->save();
+//                            }
+//                        }else{
+//                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                        }
+//                    }else{
+//                        if($luyke->luy_ke_hang_tuan >= 0){
+//                            $luyke->luy_ke_hang_tuan -=1 ;
+//                            $luyke->save();
+//                            $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->get();
+//                            foreach ($cacluykesau as $luykes){
+//                                $luykes->luy_ke_hang_tuan -=1;
+//                                $luykes->save();
+//                            }
+//                        }else{
+//                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                        }
+//                    }
+//                }
+
                 chitietyeucau::where('id_yc',$id)->delete();
                 loaingay::where('id_yc',$id)->delete();
                 thuoctinhyeucau::where('id_yc',$id)->delete();
