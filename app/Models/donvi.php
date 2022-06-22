@@ -16,4 +16,8 @@ class donvi extends Model
         'hoat_dong',
     ];
 
+    public function donvi_kybaocao(){
+        return $this->hasMany(kybaocao::class , 'id_don_vi' , 'id');
+    }
+
 }
