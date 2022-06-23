@@ -107,7 +107,7 @@ class YeucauController extends Controller
     public function list_yc()
     {
         return view('yeucau.danhsachyeucau', [
-            'title' => 'Thêm Yêu Cầu',
+            'title' => 'Yêu Cầu',
             'ycs' => $this->yeucauservice->getyeucau(),
         ]);
     }

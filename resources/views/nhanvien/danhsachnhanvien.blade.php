@@ -36,6 +36,19 @@
         <i class="fas fa-trash"></i>
     </button>
 </div>
+
+<script>
+    $(document).keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            @foreach($nvs as $dv)
+            document.getElementById('ten_dv_{{$dv->id}}').style.display = 'block';
+            document.getElementById('edit_ten_dv_{{$dv->id}}').style.display = 'none';
+            @endforeach
+        }
+    });
+</script>
+
 @section('footer')
 
     <script>
@@ -44,22 +57,27 @@
             // document.getElementById('form-add').style.display = 'absolute';
             document.getElementById('form-add').style.background = 'white';
             document.getElementById('body').style.display = 'block';
+            document.getElementById('header').style.position = '';
         }
 
         function show_add_nhom_nv() {
             document.getElementById('form_add_nhom').style.display = 'block';
             document.getElementById('form_add_nhom').style.background = 'white';
             document.getElementById('body').style.display = 'block';
+            document.getElementById('header').style.position = '';
         }
 
         function page_normal() {
             document.getElementById('body').style.display = 'none';
             document.getElementById('form-add').style.display = 'none';
             document.getElementById('form_add_nhom').style.display = 'none';
+            document.getElementById('header').style.position = 'fixed';
         }
     </script>
 
     <script>
+
+
         $('#ten_nv').keypress(function (event) {
             if (event.keyCode == 13 || event.which == 13) {
                 $('#active').focus();

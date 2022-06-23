@@ -1,5 +1,5 @@
 {{--@include('alert')--}}
-<div id="form_add_new_yc" class="row" style="width: 35%; display: none;background-color: rgba(46,52,57,0.33);margin-left: 15%; position: absolute;z-index: 10003;">
+<div id="form_add_new_yc" class="row" style="width: 35%; display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10003;top: 50px">
     <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
         <label style="font-size: 20px;color: #007bff">
             Thêm Yêu Cầu
@@ -31,6 +31,9 @@
                             </option>
                             <option value="3">
                                 Integer
+                            </option>
+                            <option value="4">
+                                link
                             </option>
                         </select>
                     </div>
@@ -142,6 +145,23 @@
                 }
             });
         }
+        else if (kieu == '4'){
+            var html = '<input type="text" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>';
+            noidung.innerHTML=html;
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }
     });
 
 </script>
@@ -205,7 +225,15 @@
                     tr.setAttribute('id','yeucauthem'+result.id_thuoctinh);
                     td_ten.appendChild(document.createTextNode(ten_thuoc_tinh));
                     td_ten.setAttribute('id','tenthuoctinh'+result.id_thuoctinh);
-                    td_noidung.appendChild(document.createTextNode(noi_dung_thuoc_tinh));
+                    if(kieu_thuoc_tinh==4){
+                        var a = document.createElement('a');
+                        a.setAttribute('href',noi_dung_thuoc_tinh);
+                        a.setAttribute('target','_blank');
+                        a.appendChild(document.createTextNode(noi_dung_thuoc_tinh));
+                        td_noidung.appendChild(a);
+                    }else{
+                        td_noidung.appendChild(document.createTextNode(noi_dung_thuoc_tinh));
+                    }
                    //xóa thuộc tính yêu cầu
                     i_xoa.setAttribute('class','fas fa-trash');
                     i_xoa.setAttribute('onclick','del_yck('+result.id_thuoctinh+')');
@@ -269,6 +297,7 @@
                         document.getElementById('form_add_new_yc').style.display = 'block';
                         document.getElementById('form_add_new_yc').style.background = 'white';
                         document.getElementById('body').style.display = 'block';
+                        document.getElementById('header').style.position = '';
                     }else {
                         document.getElementById('thatbai').innerText = 'Thêm thất bại';
                         document.getElementById('thatbai').style.display = 'block';
@@ -295,6 +324,7 @@
             document.getElementById('form_add_new_yc').style.display = 'block';
             document.getElementById('form_add_new_yc').style.background = 'white';
             document.getElementById('body').style.display = 'block';
+            document.getElementById('header').style.position = '';
         }
     }
 
@@ -308,5 +338,6 @@
         document.getElementById('form-add-dv').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
         document.getElementById('form_edit_yck').style.display = 'none';
+        document.getElementById('header').style.position = 'fixed';
     }
 </script>

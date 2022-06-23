@@ -1,11 +1,14 @@
 @extends('main')
 @section('content')
-    <div class="container-xl m-t-50" style="align-content: center">
+    <div class="m-r-10 m-l-10 m-t-50" style="align-content: center">
         @include('alert')
-        @include('nhanvien.giaodienthemnhomnv')
-        @include('nhanvien.giaodienthemnv')
+        <div class="row" style="display: flex;justify-content: center;align-items: center;">
+            @include('nhanvien.giaodienthemnhomnv')
+            @include('nhanvien.giaodienthemnv')
+        </div>
+{{--        <label style="font-size: 20px;color: #007bff;">Danh Mục Quản Lý > Nhân Viên</label>--}}
         <div class="row" style="display: flex">
-            <div style="display: flex;float: right; margin-left: auto;margin-right: 8px;font-size: 20px;margin-bottom: 50px">
+            <div style="display: flex;float: right; margin-left: auto;margin-right: 8px;font-size: 20px;">
                 <button class="btn btn-primary" id="show-add-dv" onclick="show_add_nv()">
                     Thêm Nhân Viên
                 </button>
@@ -15,14 +18,15 @@
                 </button>
             </div>
         </div>
-        <div class="row">
+        <hr>
+        <div class="row " >
             <div class="col-md-6">
                 <label style="font-size: 20px;color: #007bff;">
                     Danh Sách Nhân Viên
                 </label>
                 @include('nhanvien.danhsachnhanvien')
             </div>
-            <div style=" border-left: thin solid rgba(87,87,87,0.55);"></div>
+            <div style=" border-left: thin solid rgba(87,87,87,0.55);width:4.33333333%;margin-left: 4%  "></div>
             <div class="col-md-5">
                 <label style="font-size: 20px;color: #007bff;">
                     Danh Sách Chức Vụ
@@ -35,6 +39,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 

@@ -1,39 +1,7 @@
 @extends('main')
 @section('content')
     @include('alert')
-    <div class="container-xl m-t-50">
-{{--        <div class="row">--}}
-{{--            <div class="form-group col-md-4">--}}
-{{--                <label>Năm: </label>--}}
-{{--                <select class="form-control">--}}
-{{--                    @foreach($nam as $nam)--}}
-{{--                        <option {{date('Y' ,time()) == $nam->nam ? 'selected':'' }} value="{{$nam->nam}}">--}}
-{{--                            {{ $nam->nam}}--}}
-{{--                        </option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
-{{--            <div class="form-group col-md-4">--}}
-{{--                <label>Tháng: </label>--}}
-{{--                <select class="form-control">--}}
-{{--                    @foreach($thang as $thang)--}}
-{{--                        <option {{date('m' ,time()) == $thang->thang ? 'selected':'' }} value="{{$nam->nam}}">--}}
-{{--                            {{$thang->thang}}--}}
-{{--                        </option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
-{{--            <div class="form-group col-md-4">--}}
-{{--                <label>Tuần: </label>--}}
-{{--                <select class="form-control">--}}
-{{--                    @foreach($tuan as $tuan)--}}
-{{--                        <option>--}}
-{{--                            {{$tuan->tuan}}--}}
-{{--                        </option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+    <div class="m-t-50 m-r-10 m-l-10">
         <table class="table">
             <thead style="background: #0c84ff;color: white">
             <tr style="text-align: center">

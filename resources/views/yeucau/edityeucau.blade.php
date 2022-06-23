@@ -22,21 +22,23 @@
         <div class="col-12">
             <div class="alert alert-success"
                  id="thanhcong"
-                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: 200px;text-align: center">
+                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px;float: right ; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
                 Thành công
             </div>
             <div  class="alert alert-danger"
                   id="thatbai"
-                  style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: 200px;text-align: center">
+                  style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
                 Thất bại
             </div>
         </div>
     </div>
-    <div class="container-xl m-t-50" STYLE="align-items: center">
-        @include('yeucau.giaodienthemdv')
-        @include('yeucau.giaodienthemlct')
-        @include('yeucau.giaodienaddyc')
-        @include('yeucau.giaodienedit_yeucaukhac')
+    <div class=" m-r-10 m-l-10">
+        <div class="row" style="display: flex;justify-content: center;align-items: center;">
+            @include('yeucau.giaodienthemdv')
+            @include('yeucau.giaodienthemlct')
+            @include('yeucau.giaodienaddyc')
+            @include('yeucau.giaodienedit_yeucaukhac')
+        </div>
         @include('alert')
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Cập Nhật Yêu Cầu: {{$yeucau->ten_yeu_cau}}
@@ -194,7 +196,8 @@
 
             </div>
 
-            <div style="  border-left: thin solid rgba(87,87,87,0.55);"></div>
+            <div style="border-left: thin solid rgba(87,87,87,0.55);width:4.33333333%;margin-left: 4%"></div>
+
 
             <div class="col-md-5">
                 <div class="form-group">
@@ -253,9 +256,17 @@
                                     <td>
                                         {{$yck->ten_thuoc_tinh}}
                                     </td>
+                                    @if($yck->kieu_thuoc_tinh==4)
                                     <td>
-                                        {{$yck->noi_dung_thuoc_tinh}}
+                                        <a href="{{$yck->noi_dung_thuoc_tinh}}" target="_blank">
+                                            {{$yck->noi_dung_thuoc_tinh}}
+                                        </a>
                                     </td>
+                                    @else
+                                        <td>
+                                            {{$yck->noi_dung_thuoc_tinh}}
+                                        </td>
+                                    @endif
                                     <td>
                                         <span onclick="del_yck({{$yck->id}})">
                                             <i class="fas fa-trash"></i>
@@ -279,6 +290,11 @@
                 </div>
                 <div>
                     <button onclick="cap_nhat_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right;">Cập Nhật Yêu Cầu</button>
+                </div>
+                <div>
+                    <a href="/danhsachyeucau">
+                        <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Danh Sách Yêu Cầu</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -319,7 +335,7 @@
                     url: '/yc/capnhatyeucau/'+id_yc,
                         success:function (result){
                             if(result.error === false){
-                                window.location = '/danhsachyeucau'
+                                location.reload();
                             }else {
                                 location.reload();
                             }
@@ -335,7 +351,7 @@
                         url: '/yc/capnhatyeucau/'+id_yc,
                         success:function (result){
                             if(result.error === false){
-                                window.location = '/danhsachyeucau'
+                                location.reload();
                             }else {
                                 location.reload();
                             }

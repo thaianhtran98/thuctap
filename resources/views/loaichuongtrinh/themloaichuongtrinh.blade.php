@@ -1,13 +1,14 @@
 @extends('main')
 
 @section('content')
-    <div class="container-xl m-t-50" style="align-content: center">
+    <div class="m-t-50 m-l-10 m-r-10" >
+        @include('alert')
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 @include('loaichuongtrinh.giaodienthem')
             </div>
-            <div style=" border-left: thin solid rgba(87,87,87,0.55);"></div>
-            <div class="col-md-6">
+            <div style="border-left: thin solid rgba(87,87,87,0.55);width:4.33333333%;margin-left: 4%"></div>
+            <div class="col-md-7">
                 <label style="font-size: 20px;color: #007bff;margin-top: 50px">
                     Danh Sách Chương Trình
                 </label>

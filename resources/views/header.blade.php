@@ -1,5 +1,4 @@
 <style>
-
     .my-sub-menu {
         list-style-type: none;
         position: absolute;
@@ -7,7 +6,7 @@
         left: 100%;
         min-width: 100%;
         max-width: 500px;
-        background-color: rgba(12, 99, 228, 0.91);
+        background: #0266c7;
         transition: all 0.4s;
         -webkit-transition: all 0.4s;
         -o-transition: all 0.4s;
@@ -39,7 +38,7 @@
     .my-sub-menu a {
         font-family: Arial, sans-serif, Roboto;
         font-weight: normal;
-        text-align: center;
+        text-align: left;
         font-size: 20px;
         line-height: 1.5;
         color: white;
@@ -75,6 +74,8 @@
     .my-sub-menu > li:hover > a {
         /*color: #ff7400;*/
         text-decoration: underline;
+        /*text-decoration: none;*/
+        background:#004f9d;
     }
 
 
@@ -94,6 +95,7 @@
         text-decoration: none;
         background: #004f9d;
     }
+
     .main-menu > li {
         text-decoration: none;
         /*background: rgba(34, 34, 34, 0.91);*/
@@ -127,7 +129,7 @@
     .button_header{
         border: none;
         color: white;
-        text-align: center;
+        /*text-align: center;*/
         text-decoration: none;
         display: inline-block;
         font-size: 20px;
@@ -139,89 +141,76 @@
         height: 60px;
     }
 
-
-    /*.my_logo {*/
-    /*    display: -webkit-box;*/
-    /*    display: -webkit-flex;*/
-    /*    display: -moz-box;*/
-    /*    display: -ms-flexbox;*/
-    /*    display: flex;*/
-    /*    align-items: center;*/
-    /*    height: 20px;*/
-    /*    !*margin-right: 55px;*!*/
-    /*}*/
-
 </style>
-<div class="wrap-menu-desktop"
-     style="width: 100% ;background: #0266c7;margin-top: -1px;position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
-    <nav class="limiter-menu-desktop">
-        <!-- Logo desktop -->
-{{--        <a href="/" class="my_logo" style="margin-right: 0px">--}}
-{{--            <img height="" src="https://st.quantrimang.com/photos/image/2019/09/19/nha-mang-so-1-viet-nam-640.jpg" alt="IMG-LOGO">--}}
-{{--        </a>--}}
-
-        <!-- menu desktop -->
-        <div style="width: 100%;font-weight: bold;padding: 0px">
-            <ul class="main-menu" style="width: 100%">
-                <li style="display: inline-block;width: 25%;text-align: center">
-                    <a href="/baocao">
+<div class="container">
+    <div class="wrap-menu-desktop"
+         style="width: 100% ;background: #0266c7;margin-top: -1px;position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;top:0;">
+        <nav class="limiter-menu-desktop">
+            <div style="width: 100%;font-weight: bold;padding: 0px;">
+                <ul class="main-menu" style="width: 100%">
+                    <li id="header_danhmuc" style="display: inline;width: 33%;text-align: center">
                         <button class="button_header">
-                            Báo cáo
+                            Danh Mục Quản Lý
                         </button>
-                    </a>
-                </li>
+                        <ul class="my-sub-menu" id="menu_yeucau">
+                            <li id="donvi" style="display: inline;width: 25%;">
+                                <a href="/themdonvi">
+                                    <button class="button_header">
+                                        Đơn Vị
+                                    </button>
+                                </a>
+                            </li>
 
-                <li id="donvi" style="display: inline;width: 25%;text-align: center">
-                    <a href="/themdonvi">
+                            <li style="display: inline;width: 25%;">
+                                <a href="/themnhanvien">
+                                    <button class="button_header">
+                                        Nhân Viên
+                                    </button>
+                                </a>
+                            </li>
+
+                            <li style="display: inline;width: 25%;">
+                                <a href="/themloaichuongtrinh">
+                                    <button class="button_header">
+                                        Loại Chương Trình
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li id="header_baocao" style="display: inline-block;width: 33%;text-align: center">
                         <button class="button_header">
-                            Đơn Vị
+                            Báo Cáo
                         </button>
-                    </a>
-                </li>
+                        <ul class="my-sub-menu" id="menu_yeucau">
+                            <li id="donvi" style="display: inline;width: 25%;">
+                                <a href="/baocao">
+                                    <button class="button_header">
+                                        Báo cáo
+                                    </button>
+                                </a>
+                            </li>
+                            <li id="donvi" style="display: inline;width: 25%;">
+                                <a href="/kybaocao">
+                                    <button class="button_header">
+                                        Kỳ Báo Cáo
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
+                    <li id="header_yeucau" style="display: inline;width: 33%;text-align: center">
+                        <a href="/danhsachyeucau">
+                            <button class="button_header">
+                                Yêu Cầu
+                            </button>
+                        </a>
+                    </li>
+                </ul>
 
-                <li style="display: inline;width: 25%;text-align: center">
-                    <a href="/themnhanvien">
-                        <button class="button_header">
-                            Nhân Viên
-                        </button>
-                    </a>
-                </li>
-
-                <li style="display: inline;width: 25%;text-align: center">
-                    <a href="/themloaichuongtrinh">
-                        <button class="button_header">
-                            Loại Chương Trình
-                        </button>
-                    </a>
-                </li>
-
-
-                <li style="display: inline;width: 25%;text-align: center">
-
-                    <a href="/danhsachyeucau">
-                        <button class="button_header">
-                            Yêu Cầu
-                        </button>
-                    </a>
-{{--                    <ul class="my-sub-menu" id="menu_yeucau">--}}
-{{--                        <li>--}}
-{{--                            <a href="/themyeucau">--}}
-{{--                                Thêm Yêu Cầu--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <a href="/danhsachyeucau">--}}
-{{--                                Danh Sách Yêu Cầu--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-                </li>
-
-            </ul>
-        </div>
-    </nav>
+            </div>
+        </nav>
+    </div>
 </div>
-
-
-

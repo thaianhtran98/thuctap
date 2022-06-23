@@ -64,3 +64,4 @@ Route::delete('/yck/destroy', [\App\Http\Controllers\YeucauController::class, 'd
 
 // báo cáo
 Route::get('/baocao',[\App\Http\Controllers\BaocaoController::class,'index']);
+Route::get('/kybaocao',[\App\Http\Controllers\BaocaoController::class,'kybaocao']);

@@ -1,4 +1,4 @@
-@include('alert')
+
 <div class="row">
     <div class="col-md-12">
         <label style="font-size: 20px;color: #007bff;margin-top: 50px">
@@ -47,11 +47,13 @@
         document.getElementById('form-add').style.display = 'block';
         document.getElementById('form-add').style.background = 'white';
         document.getElementById('body').style.display = 'block';
+        document.getElementById('header').style.position = '';
     }
 
     function page_normal() {
         document.getElementById('body').style.display = 'none';
         document.getElementById('form-add').style.display = 'none';
+        document.getElementById('header').style.position = 'fixed';
     }
 
     $('#ten_ct').keypress(function (event) {

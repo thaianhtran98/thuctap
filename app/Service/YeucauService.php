@@ -596,7 +596,7 @@ class YeucauService
             $tuan_upadte = (integer)date('W',strtotime($loaingay->ngaytiepnhan));
             $nam_upadte = (integer)date('Y',strtotime($loaingay->ngaytiepnhan));
 
-            Session::flash('success', 'Xóa thành công ' . $tuan_upadte);
+            Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
 
             if ($yc) {
                 chitietyeucau::where('id_yc',$id)->delete();

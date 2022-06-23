@@ -20,7 +20,7 @@
                      {{$key+1}}
                  </td>
                  <td ondblclick="showeditten{{$dv->id}}()">
-                     <a id="ten_dv_{{$dv->id}}" style="display: block">{{$dv->ten_don_vi}}</a>
+                     <a id="ten_dv_{{$dv->id}}" style="display: block;text-align: left">{{$dv->ten_don_vi}}</a>
                      <input id="edit_ten_dv_{{$dv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"
                             value="{{$dv->ten_don_vi}}">
                  </td>

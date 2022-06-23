@@ -35,6 +35,17 @@
         @endforeach
         </tbody>
     </table>
+    <script>
+        $(document).keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                @foreach($cvs as $cv)
+                document.getElementById('ten_cv_{{$cv->id}}').style.display = 'block';
+                document.getElementById('edit_ten_cv_{{$cv->id}}').style.display = 'none';
+                @endforeach
+            }
+        });
+    </script>
 </div>
 
 <script>
