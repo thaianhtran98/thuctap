@@ -6,7 +6,8 @@
         <div class="row">
             @include('alert')
             <div class="col-12">
-                <a href="/themyeucau"> <button class="btn btn-primary" style="float: right;margin-bottom: 10px; margin-left: auto;margin-right: 8px;" id="show-add-dv" >
+                <a href="/themyeucau">
+                    <button class="btn btn-primary" style="float: right;margin-bottom: 10px; margin-left: auto;margin-right: 8px;" id="show-add-dv" >
                         Thêm Yêu Cầu
                     </button></a>
             </div>
@@ -21,7 +22,7 @@
                                style="height: 20px;width: 20px; margin: auto">
 
                     </th>
-                    <th>Đơn Vị Yêu Cầu</th>
+                    <th style="line-height: normal;">Đơn Vị Yêu Cầu</th>
                     <th>Loại Chương Trình</th>
                     <th>Tên Yêu Cầu</th>
                     <th>Nội Dung yêu cầu</th>
@@ -39,7 +40,7 @@
                         <td style="line-height: normal;width: 400px">
                             {{$yc->yc_dv->ten_don_vi}}
                         </td>
-                        <td  style="line-height: normal;width: 200px"style="line-height: normal">
+                        <td  style="line-height: normal;width: 20%">
                             {{$yc->yc_ct->ten_chuong_trinh}}
                         </td>
 

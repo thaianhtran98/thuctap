@@ -1,7 +1,7 @@
 
 <div>
-     <table id="table_dv" class="table table-bordered">
-         <thead style="background: #0c84ff;color: white;">
+     <table id="table_dv" class="table table-bordered" style="width:100%">
+         <thead style="background: #0c84ff;color: white;width: 100%">
          <tr style="text-align: center">
 {{--             <th style="line-height: normal">--}}
 {{--                 <input type="checkbox" name="del_all" onclick="delall()" style="height: 20px;width: 20px; float: left">--}}

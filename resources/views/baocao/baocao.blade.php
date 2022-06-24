@@ -1,7 +1,6 @@
 @extends('main')
 @section('content')
     @include('alert')
-
     <div class="m-t-50 m-r-10 m-l-10">
         <table id="table_bc" class="table table-bordered">
             <thead style="background: #0c84ff;color: white">
@@ -71,7 +70,7 @@
                 },
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
-                "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
+                "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "500px",
                 "scrollCollapse": true,
             } );

@@ -1,6 +1,6 @@
 
 <div style="border: 2px">
-    <table id="table_nv" class="table table-bordered">
+    <table id="table_nv" class="table table-bordered" style="width:100%">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
 {{--            <th style="line-height: normal">--}}
