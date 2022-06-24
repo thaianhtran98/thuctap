@@ -1,16 +1,5 @@
 @extends('main')
 
-@section('head')
-{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">--}}
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--}}
-    <script src="/template/js/popper.min.js"></script>
-    <script src="/template/js/bootstrap.min.js"></script>
-
-    <script src="/template/js/jquery.dataTables.min.js"></script>
-    <script src="/template/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="/template/css/boostrap4.datatable.css">
-
-@endsection
 
 @section('content')
     <div class="m-t-50 m-r-10 m-l-10">
@@ -24,33 +13,7 @@
         </div>
         <hr>
 {{--        <div class="row" style="width: 100%">--}}
-            <script>
-                $(document).ready(function() {
-                    $('#table_yc').DataTable( {
-                        "language": {
-                            "sProcessing":   "Đang xử lý...",
-                            "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
-                            "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-                            "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
-                            "sInfoFiltered": "(được lọc từ _MAX_ mục)",
-                            "sInfoPostFix":  "",
-                            "sSearch":       "Tìm:",
-                            "sUrl":          "",
-                            "sLengthMenu":   "Xem _MENU_ Mục",
-                            "oPaginate": {
-                                "sFirst":    "Đầu",
-                                "sPrevious": "<",
-                                "sNext":     ">",
-                                "sLast":     "Cuối"
-                            }
-                        },
-                        "processing": true, // tiền xử lý trước
-                        "aLengthMenu": [[5, 10, 20, 50], [5, 10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
-                        "order": [[ 1, 'desc' ]] //sắp xếp giảm dần theo cột thứ 1
-                    } );
-                } );
-            </script>
-            <table id="table_yc" class="table table-striped table-bordered" style="width:100%">
+            <table id="table_yc" class="table  table-bordered" style="width:100%">
                 <thead style="background: #0c84ff;color: white">
                 <tr style="text-align: center">
                     <th style="line-height: normal">
@@ -145,9 +108,7 @@
 
 @endsection
 @section('footer')
-
     <script>
-
         function delall() {
             var $iddel = document.getElementsByName('del_id[]');
             var $delall = document.getElementsByName('del_all');
@@ -189,4 +150,32 @@
             }
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#table_yc').DataTable( {
+                pagingType: 'full_numbers',
+                "language": {
+                    "sProcessing":   "Đang xử lý...",
+                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "Tìm:",
+                    "sUrl":          "",
+                    "sLengthMenu":   "Xem _MENU_ Mục",
+                    "oPaginate": {
+                        "sFirst":    "Đầu",
+                        "sPrevious": "<",
+                        "sNext":     ">",
+                        "sLast":     "Cuối"
+                    }
+                },
+                "processing": true, // tiền xử lý trước
+                "aLengthMenu": [[ 10, 20, 50], [ 10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
+                "order": [[ 1, 'desc' ]] //sắp xếp giảm dần theo cột thứ 1
+            } );
+        } );
+    </script>
+
 @endsection

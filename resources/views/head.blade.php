@@ -36,6 +36,12 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdn.ckeditor.com/4.16.2/basic/ckeditor.js"></script>
 
+    <script src="/template/js/popper.min.js"></script>
+    <script src="/template/js/bootstrap.min.js"></script>
+
+    <script src="/template/js/jquery.dataTables.min.js"></script>
+    <script src="/template/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="/template/css/boostrap4.datatable.css">
 
     <!--===============================================================================================-->
 </head>

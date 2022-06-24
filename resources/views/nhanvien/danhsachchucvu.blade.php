@@ -1,5 +1,6 @@
+
 <div style="border: 2px">
-    <table class="table" style="text-align: center">
+    <table id="table_cv" class="table table-bordered">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
             <th style="line-height: normal">
@@ -48,8 +49,38 @@
     </script>
 </div>
 
-<script>
 
+<script>
+    $(document).ready(function() {
+        $('#table_cv').DataTable( {
+            pagingType: 'full_numbers',
+            "language": {
+                "sProcessing":   "Đang xử lý...",
+                "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Tìm:",
+                "sUrl":          "",
+                "sLengthMenu":   "Xem _MENU_ Mục",
+                "oPaginate": {
+                    "sFirst":    "Đầu",
+                    "sPrevious": "<",
+                    "sNext":     ">",
+                    "sLast":     "Cuối"
+                }
+            },
+            "processing": true, // tiền xử lý trước
+            "aLengthMenu": [[10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
+            "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
+            "scrollY": "500px",
+            "scrollCollapse": true,
+        } );
+    } );
+</script>
+
+<script>
     @foreach($cvs as $cv)
         function showedit_cv{{$cv->id}}() {
             document.getElementById('edit_ten_cv_{{$cv->id}}').style.display = 'block';
