@@ -10,28 +10,31 @@
         sessionStorage.clear();
         sessionStorage.setItem('ok',0);
     </script>
+
 @endsection
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="alert alert-success"
                  id="thanhcong"
-                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                 style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
                 Thành công
             </div>
             <div  class="alert alert-danger"
                  id="thatbai"
-                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                 style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
                 Thất bại
             </div>
         </div>
     </div>
 
-    <div class="container-xl m-t-50">
-        @include('yeucau.giaodienthemdv')
-        @include('yeucau.giaodienthemlct')
-        @include('yeucau.giaodienaddyc')
-        @include('yeucau.giaodienedit_yeucaukhac')
+    <div class=" m-r-10 m-l-10">
+        <div class="row" style="display: flex;justify-content: center;align-items: center;">
+            @include('yeucau.giaodienthemdv')
+            @include('yeucau.giaodienthemlct')
+            @include('yeucau.giaodienaddyc')
+            @include('yeucau.giaodienedit_yeucaukhac')
+        </div>
         @include('alert')
         <label style="font-size: 20px;color: #007bff;margin-bottom: 10px">
             Thêm Yêu Cầu
@@ -97,13 +100,12 @@
                     <div class="form-group">
                         <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
                         <input type="text" name="ten_yeu_cau" class="form-control" id="ten_yeu_cau"
-                               placeholder="Enter tên yêu cầu" required>
+                               placeholder="Nhập tên yêu cầu" required>
                     </div>
 
                     <div class="form-group">
                         <label for="menu">Nội Dung Yêu Cầu</label><font color="red"> (*)</font>
-                        <textarea class="form-control" id="noi_dung_yc" name="noi_dung_yc"
-                                  placeholder="Nhập nội dung yêu cầu" required></textarea>
+                        <textarea class="form-control" id="noi_dung_yc" name="noi_dung_yc" placeholder="Nhập nội dung" ></textarea>
                     </div>
 
                     <div class="form-group">
@@ -161,7 +163,7 @@
 
                 </div>
 
-                <div style="  border-left: thin solid rgba(87,87,87,0.55);"></div>
+                <div style="border-left: thin solid rgba(87,87,87,0.55);width:4.33333333%;margin-left: 4%"></div>
 
                 <div class="col-md-5">
                     <div class="form-group">
@@ -219,6 +221,11 @@
                     <div>
                         <button onclick="luu_lai_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right ; display: none">Thêm Yêu Cầu</button>
                     </div>
+                    <div>
+                        <a href="/danhsachyeucau">
+                            <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Danh Sách Yêu Cầu</button>
+                        </a>
+                    </div>
                 </div>
             </div>
             @csrf
@@ -226,6 +233,7 @@
 
 <script>
     function them_yeu_cau(){
+        console.log($('#noi_dung_yc').val());
         var id_don_vi = document.getElementById('id_don_vi').value;
         var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;

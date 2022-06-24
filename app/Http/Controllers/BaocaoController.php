@@ -23,4 +23,10 @@ class BaocaoController extends Controller
         ]);
     }
 
+    public function kybaocao(){
+        return view('baocao.kybaocao',[
+            'title'=>'Kỳ Báo Cáo',
+        ]);
+    }
+
 }

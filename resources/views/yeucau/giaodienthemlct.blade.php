@@ -1,6 +1,6 @@
 {{--@include('alert')--}}
 <div id="form-add" class="row"
-     style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;left: 43%">
+     style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;top: 50px">
     <div class="col-md-12 m-b--12 m-t-12" style="text-align: center">
         <label style="font-size: 20px;color: #007bff">
             Thêm Chương Trình
@@ -30,6 +30,8 @@
         document.getElementById('form-add').style.display = 'block';
         document.getElementById('form-add').style.background = 'white';
         document.getElementById('body').style.display = 'block';
+        document.getElementById('header').style.position = '';
+
     }
 
     $('#ten_ct').keypress(function (event) {
@@ -60,9 +62,17 @@
                     }));
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add').style.display = 'none';
-                    alert('Thêm chương trình '+ result.lct.ten_chuong_trinh +' thành công')
+                    document.getElementById('thanhcong').innerText = 'Thêm thành công chương trình'+ result.lct.ten_chuong_trinh ;
+                    document.getElementById('thanhcong').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thanhcong').style.display = 'none';
+                    }, 1500);
                 }else {
-                    alert('Tên chương trình đã tồn tại hoặc không phù hợp')
+                    document.getElementById('thatbai').innerText = 'Tên chương trình đã tồn tại hoặc không phù hợp';
+                    document.getElementById('thatbai').style.display = 'block';
+                    setTimeout(function(){
+                        document.getElementById('thatbai').style.display = 'none';
+                    }, 1500);
                 }
             }
         })

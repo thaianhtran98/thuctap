@@ -1,6 +1,6 @@
 {{-- <div class="container-xl m-t-50" style="align-content: center">--}}
     <div id="form_add_nhom" class="row"
-         style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;left: 32%">
+         style="display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;top:50px">
         <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
             <label style="font-size: 20px;color: #007bff">
                 Thêm Chức Vụ Nhân Viên

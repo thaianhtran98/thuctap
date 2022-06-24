@@ -1,4 +1,4 @@
-<div id="form_edit_yck" class="row" style="width: 35%; display: none;background-color: rgba(46,52,57,0.33);margin-left: 15%; position: absolute;z-index: 10003;">
+<div id="form_edit_yck" class="row" style="width: 35%; display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10003;top: 50px">
     <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
         <label style="font-size: 20px;color: #007bff">
             Sửa Yêu Cầu

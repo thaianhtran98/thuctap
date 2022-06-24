@@ -1,0 +1,70 @@
+
+//                $luykefirst = luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan','<',$tuan)->orderByDesc('tuan')->first();
+//                $luyke= luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->first();
+//                if($luykefirst){
+//                    if($luyke->luy_ke_hang_tuan >= $luykefirst->luy_ke_hang_tuan){
+//                        $luyke->luy_ke_hang_tuan -=1 ;
+//                        $luyke->save();
+//                        if($luyke->luy_ke_hang_tuan == $luykefirst->luy_ke_hang_tuan || $luyke->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+//                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                        }
+//                        $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->orderByDesc('tuan')->get();
+//                        foreach ($cacluykesau as $luykes){
+//                            $luykes->luy_ke_hang_tuan -=1;
+//                            $luykes->save();
+//                            if($luykes->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+//                                luyke::where('id',$luykes->id)->delete();
+//                            }
+//                        }
+//                    }else{
+//                        luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                    }
+//                }else{
+//                    if($luyke->luy_ke_hang_tuan > 0 || $luyke->luy_ke_hang_tuan > $yc->yc_dv->luy_ke_dau_ky ){
+//                        $luyke->luy_ke_hang_tuan -=1 ;
+//                        $luyke->save();
+//                        if($luyke->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky){
+//                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                        }
+//                        $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->orderByDesc('tuan')->get();
+//                        foreach ($cacluykesau as $luykes){
+//                            $luykes->luy_ke_hang_tuan -=1;
+//                            $luykes->save();
+//                            if($luykes->luy_ke_hang_tuan == $yc->yc_dv->luy_ke_dau_ky ){
+//                                luyke::where('id',$luykes->id)->delete();
+//                            }
+//                        }
+//                    }else{
+//                        luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+//                    }
+//                }
+////
+////                else{
+////                    $luykefirst = DB::table('luyke_theonam')->where('id_don_vi',$yc->id_don_vi)->where('nam','<',$nam)->first();
+////                    $luyke= luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->first();
+////                    if($luykefirst){
+////                        if($luyke->luy_ke_hang_tuan > $luykefirst->luy_ke_hang_tuan){
+////                            $luyke->luy_ke_hang_tuan -=1 ;
+////                            $luyke->save();
+////                            $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->get();
+////                            foreach ($cacluykesau as $luykes){
+////                                $luykes->luy_ke_hang_tuan -=1;
+////                                $luykes->save();
+////                            }
+////                        }else{
+////                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+////                        }
+////                    }else{
+////                        if($luyke->luy_ke_hang_tuan >= 0){
+////                            $luyke->luy_ke_hang_tuan -=1 ;
+////                            $luyke->save();
+////                            $cacluykesau =  luyke::where('id_don_vi',$yc->id_don_vi)->where('tuan','>',$tuan)->where('nam',$nam)->get();
+////                            foreach ($cacluykesau as $luykes){
+////                                $luykes->luy_ke_hang_tuan -=1;
+////                                $luykes->save();
+////                            }
+////                        }else{
+////                            luyke::where('id_don_vi',$yc->id_don_vi)->where('nam',$nam)->where('tuan',$tuan)->delete();
+////                        }
+////                    }
+////                }

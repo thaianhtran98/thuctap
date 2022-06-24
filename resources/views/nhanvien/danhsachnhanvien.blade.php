@@ -1,5 +1,6 @@
+
 <div style="border: 2px">
-    <table class="table"  style="text-align: center">
+    <table id="table_nv" class="table table-bordered" style="width:100%">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
 {{--            <th style="line-height: normal">--}}
@@ -36,7 +37,49 @@
         <i class="fas fa-trash"></i>
     </button>
 </div>
+
+<script>
+    $(document).keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            @foreach($nvs as $dv)
+            document.getElementById('ten_dv_{{$dv->id}}').style.display = 'block';
+            document.getElementById('edit_ten_dv_{{$dv->id}}').style.display = 'none';
+            @endforeach
+        }
+    });
+</script>
+
 @section('footer')
+    <script>
+        $(document).ready(function() {
+            $('#table_nv').DataTable( {
+                pagingType: 'full_numbers',
+                "language": {
+                    "sProcessing":   "Đang xử lý...",
+                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "Tìm:",
+                    "sUrl":          "",
+                    "sLengthMenu":   "Xem _MENU_ Mục",
+                    "oPaginate": {
+                        "sFirst":    "Đầu",
+                        "sPrevious": "<",
+                        "sNext":     ">",
+                        "sLast":     "Cuối"
+                    }
+                },
+                "processing": true, // tiền xử lý trước
+                "aLengthMenu": [[10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
+                "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
+                "scrollY": "500px",
+                "scrollCollapse": true,
+            } );
+        } );
+    </script>
 
     <script>
         function show_add_nv() {
@@ -44,22 +87,27 @@
             // document.getElementById('form-add').style.display = 'absolute';
             document.getElementById('form-add').style.background = 'white';
             document.getElementById('body').style.display = 'block';
+            document.getElementById('header').style.position = '';
         }
 
         function show_add_nhom_nv() {
             document.getElementById('form_add_nhom').style.display = 'block';
             document.getElementById('form_add_nhom').style.background = 'white';
             document.getElementById('body').style.display = 'block';
+            document.getElementById('header').style.position = '';
         }
 
         function page_normal() {
             document.getElementById('body').style.display = 'none';
             document.getElementById('form-add').style.display = 'none';
             document.getElementById('form_add_nhom').style.display = 'none';
+            document.getElementById('header').style.position = 'fixed';
         }
     </script>
 
     <script>
+
+
         $('#ten_nv').keypress(function (event) {
             if (event.keyCode == 13 || event.which == 13) {
                 $('#active').focus();

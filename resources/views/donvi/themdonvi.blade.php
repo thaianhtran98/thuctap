@@ -1,67 +1,70 @@
 @extends('main')
 
 @section('content')
-    <div class="container m-t-50">
+    <div class="m-t-50 m-r-10 m-l-10" >
         @include('alert')
-        <div id="form-add" class="row"
-             style="display: none;background-color: rgba(46,52,57,0.33);left: 25%; position: absolute;z-index: 10000">
-            <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
-                <label style="font-size: 20px;color: #007bff">
-                    Thêm Đơn Vị
-                </label>
-            </div>
-            <div class="col-md-12">
-                <form action="" method="POST">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="menu">Tên Đơn Vị</label><font color="red"> (*)</font>
-                                    <input type="text" name="name" class="form-control" id="ten_dv"
-                                           placeholder="Nhập tên đơn vị" required>
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="menu">Lũy Kế Đầu Kỳ</label>
-                                    <input type="number" name="luyke" class="form-control" id="luyke_dv"
-                                           placeholder="Nhập lũy kế đầu kỳ">
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Ưu tiên</label><font color="red"> (*)</font>
-                                        <input type="number" class="form-control" name="uutien" id="uutien_dv"
-                                               placeholder="Nhập độ ưu tiên">
+        <div class="row" style="display: flex;justify-content: center;align-items: center;">
+            <div id="form-add" class="row"
+                 style=" display: none;background-color: rgba(46,52,57,0.33); position: absolute;z-index: 10000;top:50px">
+                <div class="col-sm-12 m-b--12 m-t-12" style="text-align: center">
+                    <label style="font-size: 20px;color: #007bff">
+                        Thêm Đơn Vị
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <form action="" method="POST">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="menu">Tên Đơn Vị</label><font color="red"> (*)</font>
+                                        <input type="text" name="name" class="form-control" id="ten_dv"
+                                               placeholder="Nhập tên đơn vị" required>
+                                        <br>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Kích hoạt</label> <br>
-                                        <div style="display: flex; margin-top: 10px">
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" value="1" type="radio" name="active"
-                                                       checked id="active">
-                                                <label for="active" class="custom-control-label">Có</label>
-                                            </div>
-                                            <div class="custom-control custom-radio m-l-10">
-                                                <input class="custom-control-input" value="0" type="radio" name="active"
-                                                       id="no_active">
-                                                <label for="no_active" class="custom-control-label">Không</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="menu">Lũy Kế Đầu Kỳ</label>
+                                        <input type="number" name="luyke" class="form-control" id="luyke_dv"
+                                               placeholder="Nhập lũy kế đầu kỳ">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Ưu tiên</label><font color="red"> (*)</font>
+                                            <input type="number" class="form-control" name="uutien" id="uutien_dv"
+                                                   placeholder="Nhập độ ưu tiên">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Kích hoạt</label> <br>
+                                            <div style="display: flex; margin-top: 10px">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" value="1" type="radio" name="active"
+                                                           checked id="active">
+                                                    <label for="active" class="custom-control-label">Có</label>
+                                                </div>
+                                                <div class="custom-control custom-radio m-l-10">
+                                                    <input class="custom-control-input" value="0" type="radio" name="active"
+                                                           id="no_active">
+                                                    <label for="no_active" class="custom-control-label">Không</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button style="width: 100%;" type="submit" class="btn btn-primary">Thêm Đơn Vị</button>
+                                    <button style="width: 100%;" type="submit" class="btn btn-primary">Thêm Đơn Vị</button>
 
+                                </div>
                             </div>
+                            @csrf
                         </div>
-                        @csrf
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-        <hr>
+
+{{--        <hr>--}}
         <div class="row" style="display: flex;margin-bottom: 10px">
             <label style="font-size: 20px;color: #007bff">
                 Danh Sách Đơn Vị
@@ -76,11 +79,16 @@
                     // document.getElementById('form-add').style.display = 'absolute';
                     document.getElementById('form-add').style.background = 'white';
                     document.getElementById('body').style.display = 'block';
+                    document.getElementById('header').style.position = '';
+                    // document.getElementById('header').style.zIndex = '';
                 }
 
                 function page_normal() {
                     document.getElementById('body').style.display = 'none';
                     document.getElementById('form-add').style.display = 'none';
+                    document.getElementById('header').style.position = 'fixed';
+                    // document.getElementById('header').style.zIndex = '';
+
                 }
             </script>
             <div class="col-md-12">
