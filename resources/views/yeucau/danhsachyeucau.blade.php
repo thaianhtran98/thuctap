@@ -3,33 +3,43 @@
 
 @section('content')
     <div class="m-t-50 m-r-10 m-l-10">
-        <div class="row">
-            @include('alert')
-            <div class="col-4">
-                <label>Từ ngày</label>
-                <input type="date" class="form-control" >
-            </div>
-            <div class="col-4">
-                <label>Từ ngày</label>
-                <input type="date" class="form-control" >
-            </div>
-            <div class="col-4">
-                <a href="/themyeucau">
-                    <button class="btn btn-primary" style="float: right;margin-bottom: 10px; margin-left: auto;margin-right: 8px;" id="show-add-dv" >
-                        Thêm Yêu Cầu
-                    </button>
-                </a>
-            </div>
-        </div>
+{{--        <div class="row">--}}
+{{--            @include('alert')--}}
+{{--            <div class="col-3"></div>--}}
+{{--            <div class="col-3">--}}
+{{--                <label>Từ ngày</label>--}}
+{{--                <input type="date" class="form-control" >--}}
+{{--            </div>--}}
+{{--            <div class="col-3" style="display: flex">--}}
+{{--                <div style="width: 100%">--}}
+{{--                    <label>Từ ngày</label>--}}
+{{--                    <input type="date" class="form-control" >--}}
+{{--                </div>--}}
+{{--                <button style="width: 30px;height: 30px;margin-top: 30px;margin-left: 10px">--}}
+{{--                  <span>--}}
+{{--                    <i class="fas fa-search"></i>--}}
+{{--                  </span>--}}
+{{--                </button>--}}
+{{--            </div>--}}
+
+{{--            <div class="col-3" >--}}
+{{--                <a href="/themyeucau">--}}
+{{--                    <button class="btn btn-primary" style="float: right; margin-left: auto;margin-right: 8px;margin-top: 28px;" id="show-add-dv" >--}}
+{{--                        Thêm Yêu Cầu--}}
+{{--                    </button>--}}
+{{--                </a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <hr>
 
-        <style>
-
-        </style>
-
         <div style="height: 500px;">
-            <table id="table_yc" class="table table-striped table-bordered nowrap" style="width:100%;">
+            <a href="/themyeucau">
+                <button class="btn btn-primary" style="float: left; margin-left: 8px;margin-right: auto;margin-bottom: -50px" id="show-add-dv" >
+                    Thêm Yêu Cầu
+                </button>
+            </a>
+            <table id="table_yc" class="table table-bordered nowrap" style="width:100%;">
                 <thead style="background: #0c84ff;color: white">
                 <tr style="text-align: center">
                     <th style="line-height: normal">
@@ -173,7 +183,6 @@
             var table = $('#table_yc').DataTable( {
                 pagingType: 'full_numbers',
                 dom: 'Plfrtip',
-
                 "language": {
                     "sProcessing":   "Đang xử lý...",
                     "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
@@ -196,6 +205,9 @@
                         title: {
                             _:''
                         },
+                        collapseMessage: 'Ẩn bảng thống kê',
+                        showMessage: 'Hiển thị bảng thống kê',
+                        clearMessage: 'Xóa hết'
                         // clearer:'Tìm lại'
                     }
                 },
@@ -209,60 +221,17 @@
                         },
                         targets: [ 1, 2, 5, 6],
                     },
-
-                    {
-                        searchPanes: {
-                            options: [
-                                {
-                                    label: 'Under 20',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] < 20;
-                                    }
-                                },
-                                {
-                                    label: '20 to 30',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] <= 30 && rowData[5] >=20;
-                                    }
-                                },
-                                {
-                                    label: '30 to 40',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] <= 40 && rowData[5] >=30;
-                                    }
-                                },
-                                {
-                                    label: '40 to 50',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] <= 50 && rowData[5] >=40;
-                                    }
-                                },
-                                {
-                                    label: '50 to 60',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] <= 60 && rowData[5] >=50;
-                                    }
-                                },
-                                {
-                                    label: 'Over 60',
-                                    value: function(rowData, rowIdx) {
-                                        return rowData[5] > 60;
-                                    }
-                                }
-                            ]
-                        },
-                        targets: [5]
-                    },
-
                 ],
+
                 searchPanes: {
-                    clear: false,
+                    // clear: false,
                     cascadePanes: true,
-                    viewTotal: false,
+                    // viewTotal: false,
                     orderable: false,
                     viewCount: false,
-                    collapse:false,
+                    // collapse:false,
                     // title:false
+                    initCollapsed: true,
                     dtOpts: {
                         select: {
                             style: 'multi'
@@ -272,18 +241,12 @@
                 "scrollY": "500px",
                 "scrollCollapse": true,
             } );
-            // table.searchPanes.container().prependTo(table.table().container());
-            // table.searchPanes.resizePanes();
-            table.on('select.table', () => {
-                table.searchPanes.rebuildPane(0, true);
-            });
-
-            table.on('deselect.table', () => {
-                table.searchPanes.rebuildPane(0, true);
-            });
+            table.searchPanes.container().prependTo(table.table().container());
+            table.searchPanes.resizePanes();
         } );
-
-
     </script>
 
+    <script>
+
+    </script>
 @endsection

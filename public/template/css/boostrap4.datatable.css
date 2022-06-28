@@ -267,7 +267,7 @@ table.dataTable > tbody > tr {
     background-color: transparent;
 }
 table.dataTable > tbody > tr.selected > * {
-    box-shadow: inset 0 0 0 9999px rgba(2, 117, 216, 0.9);
+    box-shadow: inset 0 0 0 9999px #0c84ff;
     color: white;
 }
 table.dataTable.table-striped > tbody > tr.odd > * {
@@ -294,6 +294,7 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 div.dataTables_wrapper div.dataTables_filter {
     text-align: right;
+    margin-top: -33px;
 }
 div.dataTables_wrapper div.dataTables_filter label {
     font-weight: normal;

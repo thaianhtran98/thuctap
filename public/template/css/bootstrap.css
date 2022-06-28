@@ -2770,8 +2770,8 @@ fieldset:disabled a.btn {
 }
 
 .btn-light:hover {
-    color: #212529;
-    background-color: #e2e6ea;
+    color: #ffffff;
+    background-color: #0c84ff;
     border-color: #dae0e5;
 }
 
