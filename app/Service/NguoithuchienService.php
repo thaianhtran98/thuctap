@@ -14,7 +14,7 @@ class NguoithuchienService
                 'ten_nguoi_thuc_hien' => (string)$request->input('ten_nv'),
                 'hoat_dong' => (int)$request->input('hoat_dong'),
             ]);
-            Session::flash('success', 'Thêm  thành công ' . $request->input('ten_nv'));
+            Session::flash('success', 'Thêm  thành công nhân viên ' . $request->input('ten_nv'));
         } catch (\Exception $err) {
             Session::flash('error', $err->getMessage());
             return false;
