@@ -26,4 +26,8 @@ class yeucauton extends Model
     {
         return $this->hasOne(loaichuongtrinh::class, 'id', 'id_loai_chuong_trinh');
     }
+
+    public function yc_loaingay(){
+        return $this->hasOne(loaingay::class, 'id_yc', 'id');
+    }
 }

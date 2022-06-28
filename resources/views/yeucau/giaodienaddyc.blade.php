@@ -8,17 +8,51 @@
     <div class="col-md-12">
         <div class="card-body">
             <div class="form-group">
-                <div class="row">
+
+                <div class="row" id="select_yc_con" style="display: none">
+                    <label for="menu">Các yêu cầu con</label><font color="red"> (*)</font>
+                    <div class="col-sm-11">
+                        <select name="name_tt" class="form-control" id="ten_thuoc_tinh"></select>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <button onclick="show_them_moi_yc_plus()">
+                            <span style="font-size: 25px;color: dodgerblue;">
+                                <i class="fas fa-plus-square"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row" id="them_moi_yc_con">
+                    <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
                     <div class="col-md-12">
-                        <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
-                        <input type="text" name="name_tt" class="form-control" id="ten_thuoc_tinh"
+                        <input type="text" name="name_tt" class="form-control" id="ten_thuoc_tinh_dau"
                                placeholder="Nhập tên tên yêu cầu" required>
                         <br>
                     </div>
                 </div>
+
+                <div class="row" id="them_moi_yeu_cau_plus" style="display: none">
+                    <label for="menu">Thêm Tên Yêu Cầu</label><font color="red"> (*)</font>
+                    <div class="col-md-11">
+                        <input type="text" name="name_tt" class="form-control" id="ten_thuoc_tinh_moi"
+                               placeholder="Nhập tên tên yêu cầu" required>
+                    </div>
+                    <div class="col-md-1">
+                        <button onclick="huy_them_moi()">
+                            <span style="font-size: 25px;color: #ff0000;margin-left: 10px">
+                                <i class="fas fa-times-circle"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <br>
+                </div>
+
                 <div class="row">
+                    <label for="menu">Kiểu dữ liệu</label>
                     <div class="col-md-12">
-                        <label for="menu">Kiểu dữ liệu</label>
                         <select class="form-control" id ='kieu_thuoc_tinh'>
                             <option value="0">
                                 Varchar
@@ -38,10 +72,12 @@
                         </select>
                     </div>
                 </div>
+                <br>
+
                 <div class="row">
+                    <label>Nội Dung Thuộc Tính</label><font color="red"> (*)</font>
                     <div class="col-md-12">
                         <div  class="form-group">
-                            <label>Nội Dung Thuộc Tính</label><font color="red"> (*)</font>
                             <div id="noi_dung_theo_kieu">
                                 <input type="text" name="name_tt" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>
                             </div>
@@ -192,9 +228,20 @@
         })
     }
 
+    var stt_thuoctinh = 0;
+
     function add_tt_post(){
         var id_yc = sessionStorage.getItem('yc_id');
-        var ten_thuoc_tinh = document.getElementById('ten_thuoc_tinh').value;
+        var ten_thuoc_tinh = '';
+        if(stt_thuoctinh>0 && document.getElementById('them_moi_yeu_cau_plus').style.display == 'none'){
+            ten_thuoc_tinh= document.getElementById('ten_thuoc_tinh').value;
+        } else{
+            if (document.getElementById('ten_thuoc_tinh_moi').value !=''){
+                ten_thuoc_tinh = document.getElementById('ten_thuoc_tinh_moi').value;
+            }else{
+                ten_thuoc_tinh = document.getElementById('ten_thuoc_tinh_dau').value;
+            }
+        }
         var kieu_thuoc_tinh = document.getElementById('kieu_thuoc_tinh').value;
         var noi_dung_thuoc_tinh = '';
         if(document.getElementById('noidung_tt')!='')
@@ -253,6 +300,27 @@
                     document.getElementById('ten_thuoc_tinh').value ='';
                     document.getElementById('kieu_thuoc_tinh').value=0;
                     document.getElementById('noi_dung_thuoc_tinh').value ='';
+                    document.getElementById('noi_dung_thuoc_tinh').ariaPlaceholder ='Nhập nội dung';
+                    stt_thuoctinh+=1;
+                    if(stt_thuoctinh>0){
+                        if(document.getElementById('select_yc_con').style.display !== 'flex'){
+                            document.getElementById('select_yc_con').style.display = 'flex';
+                            document.getElementById('kieu_thuoc_tinh').disabled = 'true';
+                        }
+                        document.getElementById('them_moi_yc_con').style.display = 'none';
+                        if(sessionStorage.getItem(ten_thuoc_tinh)){
+                            console.log('ok');
+                            huy_them_moi();
+                        }else {
+                            var option = document.createElement('option');
+                            option.setAttribute('value',ten_thuoc_tinh);
+                            option.appendChild(document.createTextNode(ten_thuoc_tinh));
+                            document.getElementById('ten_thuoc_tinh').appendChild(option);
+                            sessionStorage.setItem(ten_thuoc_tinh,kieu_thuoc_tinh);
+                            huy_them_moi();
+                        }
+                        // kieu = sessionStorage.getItem(document.getElementById(ten_thuoc_tinh).options[0].value);
+                    }
                 }
                 else {
                     document.getElementById('thatbai').innerText = 'Yêu cầu đã tồn tại';
@@ -261,6 +329,10 @@
                         document.getElementById('thatbai').style.display = 'none';
                     }, 1500);
                 }
+                let kieu = sessionStorage.getItem(document.getElementById('ten_thuoc_tinh').options[0].text);
+                document.getElementById('ten_thuoc_tinh').value = document.getElementById('ten_thuoc_tinh').options[0].text;
+                document.getElementById('kieu_thuoc_tinh').value = kieu;
+                kieunhapmoi(kieu);
             }
         });
     }
@@ -312,8 +384,6 @@
         }
     }
 
-
-
     function show_add_new_yc() {
         if(sessionStorage.getItem('ok')!=1){
             if(confirm('Để thêm thuộc tính phải lưu lại yêu cầu này?')){
@@ -328,8 +398,6 @@
         }
     }
 
-
-
     function page_normal() {
         document.getElementById('body').style.display = 'none';
         document.getElementById('form_add_new_yc').style.display = 'none';
@@ -340,4 +408,123 @@
         document.getElementById('form_edit_yck').style.display = 'none';
         document.getElementById('header').style.position = 'fixed';
     }
+
+    function show_them_moi_yc_plus(){
+        document.getElementById('them_moi_yeu_cau_plus').style.display = 'flex';
+        document.getElementById('select_yc_con').style.display = 'none';
+        document.getElementById('kieu_thuoc_tinh').disabled = false;
+    }
+
+    function huy_them_moi(){
+        document.getElementById('them_moi_yeu_cau_plus').style.display = 'none';
+        document.getElementById('select_yc_con').style.display = 'flex';
+        document.getElementById('ten_thuoc_tinh_moi').value = '';
+        document.getElementById('kieu_thuoc_tinh').disabled = true;
+    }
+
+    function kieunhapmoi(kieu){
+        var noidung = document.getElementById('noi_dung_theo_kieu');
+        if( kieu== 0){
+            document.getElementById('kieu_thuoc_tinh').value = kieu;
+            var html = '<input type="text" name="name_tt" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>';
+            noidung.innerHTML=html;
+
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }else if( kieu== 1){
+            document.getElementById('kieu_thuoc_tinh').value = kieu;
+            var html = '<input type="text"  class="form-control"  id="noi_dung_thuoc_tinh" placeholder="dd/mm/yyyy" required>';
+            noidung.innerHTML=html;
+            $(document).ready(function () {
+                $("#noi_dung_thuoc_tinh").inputmask("99/99/9999", {
+                    "placeholder": "dd/mm/yyyy",
+                    'alias': 'date',
+                });
+            });
+
+            $("#noi_dung_thuoc_tinh").datepicker({
+                dateFormat: 'dd/mm/yy',
+            });
+
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }else if( kieu== 2){
+            document.getElementById('kieu_thuoc_tinh').value = kieu;
+            var html = '<textarea  class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required></textarea>';
+            noidung.innerHTML=html;
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }else if( kieu== 3){
+            document.getElementById('kieu_thuoc_tinh').value = kieu;
+            var html = '<input type="Number" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>';
+            noidung.innerHTML=html;
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }else if( kieu== 4){
+            document.getElementById('kieu_thuoc_tinh').value = kieu;
+            var html = '<input type="text" class="form-control" id="noi_dung_thuoc_tinh" placeholder="Nhập nội dung" required>';
+            noidung.innerHTML=html;
+            $('#kieu_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#noi_dung_thuoc_tinh').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+
+            $('#noi_dung_thuoc_tinh').keypress(function (event) {
+                if (event.keyCode == 13 || event.which == 13) {
+                    $('#add_tt').focus();
+                    event.preventDefault(); //preventDefault() Không load lại form
+                }
+            });
+        }
+    }
+
+    document.querySelector('#ten_thuoc_tinh').addEventListener('change', (event) => {
+        var kieu  =sessionStorage.getItem(document.getElementById('ten_thuoc_tinh').value);
+        kieunhapmoi(kieu);
+    });
+
 </script>

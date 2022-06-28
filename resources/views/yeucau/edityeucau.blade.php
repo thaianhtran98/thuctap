@@ -22,12 +22,13 @@
         <div class="col-12">
             <div class="alert alert-success"
                  id="thanhcong"
-                 style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px;float: right ; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                 style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+
                 Thành công
             </div>
             <div  class="alert alert-danger"
                   id="thatbai"
-                  style="z-index: 20000;position: absolute;display: none; margin-top: 10px;right: 0;top: 20px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+                  style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
                 Thất bại
             </div>
         </div>
@@ -218,20 +219,20 @@
                            name="ngayhoanthanhdukien" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
-                <div class="form-group"id="form_ngayhoanthanh" style="display: none">
+                <div class="form-group" id="form_ngayhoanthanh" style="display: none">
                     <label for="menu">Ngày Hoàn Thành</label>
                     <input type="text" id="ngayhoanthanh" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngayhoanthanh" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
-                <div class="form-group"id="form_ngayhostfix" style="display: none">
+                <div class="form-group" id="form_ngayhostfix" style="display: none">
                     <label for="menu">Ngày Hostfix</label>
                     <input type="text" id="ngayhostfix" data-inputmask="'alias': 'date'" autocomplete="off"
                            name="ngayhostfix" class="form-control" placeholder="dd/mm/yyyy">
                 </div>
 
                 <div class="form-group">
-                    <label for="menu">Yêu Cầu Khác</label>
+                    <label for="menu">Yêu Cầu Con</label>
                     @if($yeucaukhac!=null)
                         <table style="text-align: center;width: 100%;visibility: visible" id="table_yc_plus" class="table" >
                             <thead style="background: #0c84ff;color: white">
@@ -278,9 +279,28 @@
                                         </span>
                                     </td>
                                 </tr>
+                                <script>
+                                        stt_thuoctinh+=1;
+                                        if(document.getElementById('select_yc_con').style.display !== 'flex'){
+                                            document.getElementById('select_yc_con').style.display = 'flex';
+                                            document.getElementById('kieu_thuoc_tinh').disabled = 'true';
+                                        }
+                                        document.getElementById('them_moi_yc_con').style.display = 'none';
+                                        if(sessionStorage.getItem('{{$yck->ten_thuoc_tinh}}')){
+                                            console.log('ok');
+                                            huy_them_moi();
+                                        }else {
+                                            var option = document.createElement('option');
+                                            option.setAttribute('value','{{$yck->ten_thuoc_tinh}}');
+                                            option.appendChild(document.createTextNode('{{$yck->ten_thuoc_tinh}}'));
+                                            document.getElementById('ten_thuoc_tinh').appendChild(option);
+                                            sessionStorage.setItem('{{$yck->ten_thuoc_tinh}}','{{$yck->kieu_thuoc_tinh}}');
+                                        }
+                                </script>
                             @endforeach
                             </tbody>
                         </table>
+
                     @endif
                     <button type="button" onclick="show_add_new_yc()">
                                 <span style="font-size: 25px;color: #007bff;">
@@ -293,7 +313,7 @@
                 </div>
                 <div>
                     <a href="/danhsachyeucau">
-                        <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Danh Sách Yêu Cầu</button>
+                        <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Quay Về Danh Sách Yêu Cầu</button>
                     </a>
                 </div>
             </div>
@@ -695,6 +715,8 @@
                 document.getElementById('form_ngaygiaoviec').style.display = 'block';
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
+                document.getElementById('form_ngayhoanthanh').style.display = 'none';
+                document.getElementById('form_ngayhostfix').style.display = 'none';
             }else if(document.getElementById('trang_thai').value==0) {
                 document.getElementById('form_ngaygiaoviec').style.display = 'none';
                 document.getElementById('form_ngayhoanthanh').style.display = 'none';
@@ -769,7 +791,7 @@
                 document.getElementById('addnv').style.display = 'block';
                 document.getElementById('nv_selected').style.display = 'block';
             } else if(document.getElementById('trang_thai').value==0) {
-                sessionStorage.clear();
+                // sessionStorage.clear();
                 sessionStorage.setItem('ok',1);
                 sessionStorage.setItem('yc_id',{{$yeucau->id}});
                 document.getElementById('form_ngaygiaoviec').style.display = 'none';
@@ -780,6 +802,13 @@
                 document.getElementById('ngaygiaoviec').value ='';
                 document.getElementById('ngayhoanthanh').value ='';
                 document.getElementById('ngayhostfix').value ='';
+            } else if(document.getElementById('trang_thai').value==2) {
+                document.getElementById('form_ngayhoanthanh').style.display = 'none';
+                document.getElementById('form_ngayhostfix').style.display = 'none';
+                document.getElementById('ngayhoanthanh').value ='';
+                document.getElementById('ngayhostfix').value ='';
+                document.getElementById('addnv').style.display = 'block';
+                document.getElementById('nv_selected').style.display = 'block';
             }
         })
 

@@ -13,8 +13,7 @@
   top: 0; /*Nằm trên cùng*/
   left: 0; /*Nằm sát bên trái*/
   z-index: 100000;
-  /*Hiển thị lớp trên cùng*/"
->
+  /*Hiển thị lớp trên cùng*/">
     @include('header')
 </header>
 

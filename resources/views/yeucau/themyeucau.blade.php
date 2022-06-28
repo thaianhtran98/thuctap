@@ -223,7 +223,7 @@
                     </div>
                     <div>
                         <a href="/danhsachyeucau">
-                            <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Danh Sách Yêu Cầu</button>
+                            <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Quay Về Danh Sách Yêu Cầu</button>
                         </a>
                     </div>
                 </div>

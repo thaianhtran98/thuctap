@@ -1,4 +1,3 @@
-
 <div style="border: 2px">
     <table id="table_cv" class="table table-bordered" style="width:100%">
         <thead style="background: #0c84ff;color: white">

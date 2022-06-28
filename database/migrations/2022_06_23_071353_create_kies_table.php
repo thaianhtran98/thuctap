@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('tuan');
             $table->integer('nam');
-            $table->date('ngaybatdau');
-            $table->date('ngayketthuc');
+            $table->date('tungay');
+            $table->date('denngay');
             $table->timestamps();
         });
     }

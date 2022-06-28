@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="menu">Tên Yêu Cầu</label><font color="red"> (*)</font>
-                        <input type="text" name="edit_ten_thuoc_tinh" class="form-control" id="edit_ten_thuoc_tinh"
+                        <input type="text" name="edit_ten_thuoc_tinh" class="form-control" disabled id="edit_ten_thuoc_tinh"
                                placeholder="Nhập tên đơn vị" required>
                         <br>
                     </div>
@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="menu">Kiểu dữ liệu</label>
-                        <select class="form-control" id ='edit_kieu_thuoc_tinh'>
+                        <select class="form-control" id ='edit_kieu_thuoc_tinh' disabled>
                             <option value="0">
                                 Varchar
                             </option>
@@ -30,6 +30,9 @@
                             </option>
                             <option value="3">
                                 Integer
+                            </option>
+                            <option value="4">
+                                link
                             </option>
                         </select>
                     </div>
@@ -117,11 +120,11 @@
 
     var id_thuoc_tinh_edit = 0;
     function show_edit_yck(id,tenthuoctinh,kieuthuoctinh,noidungthuoctinh) {
-        if(sessionStorage.getItem('ok')!=1){
-            if(confirm('Để thêm thuộc tính phải lưu lại yêu cầu này?')){
-                add_yeu_cau();
-            }
-        }else {
+        // if(sessionStorage.getItem('ok')!=1){
+        //     if(confirm('Để thêm thuộc tính phải lưu lại yêu cầu này?')){
+        //         add_yeu_cau();
+        //     }
+        // }else {
             id_thuoc_tinh_edit = id;
             // console.log(id_thuoc_tinh_edit);
             sessionStorage.setItem('ok',1);
@@ -133,7 +136,8 @@
             document.getElementById('form_edit_yck').style.display = 'block';
             document.getElementById('form_edit_yck').style.background = 'white';
             document.getElementById('body').style.display = 'block';
-        }
+            document.getElementById('header').style.position = '';
+        // }
     }
 </script>
 

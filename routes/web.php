@@ -65,3 +65,7 @@ Route::delete('/yck/destroy', [\App\Http\Controllers\YeucauController::class, 'd
 // báo cáo
 Route::get('/baocao',[\App\Http\Controllers\BaocaoController::class,'index']);
 Route::get('/kybaocao',[\App\Http\Controllers\BaocaoController::class,'kybaocao']);
+Route::post('/kybaocao',[\App\Http\Controllers\BaocaoController::class,'them_kybaocao']);
+Route::get('/xembaocao/{ky}',[\App\Http\Controllers\BaocaoController::class,'xembaocao']);
+Route::post('/load_ky/',[\App\Http\Controllers\BaocaoController::class,'load_ky']);
+Route::post('/chot_ky/{ky}',[\App\Http\Controllers\BaocaoController::class,'chot_ky']);
