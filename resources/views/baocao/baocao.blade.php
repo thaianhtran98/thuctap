@@ -2,12 +2,12 @@
 @section('content')
     @include('alert')
 
-    <div class="m-t-50 m-r-10 m-l-10">
+    <div class="m-t-50 m-r-20 m-l-20">
         <div class="row" >
             <div class="col-md-3" style="margin-left: 2%">
 {{--                {{$ky_hientai->nam}}--}}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="menu">Năm</label>
                 <select id="nam" name="nam" class="form-control">
                     @foreach($nams as $nam)
@@ -18,7 +18,7 @@
                 </select>
                 <br>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="menu">Kỳ</label>
                 <select id="ky" name="ky" class="form-control">
                     @foreach($ky as $k)
@@ -30,18 +30,18 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-1" style="line-height: 88px">
+            <div class="col-md-2" style="line-height: 88px">
                 <button class="form-control btn btn-primary" onclick="xembaocao()">
                     Xem báo cáo
                 </button>
             </div>
 
             @if($ky_dang_baocao->chot == 0)
-                <button class="form-control btn btn-success" style="float: right;margin-right: 0;margin-left: auto; width: 100px;margin-top: 1.5%" onclick="chot({{$ky_dang_baocao->id}})">
+                <button class="form-control btn btn-success" style="float: right;margin-right: 10px;margin-left: auto; width: 100px;margin-top: 1.5%" onclick="chot({{$ky_dang_baocao->id}})">
                     Chốt
                 </button>
             @else
-                <button class="form-control btn btn-danger" style="float: right;margin-right: 0;margin-left: auto; width: 100px;margin-top: 1.5%" onclick="chot({{$ky_dang_baocao->id}})">
+                <button class="form-control btn btn-danger" style="float: right;margin-right: 10px;margin-left: auto; width: 100px;margin-top: 1.5%" onclick="chot({{$ky_dang_baocao->id}})">
                     Hủy Chốt
                 </button>
             @endif
@@ -55,24 +55,43 @@
             </label>
 
             <div class="col-md-12">
-                <table id="table_tiepnhan" class="table table-bordered">
-                    <thead style="background: #0c84ff;color: white">
-                    <tr>
-                        <th>STT</th>
-                        <th>Đơn Vị</th>
-                        <th>Tên Yêu Cầu</th>
-                        <th>Nội Dung Yêu Cầu</th>
-                        <th>Ngày Tiếp Nhận</th>
-                    </tr>
+                <table id="table_tiepnhan" class="table table-bordered" style="width: 100%">
+                    <thead style="background: #0c84ff;color: white;">
+                        <tr>
+                            <th style="text-align: center;width: 1%;">STT</th>
+                            <th style="text-align: center;width: 20%;">Đơn Vị</th>
+                            <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
+                            <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
+                            <th style="text-align: center;width: 10%;">Chương Trình</th>
+                            <th style="text-align: center;width: 10%;;">Ngày Tiếp Nhận</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($yeucau_tiepnhan as $key => $yc)
                         <tr>
-                            <td style=text-align:center;>{{$key+1}}</td>
-                            <td>{{$yc->yc_dv->ten_don_vi}}</td>
-                            <td>{{$yc->ten_yeu_cau}}</td>
-                            <td>{{$yc->noi_dung_yc}}</td>
-                            <td>
+                            <td style="text-align:center;width: 1%;">{{$key+1}}</td>
+                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
+                            @if(strlen($yc->ten_yeu_cau)<50)
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {{$yc->ten_yeu_cau}}
+                                </td>
+                            @else
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
+                                </td>
+                            @endif
+
+                            @if(strlen($yc->noi_dung_yc)<50)
+                                <td style="line-height: normal; width: 30%;text-align: left">
+                                    {{$yc->noi_dung_yc}}
+                                </td>
+                            @else
+                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
+                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
+                                </td>
+                            @endif
+                            <td style="text-align: center;width: 10%;">{{$yc->yc_ct->ten_chuong_trinh}}</td>
+                            <td  style="text-align: left;width: 10%;">
                                 {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}
                             </td>
                         </tr>
@@ -91,23 +110,42 @@
             </label>
 
             <div class="col-md-12">
-                <table id="table_giaoviec" class="table table-bordered">
+                <table id="table_tiepnhan" class="table table-bordered" style="width: 100%">
                     <thead style="background: #0c84ff;color: white">
                     <tr>
-                        <th>STT</th>
-                        <th>Đơn Vị</th>
-                        <th>Tên Yêu Cầu</th>
-                        <th>Nội Dung Yêu Cầu</th>
-                        <th>Ngày Giao Việc</th>
+                        <th style="text-align: center;width: 1%;">STT</th>
+                        <th style="text-align: center;width: 20%;">Đơn Vị</th>
+                        <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
+                        <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
+                        <th style="text-align: center;width: 10%;">Chương Trình</th>
+                        <th style="text-align: center;width: 10%;">Ngày Giao Việc</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($yeucau_dangcode as $key => $yc)
                         <tr>
                             <td style=text-align:center;>{{$key+1}}</td>
-                            <td>{{$yc->yc_dv->ten_don_vi}}</td>
-                            <td>{{$yc->ten_yeu_cau}}</td>
-                            <td>{{$yc->noi_dung_yc}}</td>
+                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
+                            @if(strlen($yc->ten_yeu_cau)<50)
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {{$yc->ten_yeu_cau}}
+                                </td>
+                            @else
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
+                                </td>
+                            @endif
+
+                            @if(strlen($yc->noi_dung_yc)<50)
+                                <td style="line-height: normal; width: 30%;text-align: left">
+                                    {{$yc->noi_dung_yc}}
+                                </td>
+                            @else
+                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
+                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
+                                </td>
+                            @endif
+                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                             <td>
                                 {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
                             </td>
@@ -126,23 +164,42 @@
             </label>
 
             <div class="col-md-12">
-                <table id="table_hoanthanh" class="table table-bordered">
+                <table id="table_hoanthanh" class="table table-bordered" style="width: 100%">
                     <thead style="background: #0c84ff;color: white">
                         <tr>
-                            <th>STT</th>
-                            <th>Đơn Vị</th>
-                            <th>Tên Yêu Cầu</th>
-                            <th>Nội Dung Yêu Cầu</th>
-                            <th>Ngày Hoàn Thành</th>
+                            <th style="text-align: center;width: 1%;">STT</th>
+                            <th style="text-align: center;width: 20%;">Đơn Vị</th>
+                            <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
+                            <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
+                        <th style="text-align: center;width: 10%;">Chương Trình</th>
+                            <th style="text-align: center;width: 10%;">Ngày Hoàn Thành</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($yeucau_hoanthanh as $key => $yc)
                         <tr>
                             <td style=text-align:center;>{{$key+1}}</td>
-                            <td>{{$yc->yc_dv->ten_don_vi}}</td>
-                            <td>{{$yc->ten_yeu_cau}}</td>
-                            <td>{{$yc->noi_dung_yc}}</td>
+                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
+                            @if(strlen($yc->ten_yeu_cau)<50)
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {{$yc->ten_yeu_cau}}
+                                </td>
+                            @else
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
+                                </td>
+                            @endif
+
+                            @if(strlen($yc->noi_dung_yc)<50)
+                                <td style="line-height: normal; width: 30%;text-align: left">
+                                    {{$yc->noi_dung_yc}}
+                                </td>
+                            @else
+                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
+                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
+                                </td>
+                            @endif
+                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                             <td>
                                 {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}
                             </td>
@@ -161,23 +218,42 @@
             </label>
 
             <div class="col-md-12">
-                <table id="table_hostfix" class="table table-bordered">
+                <table id="table_hostfix" class="table table-bordered" style="width: 100%">
                     <thead style="background: #0c84ff;color: white">
                     <tr>
-                        <th>STT</th>
-                        <th>Đơn Vị</th>
-                        <th>Tên Yêu Cầu</th>
-                        <th>Nội Dung Yêu Cầu</th>
-                        <th>Ngày hostfix</th>
+                        <th style="text-align: center;width: 1%;">STT</th>
+                        <th style="text-align: center;width: 20%;">Đơn Vị</th>
+                        <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
+                        <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
+                        <th style="text-align: center;width: 10%;">Chương Trình</th>
+                        <th style="text-align: center;width: 10%;">Ngày hostfix</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($yeucau_hostfix as $key => $yc)
                         <tr>
                             <td style=text-align:center;>{{$key+1}}</td>
-                            <td>{{$yc->yc_dv->ten_don_vi}}</td>
-                            <td>{{$yc->ten_yeu_cau}}</td>
-                            <td>{{$yc->noi_dung_yc}}</td>
+                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
+                            @if(strlen($yc->ten_yeu_cau)<50)
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {{$yc->ten_yeu_cau}}
+                                </td>
+                            @else
+                                <td  style="line-height: normal;width: 20%;text-align: left">
+                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
+                                </td>
+                            @endif
+
+                            @if(strlen($yc->noi_dung_yc)<50)
+                                <td style="line-height: normal; width: 30%;text-align: left">
+                                    {{$yc->noi_dung_yc}}
+                                </td>
+                            @else
+                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
+                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
+                                </td>
+                            @endif
+                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                             <td>
                                 {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}
                             </td>
@@ -196,7 +272,7 @@
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sZeroRecords":  "Không tìm có kết quả",
                     "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
                     "sInfoFiltered": "(được lọc từ _MAX_ mục)",
@@ -223,7 +299,7 @@
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sZeroRecords":  "Không tìm có kết quả",
                     "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
                     "sInfoFiltered": "(được lọc từ _MAX_ mục)",
@@ -250,7 +326,7 @@
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sZeroRecords":  "Không tìm có kết quả",
                     "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
                     "sInfoFiltered": "(được lọc từ _MAX_ mục)",
@@ -277,7 +353,7 @@
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sZeroRecords":  "Không tìm có kết quả",
                     "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
                     "sInfoFiltered": "(được lọc từ _MAX_ mục)",
@@ -304,7 +380,7 @@
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+                    "sZeroRecords":  "Không tìm có kết quả",
                     "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
                     "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
                     "sInfoFiltered": "(được lọc từ _MAX_ mục)",

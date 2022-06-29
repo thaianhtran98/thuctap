@@ -7,7 +7,7 @@
             <div class="col-md-3" style="margin-left: 2%">
 
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label for="menu">Năm</label>
                 <select id="nam" name="nam" class="form-control">
                     @if(count($ky)!=0)
@@ -33,7 +33,7 @@
                 </select>
                 <br>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="menu">Kỳ</label>
                 <select id="ky" name="ky" class="form-control">
                     @foreach($ky as $k)
@@ -45,7 +45,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-1" style="line-height: 88px">
+            <div class="col-md-2" style="line-height: 88px">
                 <button class="form-control btn btn-primary" onclick="xembaocao()">
                     Xem báo cáo
                 </button>

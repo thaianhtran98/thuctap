@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\chitietyeucau;
 use App\Models\donvi;
+use App\Models\ky;
 use App\Models\kybaocao;
 use App\Models\loaingay;
 use App\Models\luyke;
@@ -326,11 +327,8 @@ class YeucauService
         try {
             $id = $request->input('id');
             $yc = yeucauton::where('id', $id)->first();
-//            $loaingay = loaingay::where('id_yc',$id)->first();
-////            $tuan_upadte = (integer)date('W',strtotime($loaingay->ngaytiepnhan));
-////            $nam_upadte = (integer)date('Y',strtotime($loaingay->ngaytiepnhan));
 
-            Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
+//            Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
 
             if ($yc) {
                 chitietyeucau::where('id_yc',$id)->delete();
@@ -338,9 +336,6 @@ class YeucauService
                 thuoctinhyeucau::where('id_yc',$id)->delete();
                 yeucauton::where('id', $id)->delete();
             }
-
-//            $this->capnhat_kybaocao($nam_upadte,$tuan_upadte,$yc->id_don_vi);
-
             return true;
         } catch (\Exception $err) {
             Session::flash('error', $err->getMessage());
@@ -378,6 +373,10 @@ class YeucauService
 
     public function getyeucaukhac($id_yc){
         return thuoctinhyeucau::where('id_yc',$id_yc)->get();
+    }
+
+    public function get_min_ngaytiepnhan(){
+        return ky::where('chot',1)->orderByDesc('denngay')->first();
     }
 
 

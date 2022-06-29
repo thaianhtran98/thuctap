@@ -113,5 +113,19 @@ class BaocaoService
        return true;
     }
 
+    public function destroy_ky($request){
+        try {
+            $id = $request->input('id');
+            $ky = ky::where('id', $id)->first();
+            if ($ky) {
+                ky::where('id',$id)->delete();
+            }
+            return true;
+        } catch (\Exception $err) {
+            Session::flash('error', 'Xóa thất bại');
+            return false;
+        }
+    }
+
 
 }

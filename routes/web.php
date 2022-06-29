@@ -69,3 +69,4 @@ Route::post('/kybaocao',[\App\Http\Controllers\BaocaoController::class,'them_kyb
 Route::get('/xembaocao/{ky}',[\App\Http\Controllers\BaocaoController::class,'xembaocao']);
 Route::post('/load_ky/',[\App\Http\Controllers\BaocaoController::class,'load_ky']);
 Route::post('/chot_ky/{ky}',[\App\Http\Controllers\BaocaoController::class,'chot_ky']);
+Route::delete('/ky/destroy',[\App\Http\Controllers\BaocaoController::class,'destroy']);

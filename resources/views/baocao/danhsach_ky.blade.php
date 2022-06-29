@@ -5,6 +5,10 @@
 <table id="table_ky" class="table table-bordered" style="width:100%">
     <thead style="background: #0c84ff;color: white;width: 100%">
     <tr style="text-align: center">
+        <th style="line-height: normal">
+            <input type="checkbox" name="del_all" onclick="delall()"
+                   style="height: 20px;width: 20px; margin: auto">
+        </th>
         <th>STT</th>
         <th>Năm</th>
         <th>Tuần</th>
@@ -17,6 +21,10 @@
     <tbody style="text-align: center">
     @foreach($ky as $key => $k)
         <tr>
+            <td style="line-height: normal;text-align: center; width: 100px">
+                <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto"
+                    {{$k->chot==1 ? 'disabled':''}}   value="{{$k->id}}">
+            </td>
             <td>
                 {{$key+1}}
             </td>
@@ -52,6 +60,54 @@
     @endforeach
     </tbody>
 </table>
+
+<button class="btn btn-danger" type="button" id="button_del" href="#" onclick="delid()"
+        style="display: none; height: 50px;width: 100px;margin-left: 0;margin-right: auto">
+    <i class="fas fa-trash"></i>
+</button>
+
+<script>
+    function delall() {
+        var $iddel = document.getElementsByName('del_id[]');
+        var $delall = document.getElementsByName('del_all');
+        if ($delall[0].checked === true) {
+            document.getElementById('button_del').style.display = 'block';
+            for ($i = 0; $i < $iddel.length; $i++) {
+                $iddel[$i].checked = true;
+            }
+        } else {
+            document.getElementById('button_del').style.display = 'none';
+            for ($i = 0; $i < $iddel.length; $i++) {
+                $iddel[$i].checked = false;
+            }
+        }
+    }
+
+    function showbutton() {
+        var $iddel = document.getElementsByName('del_id[]');
+
+        for ($i = 0; $i < $iddel.length; $i++) {
+            if ($iddel[$i].checked === true) {
+                return document.getElementById('button_del').style.display = 'block';
+            } else {
+                document.getElementById('button_del').style.display = 'none';
+            }
+        }
+    }
+
+    function delid() {
+        if (confirm('Dữ liệu xóa không thể khôi phục. Bạn có muốn xóa không?')) {
+            var $iddel = document.getElementsByName('del_id[]');
+
+            for ($i = 0; $i < $iddel.length; $i++) {
+                if ($iddel[$i].checked === true && $iddel[$i].disabled === false) {
+                    removeRow($iddel[$i].value, '/ky/destroy');
+                }
+            }
+            window.location.reload();
+        }
+    }
+</script>
 
 <script>
     $(document).ready(function() {
