@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('content')
-    <div class="m-t-50 m-r-10 m-l-10" >
+    <div class="m-t-50 m-r-20 m-l-20" >
         @include('alert')
         <div class="row" style="display: flex;justify-content: center;align-items: center;">
             <div id="form-add" class="row"
@@ -69,8 +69,8 @@
             <label style="font-size: 20px;color: #007bff">
                 Danh Sách Đơn Vị
             </label>
-            <button class="btn btn-primary" style="float: right;margin-bottom: 10px;
-             margin-left: auto;margin-right: 8px;" id="show-add-dv" onclick="show_add_dv()">
+            <button class="btn btn-primary" style="float: right;margin-bottom: 40px;
+             margin-left: auto;margin-right: 10px;" id="show-add-dv" onclick="show_add_dv()">
                 Thêm Đơn Vị
             </button>
             <script>

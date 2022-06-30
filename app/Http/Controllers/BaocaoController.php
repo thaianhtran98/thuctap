@@ -84,4 +84,9 @@ class BaocaoController extends Controller
             ]);
     }
 
+    public function destroy(Request $request){
+        return $this->baocaoservice->destroy_ky($request);
+    }
+
+
 }

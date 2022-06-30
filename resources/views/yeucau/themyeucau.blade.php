@@ -342,10 +342,15 @@
 
 {{--    Xử lý ngày tháng năm và bấm enter--}}
     <script>
-        let d = new Date();
-        let year = d.getFullYear();
-        let month = d.getMonth() + 1;
-        let day = d.getDate();
+        @if($min_ngaytiepnhan)
+            sessionStorage.setItem('min_ngaytiepnhan','{{DateTime::createFromFormat('Y-m-d',$min_ngaytiepnhan->denngay)->format('d/m/Y')}}');
+        @endif
+
+
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
         if (Number(day) < 10) {
             day = '0' + day;
         }
@@ -353,8 +358,48 @@
             month = '0' + month;
         }
 
+        console.log(sessionStorage.getItem('min_ngaytiepnhan').substr(3,2))
+
+        if(sessionStorage.getItem('min_ngaytiepnhan')){
+            if(sessionStorage.getItem('min_ngaytiepnhan').substr(6,4)>year &&
+                sessionStorage.getItem('min_ngaytiepnhan').substr(3,2)>month){
+                var min = sessionStorage.getItem('min_ngaytiepnhan');
+                year = min.substr(6,4);
+                month = min.substr(3,2);
+                day = Number(min.substr(0,2));
+            }else if( sessionStorage.getItem('min_ngaytiepnhan').substr(6,4)==year &&
+                sessionStorage.getItem('min_ngaytiepnhan').substr(3,2)>month){
+                var min = sessionStorage.getItem('min_ngaytiepnhan');
+                year = min.substr(6,4);
+                month = min.substr(3,2);
+                day = Number(min.substr(0,2));
+            }else if(sessionStorage.getItem('min_ngaytiepnhan').substr(6,4)==year &&
+                sessionStorage.getItem('min_ngaytiepnhan').substr(3,2)==month && sessionStorage.getItem('min_ngaytiepnhan').substr(0,2)>=day){
+                var min = sessionStorage.getItem('min_ngaytiepnhan');
+                year = min.substr(6,4);
+                month = min.substr(3,2);
+                day = Number(min.substr(0,2));
+            }
+        }
+
+        var get_day_of_month = (year, month) => {
+            return new Date(year, month, 0).getDate();
+        };
+
+        day+=1;
+        var max_day = get_day_of_month(year,month);
+        if (day>max_day){
+            day='01'
+            month = Number(month)+1
+            if (month<10){
+                month='0'+month;
+            }
+        }
+
+
         $("#ngaytiepnhan").datepicker({
-            dateFormat: 'dd/mm/yy',
+            dateFormat: 'dd/mm/yy', minDate: new Date(
+                year, month-1, day)
         });
 
         $(document).ready(function () {

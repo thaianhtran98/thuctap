@@ -18,7 +18,9 @@ class YeucauController extends Controller
     protected $nguoithuchienservice;
     protected $chucvuservice;
 
-    public function __construct(ChucvuService $chucvuService,NguoithuchienService $nguoithuchienService, DonviService $donviService, LoaichuongtrinhService $loaichuongtrinhService, YeucauService $yeucauService)
+    public function __construct(ChucvuService $chucvuService,NguoithuchienService $nguoithuchienService,
+                                DonviService $donviService, LoaichuongtrinhService $loaichuongtrinhService,
+                                YeucauService $yeucauService)
     {
         $this->donviservice = $donviService;
         $this->chuongtrinhservice = $loaichuongtrinhService;
@@ -34,6 +36,7 @@ class YeucauController extends Controller
             'cts' => $this->chuongtrinhservice->getlctactive(),
             'nvs' => $this->nguoithuchienservice->getnhanvienactive(),
             'chucvues'=>$this->chucvuservice->getchucvu_active(),
+            'min_ngaytiepnhan'=>$this->yeucauservice->get_min_ngaytiepnhan()
         ]);
     }
 
@@ -109,6 +112,7 @@ class YeucauController extends Controller
         return view('yeucau.danhsachyeucau', [
             'title' => 'Yêu Cầu',
             'ycs' => $this->yeucauservice->getyeucau(),
+            'disable_xoa'=>$this->yeucauservice->get_min_ngaytiepnhan(),
         ]);
     }
 
