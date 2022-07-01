@@ -177,7 +177,11 @@
                     document.getElementById('denngay').value =   ngayden + '/'+ tuthang + '/' + ngaybatdau_kymoi.substr(6,4);
                 }
             }else{
-                document.getElementById('denngay').value = day+1 + '/' + month + '/' + year;
+                day=Number(day)+1;
+                if(day<10){
+                    day = '0'+day;
+                }
+                document.getElementById('denngay').value = day + '/' + month + '/' + year;
             }
             $("#denngay").inputmask("99/99/9999", {
                 "placeholder": "dd/mm/yyyy",
@@ -280,5 +284,6 @@
         );
 
     </script>
+
 
 @endsection

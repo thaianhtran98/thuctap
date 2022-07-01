@@ -328,7 +328,7 @@ class YeucauService
             $id = $request->input('id');
             $yc = yeucauton::where('id', $id)->first();
 
-//            Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
+            Session::flash('success', 'Xóa thành công ' . $yc->ten_yeu_cau);
 
             if ($yc) {
                 chitietyeucau::where('id_yc',$id)->delete();
