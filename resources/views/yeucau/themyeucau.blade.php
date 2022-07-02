@@ -358,7 +358,12 @@
             month = '0' + month;
         }
 
-        console.log(sessionStorage.getItem('min_ngaytiepnhan').substr(3,2))
+
+        var get_day_of_month = (year, month) => {
+            return new Date(year, month, 0).getDate();
+        };
+
+        // console.log(sessionStorage.getItem('min_ngaytiepnhan').substr(3,2))
 
         if(sessionStorage.getItem('min_ngaytiepnhan')){
             if(sessionStorage.getItem('min_ngaytiepnhan').substr(6,4)>year &&
@@ -380,21 +385,19 @@
                 month = min.substr(3,2);
                 day = Number(min.substr(0,2));
             }
-        }
 
-        var get_day_of_month = (year, month) => {
-            return new Date(year, month, 0).getDate();
-        };
-
-        day+=1;
-        var max_day = get_day_of_month(year,month);
-        if (day>max_day){
-            day='01'
-            month = Number(month)+1
-            if (month<10){
-                month='0'+month;
+            day=Number(day)+1;
+            var max_day = get_day_of_month(year,month);
+            if (day>max_day){
+                day='01'
+                month = Number(month)+1
+                if (month<10){
+                    month='0'+month;
+                }
             }
         }
+
+
 
 
         $("#ngaytiepnhan").datepicker({

@@ -1,4 +1,17 @@
-
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-success"
+             id="thanhcong"
+             style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+            Thành công
+        </div>
+        <div  class="alert alert-danger"
+              id="thatbai"
+              style="z-index: 20000;position: absolute;display: none; right: 0;top: 0px; margin-bottom: 10px; margin-left: auto;margin-right: 50px;width: auto;text-align: center">
+            Thất bại
+        </div>
+    </div>
+</div>
 <label style="font-size: 20px;color: #007bff">
     Danh Sách Kỳ Báo Cáo
 </label>
@@ -104,7 +117,8 @@
                     removeRow($iddel[$i].value, '/ky/destroy');
                 }
             }
-            window.location.reload();
+            location.reload()
+
         }
     }
 </script>

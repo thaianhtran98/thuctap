@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\donvi;
 use App\Models\ky;
 use App\Models\kybaocao;
+use App\Models\loaingay;
 use App\Models\luyke;
 use App\Models\yeucauton;
 use Illuminate\Support\Facades\DB;
@@ -97,18 +98,71 @@ class BaocaoService
     }
 
 
+    public function get_luyke_ky($ky){
+
+        $dv = DB::table('luyke_hang_tuan_cac_dv')
+            ->where('tuan',$ky->tuan)
+            ->where('nam',$ky->nam)
+            ->orderByDesc('uu_tien')
+            ->get();
+        return $dv;
+    }
+
+
+//    public function get_luyke_don_vi(){
+//        $donvi = donvi::where('hoat_dong',1)->get();
+//        $id_dv = [];
+//
+//        foreach ($donvi as $dv){
+//            $id_dv[] = $dv->id;
+//        }
+//
+//
+//        $luyke = luyke::whereIN('id_don_vi',$id_dv)
+//            ->orderByDesc('tuan')
+//            ->orderByDesc('nam')
+//            ->paginate(count($id_dv));
+//        return $luyke;
+//    }
+
+
     public function getnam(){
         return ky::DISTINCT()->select('nam')->get();
     }
 
 
-    public function chot_ky($ky){
+    public function chot_ky($ky,$request){
        if($ky->chot==0){
+           $id_don_vi = $request->input('id_dv');
+           $luy_ke_hang_tuan = $request->input('luyke');
+           $tuan = $request->input('tuan');
+           $nam = $request->input('nam');
+           $luyke_donvi =luyke::where('tuan',$tuan[0])->where('nam',$nam[0])->first();
+           if ($luyke_donvi){
+               foreach ($id_don_vi as $key => $dv){
+                    $luyke_donvi->id_don_vi=(integer)$dv;
+                    $luyke_donvi->luy_ke_hang_tuan=(integer)$luy_ke_hang_tuan[$key];
+                    $luyke_donvi->tuan=(integer)$tuan[$key];
+                    $luyke_donvi->nam=(integer)$nam[$key];
+                   $luyke_donvi->save();
+               }
+           }else{
+               foreach ($id_don_vi as $key => $dv){
+                   luyke::create([
+                       'id_don_vi'=>(integer)$dv,
+                       'luy_ke_hang_tuan'=>(integer)$luy_ke_hang_tuan[$key],
+                       'tuan'=>(integer)$tuan[$key],
+                       'nam'=>(integer)$nam[$key],
+                   ]);
+               }
+           }
+
            $ky->chot = 1;
            $ky->save();
        }else{
            $ky->chot = 0;
            $ky->save();
+
        }
        return true;
     }
@@ -117,6 +171,12 @@ class BaocaoService
         try {
             $id = $request->input('id');
             $ky = ky::where('id', $id)->first();
+
+            if (luyke::where('tuan',$ky->tuan)->where('nam',$ky->nam)->first()){
+                Session::flash('error', 'Không được xóa kỳ đã chốt');
+                return false;
+            }
+
             if ($ky) {
                 ky::where('id',$id)->delete();
             }

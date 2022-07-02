@@ -16,8 +16,17 @@ class donvi extends Model
         'hoat_dong',
     ];
 
-    public function donvi_kybaocao(){
-        return $this->hasMany(kybaocao::class , 'id_don_vi' , 'id');
+    public function luyke_donvi(){
+        return $this->hasMany(luyke::class, 'id_don_vi', 'id')
+            ->orderByDesc('tuan')
+            ->orderByDesc('nam');
     }
+
+    public function luyke_donvi_tuan($tuan,$nam){
+        return $this->hasMany(luyke::class, 'id_don_vi', 'id')
+            ->where('tuan',$tuan)
+            ->where('nam',$nam)->first();
+    }
+
 
 }

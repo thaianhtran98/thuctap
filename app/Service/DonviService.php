@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\donvi;
+use App\Models\luyke;
 use Illuminate\Support\Facades\Session;
 
 class DonviService
@@ -16,6 +17,16 @@ class DonviService
                 'uu_tien' => (int)$request->input('uutien'),
                 'hoat_dong' => (int)$request->input('active'),
             ]);
+
+            $id_don_vi = donvi::where('ten_don_vi',(string)$request->input('name'))->first();
+
+            luyke::create([
+                'id_don_vi' => (integer)$id_don_vi->id,
+                'luy_ke_dau_ky' => (integer)$request->input('luyke'),
+                'tuan' => 0,
+                'nam' => 0,
+            ]);
+
             Session::flash('success', 'Thêm  thành công ' . $request->input('name'));
 
         }catch (\Exception $err){

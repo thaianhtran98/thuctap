@@ -48,221 +48,28 @@
         </div>
         <hr>
 
+        {{--        Các yêu cầu phát sinh--}}
+        @include('baocao.tonghop_cacbaocao.tong_ket_ky')
+
+
+        <hr>
+
 {{--        Các yêu cầu phát sinh--}}
-        <div class="row">
-            <label style="font-size: 20px;color: #007bff">
-                Các Yêu Cầu Phát Sinh
-            </label>
-
-            <div class="col-md-12">
-                <table id="table_tiepnhan" class="table table-bordered" style="width: 100%">
-                    <thead style="background: #0c84ff;color: white;">
-                        <tr>
-                            <th style="text-align: center;width: 1%;">STT</th>
-                            <th style="text-align: center;width: 20%;">Đơn Vị</th>
-                            <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
-                            <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
-                            <th style="text-align: center;width: 10%;">Chương Trình</th>
-                            <th style="text-align: center;width: 10%;;">Ngày Tiếp Nhận</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($yeucau_tiepnhan as $key => $yc)
-                        <tr>
-                            <td style="text-align:center;width: 1%;">{{$key+1}}</td>
-                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                            @if(strlen($yc->ten_yeu_cau)<50)
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {{$yc->ten_yeu_cau}}
-                                </td>
-                            @else
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                                </td>
-                            @endif
-
-                            @if(strlen($yc->noi_dung_yc)<50)
-                                <td style="line-height: normal; width: 30%;text-align: left">
-                                    {{$yc->noi_dung_yc}}
-                                </td>
-                            @else
-                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
-                                </td>
-                            @endif
-                            <td style="text-align: center;width: 10%;">{{$yc->yc_ct->ten_chuong_trinh}}</td>
-                            <td  style="text-align: left;width: 10%;">
-                                {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        @include('baocao.tonghop_cacbaocao.cac_yc_phat_sinh')
 
         <hr>
 
 {{--Các yêu cầu đang code--}}
-        <div class="row">
-            <label style="font-size: 20px;color: #007bff">
-                Các Yêu Cầu Đang Code
-            </label>
-
-            <div class="col-md-12">
-                <table id="table_tiepnhan" class="table table-bordered" style="width: 100%">
-                    <thead style="background: #0c84ff;color: white">
-                    <tr>
-                        <th style="text-align: center;width: 1%;">STT</th>
-                        <th style="text-align: center;width: 20%;">Đơn Vị</th>
-                        <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
-                        <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
-                        <th style="text-align: center;width: 10%;">Chương Trình</th>
-                        <th style="text-align: center;width: 10%;">Ngày Giao Việc</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($yeucau_dangcode as $key => $yc)
-                        <tr>
-                            <td style=text-align:center;>{{$key+1}}</td>
-                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                            @if(strlen($yc->ten_yeu_cau)<50)
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {{$yc->ten_yeu_cau}}
-                                </td>
-                            @else
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                                </td>
-                            @endif
-
-                            @if(strlen($yc->noi_dung_yc)<50)
-                                <td style="line-height: normal; width: 30%;text-align: left">
-                                    {{$yc->noi_dung_yc}}
-                                </td>
-                            @else
-                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
-                                </td>
-                            @endif
-                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
-                            <td>
-                                {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        @include('baocao.tonghop_cacbaocao.cac_yc_dangcode')
 
         <hr>
 {{--Các yêu cầu đã hoàn thành--}}
-        <div class="row">
-            <label style="font-size: 20px;color: #007bff">
-                Các Yêu Cầu Đã Hoàn Thành
-            </label>
-
-            <div class="col-md-12">
-                <table id="table_hoanthanh" class="table table-bordered" style="width: 100%">
-                    <thead style="background: #0c84ff;color: white">
-                        <tr>
-                            <th style="text-align: center;width: 1%;">STT</th>
-                            <th style="text-align: center;width: 20%;">Đơn Vị</th>
-                            <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
-                            <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
-                        <th style="text-align: center;width: 10%;">Chương Trình</th>
-                            <th style="text-align: center;width: 10%;">Ngày Hoàn Thành</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($yeucau_hoanthanh as $key => $yc)
-                        <tr>
-                            <td style=text-align:center;>{{$key+1}}</td>
-                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                            @if(strlen($yc->ten_yeu_cau)<50)
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {{$yc->ten_yeu_cau}}
-                                </td>
-                            @else
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                                </td>
-                            @endif
-
-                            @if(strlen($yc->noi_dung_yc)<50)
-                                <td style="line-height: normal; width: 30%;text-align: left">
-                                    {{$yc->noi_dung_yc}}
-                                </td>
-                            @else
-                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
-                                </td>
-                            @endif
-                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
-                            <td>
-                                {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        @include('baocao.tonghop_cacbaocao.cac_yc_hoanthanh')
 
         <hr>
 {{--Các yêu cầu đã hostfixx--}}
-        <div class="row">
-            <label style="font-size: 20px;color: #007bff">
-                Các Yêu Cầu Đã Hostfix/Upcode
-            </label>
+        @include('baocao.tonghop_cacbaocao.cac_yc_hostfix')
 
-            <div class="col-md-12">
-                <table id="table_hostfix" class="table table-bordered" style="width: 100%">
-                    <thead style="background: #0c84ff;color: white">
-                    <tr>
-                        <th style="text-align: center;width: 1%;">STT</th>
-                        <th style="text-align: center;width: 20%;">Đơn Vị</th>
-                        <th style="text-align: center;width: 20%;">Tên Yêu Cầu</th>
-                        <th style="text-align: center;width: 30%;">Nội Dung Yêu Cầu</th>
-                        <th style="text-align: center;width: 10%;">Chương Trình</th>
-                        <th style="text-align: center;width: 10%;">Ngày hostfix</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($yeucau_hostfix as $key => $yc)
-                        <tr>
-                            <td style=text-align:center;>{{$key+1}}</td>
-                            <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                            @if(strlen($yc->ten_yeu_cau)<50)
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {{$yc->ten_yeu_cau}}
-                                </td>
-                            @else
-                                <td  style="line-height: normal;width: 20%;text-align: left">
-                                    {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                                </td>
-                            @endif
-
-                            @if(strlen($yc->noi_dung_yc)<50)
-                                <td style="line-height: normal; width: 30%;text-align: left">
-                                    {{$yc->noi_dung_yc}}
-                                </td>
-                            @else
-                                <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                                    {!! substr($yc->noi_dung_yc,0,50) !!}...
-                                </td>
-                            @endif
-                            <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
-                            <td>
-                                {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 @endsection
 @section('footer')
@@ -444,9 +251,27 @@
 
         function chot(id){
             var url = '/chot_ky/'+id;
+            var id_don_vi = document.getElementsByName('id_don_vi_chotky');
+            var luy_ke_hang_tuan = document.getElementsByName('luy_ke_hang_tuan_chotky');
+            var t = document.getElementsByName('tuan_chotky');
+            var n = document.getElementsByName('nam_chotky');
+
+            var id_dv=[];
+            var luyke=[];
+            var tuan=[];
+            var nam=[];
+            for (var i = 0 ; i<id_don_vi.length;i++){
+                // console.log(id_don_vi[i].value);
+                id_dv.push(id_don_vi[i].value);
+                luyke.push(luy_ke_hang_tuan[i].value);
+                tuan.push(t[i].value);
+                nam.push(n[i].value);
+            }
+
             $.ajax({
                 type: 'POST',
                 datatype: 'JSON',
+                data: {id_dv,luyke,tuan,nam},
                 url: url,
                 success:function (result){
                     if (result.error === true){

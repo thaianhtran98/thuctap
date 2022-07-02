@@ -1,5 +1,17 @@
 @extends('main')
+@section('head')
+    <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+{{--    <script>--}}
+{{--        var donvi = sessionStorage.getItem('donvi');--}}
+{{--        var ct = sessionStorage.getItem('ct');--}}
+{{--        sessionStorage.clear();--}}
+{{--        sessionStorage.setItem('ok',0);--}}
+{{--    </script>--}}
 
+@endsection
 
 @section('content')
 
@@ -21,32 +33,6 @@
 
     <div class="m-t-50 m-r-10 m-l-10">
 
-{{--            <div class="col-3"></div>--}}
-{{--            <div class="col-3">--}}
-{{--                <label>Từ ngày</label>--}}
-{{--                <input type="date" class="form-control" >--}}
-{{--            </div>--}}
-{{--            <div class="col-3" style="display: flex">--}}
-{{--                <div style="width: 100%">--}}
-{{--                    <label>Từ ngày</label>--}}
-{{--                    <input type="date" class="form-control" >--}}
-{{--                </div>--}}
-{{--                <button style="width: 30px;height: 30px;margin-top: 30px;margin-left: 10px">--}}
-{{--                  <span>--}}
-{{--                    <i class="fas fa-search"></i>--}}
-{{--                  </span>--}}
-{{--                </button>--}}
-{{--            </div>--}}
-
-{{--            <div class="col-3" >--}}
-{{--                <a href="/themyeucau">--}}
-{{--                    <button class="btn btn-primary" style="float: right; margin-left: auto;margin-right: 8px;margin-top: 28px;" id="show-add-dv" >--}}
-{{--                        Thêm Yêu Cầu--}}
-{{--                    </button>--}}
-{{--                </a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
         <hr>
 
         <div class="row">
@@ -56,6 +42,76 @@
                         Thêm Yêu Cầu
                     </button>
                 </a>
+
+                <div class="row" style="float: left; margin-left: 25%;margin-right: auto;margin-bottom: -50px">
+                    <div class=" col-6 form-group">
+                        <label for="menu">Từ Ngày </label><font color="red"> (*)</font>
+                        <input type="text" name="tungay" id="tungay" autocomplete="off"
+                               class="form-control" placeholder="dd/mm/yyyy">
+                    </div>
+
+                    <div class="col-6 form-group" >
+                        <label for="menu">Đến Ngày</label><font color="red"> (*)</font>
+                        <input type="text" name="denngay" id="denngay" autocomplete="off"
+                               class="form-control" placeholder="dd/mm/yyyy">
+                    </div>
+                </div>
+
+
+                <script>
+                    $("#tungay").datepicker({
+                        dateFormat: 'dd/mm/yy',
+                        // minDate: new Date(
+                        //     year, month-1, day)
+                    });
+
+                    $(document).ready(function () {
+                        // document.getElementById('tungay').value = day + '/' + month + '/' + year;
+                        $("#tungay").inputmask("99/99/9999", {
+                            "placeholder": "dd/mm/yyyy",
+                            'alias': 'date',
+                        });
+                    });
+
+
+                    $("#denngay").datepicker({
+                        dateFormat: 'dd/mm/yy',
+                        // minDate: new Date(
+                        //     year, month-1, day)
+                    });
+
+                    $(document).ready(function () {
+                        // document.getElementById('tungay').value = day + '/' + month + '/' + year;
+                        $("#denngay").inputmask("99/99/9999", {
+                            "placeholder": "dd/mm/yyyy",
+                            'alias': 'date',
+                        });
+                    });
+
+                    var minDate, maxDate;
+
+                    $.fn.dataTable.ext.search.push(
+                        function( settings, data, dataIndex ) {
+                            var min = minDate.val();
+                            var max = maxDate.val();
+                            var date = new Date( data[4] );
+
+                            if (
+                                ( min === null && max === null ) ||
+                                ( min === null && date <= max ) ||
+                                ( min <= date   && max === null ) ||
+                                ( min <= date   && date <= max )
+                            ) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    );
+
+
+                </script>
+
+
                 <table id="table_yc" class="table table-bordered nowrap" style="width:100%;">
                     <thead style="background: #0c84ff;color: white">
                     <tr style="text-align: center">
@@ -204,6 +260,7 @@
                     }
                 }
                 document.getElementById('button_del').style.display = 'none';
+                location.reload();
 
             }
         }
@@ -239,7 +296,6 @@
                         collapseMessage: 'Ẩn bảng thống kê',
                         showMessage: 'Hiển thị bảng thống kê',
                         clearMessage: 'Chọn lại'
-                        // clearer:'Tìm lại'
                     }
                 },
                 "processing": true, // tiền xử lý trước
@@ -250,18 +306,14 @@
                         searchPanes: {
                             show: true
                         },
-                        targets: [ 1, 2, 5, 6],
+                        targets: [ 1, 2, 5],
                     },
                 ],
 
                 searchPanes: {
-                    // clear: false,
                     cascadePanes: true,
-                    // viewTotal: false,
                     orderable: false,
                     viewCount: false,
-                    // collapse:false,
-                    // title:false
                     initCollapsed: true,
                     dtOpts: {
                         select: {
@@ -275,9 +327,21 @@
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
         } );
+
+
+        $(document).ready(function() {
+            // Create date inputs
+            minDate = new DateTime($('#tungay'));
+            maxDate = new DateTime($('#denngay'));
+
+            // DataTables initialisation
+            // var table = $('#example').DataTable();
+
+            // Refilter the table
+            $('#tungay, #denngay').on('change', function () {
+                table.draw();
+            });
+        });
     </script>
 
-    <script>
-
-    </script>
 @endsection

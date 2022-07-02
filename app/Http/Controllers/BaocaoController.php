@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ky;
 use App\Service\BaocaoService;
+use App\Service\DonviService;
 use Illuminate\Http\Request;
 use function Symfony\Component\String\b;
 
@@ -11,10 +12,12 @@ class BaocaoController extends Controller
 {
 
     protected $baocaoservice;
+    protected $donviservice;
 
-    public function __construct(BaocaoService $baocaoService)
+    public function __construct(BaocaoService $baocaoService,DonviService $donviService)
     {
         $this->baocaoservice = $baocaoService;
+        $this->donviservice = $donviService;
     }
 
     public function index(){
@@ -54,6 +57,8 @@ class BaocaoController extends Controller
             'yeucau_dangcode'=>$this->baocaoservice->get_yc_dangcode($ky),
             'yeucau_hoanthanh'=>$this->baocaoservice->get_yc_hoanthanh($ky),
             'yeucau_hostfix'=>$this->baocaoservice->get_yc_hostfix($ky),
+            'luyke_ky'=>$this->baocaoservice->get_luyke_ky($ky),
+            'donvi'=>$this->donviservice->getdonviactive(),
         ]);
     }
 
@@ -71,8 +76,8 @@ class BaocaoController extends Controller
             ]);
     }
 
-    public function chot_ky(ky $ky){
-        $result= $this->baocaoservice->chot_ky($ky);
+    public function chot_ky(ky $ky,Request $request){
+        $result= $this->baocaoservice->chot_ky($ky,$request);
 
         if ($result===false)
             return response()->json([
