@@ -285,6 +285,37 @@ class YeucauService
         return true;
     }
 
+
+//    public function search_yc_with_date($request){
+//        $tungay=explode('/',$request->input('tungay'));
+//        $denngay=explode('/',$request->input('denngay'));
+////        return $denngay[2] . '-' . $denngay[1] . '-' . $denngay[0];
+//        $ycs = yeucauton::distinct()->select('loaingays.ngaytiepnhan')
+//            ->join('loaingays','loaingays.id_yc','=','yeucautons.id')
+//            ->join('donvis','donvis.id','=','yeucautons.id_don_vi')
+//            ->join('loaichuongtrinhs','loaichuongtrinhs.id','=','yeucautons.id_loai_chuong_trinh')
+//            ->where('yeucautons.trang_thai',0)
+//            ->where('loaingays.ngaytiepnhan','<=',$denngay[2] . '-' . $denngay[1] . '-' . $denngay[0])
+//            ->where('loaingays.ngaytiepnhan','>=',$tungay[2] . '-' . $tungay[1] . '-' . $tungay[0])
+//            ->orWhere('yeucautons.trang_thai',1)
+//            ->where('loaingays.ngaygiaoviec','<=',$denngay[2] . '-' . $denngay[1] . '-' . $denngay[0])
+//            ->where('loaingays.ngaygiaoviec','>=',$tungay[2] . '-' . $tungay[1] . '-' . $tungay[0])
+//            ->orWhere('yeucautons.trang_thai',2)
+//            ->where('loaingays.ngaygiaoviec','<=',$denngay[2] . '-' . $denngay[1] . '-' . $denngay[0])
+//            ->where('loaingays.ngaygiaoviec','>=',$tungay[2] . '-' . $tungay[1] . '-' . $tungay[0])
+//            ->orWhere('yeucautons.trang_thai',3)
+//            ->where('loaingays.ngayhoanthanh','<=',$denngay[2] . '-' . $denngay[1] . '-' . $denngay[0])
+//            ->where('loaingays.ngayhoanthanh','>=',$tungay[2] . '-' . $tungay[1] . '-' . $tungay[0])
+//            ->orWhere('yeucautons.trang_thai',4)
+//            ->where('loaingays.ngayhostfix','<=',$denngay[2] . '-' . $denngay[1] . '-' . $denngay[0])
+//            ->where('loaingays.ngayhostfix','>=',$tungay[2] . '-' . $tungay[1] . '-' . $tungay[0])
+//            ->get();
+//        if(count($ycs)!=0)
+//            return $ycs;
+//        else
+//            return false;
+//    }
+
     public function create_thuoctinh($request){
         try{
             $thuoctinh = thuoctinhyeucau::where('id_yc',$request->input('id_yc'))

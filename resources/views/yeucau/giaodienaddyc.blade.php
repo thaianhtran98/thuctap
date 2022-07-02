@@ -90,6 +90,7 @@
     </div>
 </div>
 
+
 <script>
     $('#ten_thuoc_tinh').keypress(function (event) {
         if (event.keyCode == 13 || event.which == 13) {
@@ -319,6 +320,8 @@
                             sessionStorage.setItem(ten_thuoc_tinh,kieu_thuoc_tinh);
                             huy_them_moi();
                         }
+
+                        // $('#ten_thuoc_tinh').picker({search : true});
                         // kieu = sessionStorage.getItem(document.getElementById(ten_thuoc_tinh).options[0].value);
                     }
                 }

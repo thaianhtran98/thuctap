@@ -117,7 +117,7 @@
                     removeRow($iddel[$i].value, '/ky/destroy');
                 }
             }
-            location.reload()
+            return  location.reload()
 
         }
     }

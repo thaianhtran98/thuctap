@@ -34,13 +34,14 @@
     <link rel="stylesheet" href="/template/css/boostrap4.datatable.css">
     <link rel="stylesheet" href="/template/css/searchPanes.dataTables.css">
     <link rel="stylesheet" href="/template/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 
 
     <script src="/template/js/jquery-3.5.1.js" ></script>
 
     <script src="/template/js/bootstrap.min.js"></script>
-    <script src="/template/js/popper.min.js"></script>
+
     <script src="/template/js/jquery.dataTables.min.js"></script>
     <script src="/template/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="/template/js/dataTables.searchPanes.min.js"></script>

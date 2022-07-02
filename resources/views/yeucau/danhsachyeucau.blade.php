@@ -4,12 +4,12 @@
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-{{--    <script>--}}
-{{--        var donvi = sessionStorage.getItem('donvi');--}}
-{{--        var ct = sessionStorage.getItem('ct');--}}
-{{--        sessionStorage.clear();--}}
-{{--        sessionStorage.setItem('ok',0);--}}
-{{--    </script>--}}
+    {{--    <script>--}}
+    {{--        var donvi = sessionStorage.getItem('donvi');--}}
+    {{--        var ct = sessionStorage.getItem('ct');--}}
+    {{--        sessionStorage.clear();--}}
+    {{--        sessionStorage.setItem('ok',0);--}}
+    {{--    </script>--}}
 
 @endsection
 
@@ -43,76 +43,22 @@
                     </button>
                 </a>
 
-                <div class="row" style="float: left; margin-left: 25%;margin-right: auto;margin-bottom: -50px">
-                    <div class=" col-6 form-group">
-                        <label for="menu">Từ Ngày </label><font color="red"> (*)</font>
-                        <input type="text" name="tungay" id="tungay" autocomplete="off"
-                               class="form-control" placeholder="dd/mm/yyyy">
-                    </div>
+{{--                <div class="row" style="float: left; margin-left: 25%;margin-right: auto;margin-bottom: -50px;width: 50%">--}}
+{{--                    <div class=" col-6 form-group" >--}}
+{{--                        <label for="menu">Từ Ngày </label><font color="red"> (*)</font>--}}
+{{--                        <input type="text" name="tungay" id="tungay" autocomplete="off"--}}
+{{--                               class="form-control" placeholder="dd/mm/yyyy">--}}
+{{--                    </div>--}}
 
-                    <div class="col-6 form-group" >
-                        <label for="menu">Đến Ngày</label><font color="red"> (*)</font>
-                        <input type="text" name="denngay" id="denngay" autocomplete="off"
-                               class="form-control" placeholder="dd/mm/yyyy">
-                    </div>
-                </div>
+{{--                    <div class="col-6 form-group" >--}}
+{{--                        <label for="menu">Đến Ngày</label><font color="red"> (*)</font>--}}
+{{--                        <input type="text" name="denngay" id="denngay" autocomplete="off"--}}
+{{--                               class="form-control" placeholder="dd/mm/yyyy">--}}
+{{--                    </div>--}}
 
+{{--                </div>--}}
 
-                <script>
-                    $("#tungay").datepicker({
-                        dateFormat: 'dd/mm/yy',
-                        // minDate: new Date(
-                        //     year, month-1, day)
-                    });
-
-                    $(document).ready(function () {
-                        // document.getElementById('tungay').value = day + '/' + month + '/' + year;
-                        $("#tungay").inputmask("99/99/9999", {
-                            "placeholder": "dd/mm/yyyy",
-                            'alias': 'date',
-                        });
-                    });
-
-
-                    $("#denngay").datepicker({
-                        dateFormat: 'dd/mm/yy',
-                        // minDate: new Date(
-                        //     year, month-1, day)
-                    });
-
-                    $(document).ready(function () {
-                        // document.getElementById('tungay').value = day + '/' + month + '/' + year;
-                        $("#denngay").inputmask("99/99/9999", {
-                            "placeholder": "dd/mm/yyyy",
-                            'alias': 'date',
-                        });
-                    });
-
-                    var minDate, maxDate;
-
-                    $.fn.dataTable.ext.search.push(
-                        function( settings, data, dataIndex ) {
-                            var min = minDate.val();
-                            var max = maxDate.val();
-                            var date = new Date( data[4] );
-
-                            if (
-                                ( min === null && max === null ) ||
-                                ( min === null && date <= max ) ||
-                                ( min <= date   && max === null ) ||
-                                ( min <= date   && date <= max )
-                            ) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    );
-
-
-                </script>
-
-
-                <table id="table_yc" class="table table-bordered nowrap" style="width:100%;">
+                <table id="table_yc" class="table table-bordered nowrap hover" style="width:100%;">
                     <thead style="background: #0c84ff;color: white">
                     <tr style="text-align: center">
                         <th style="line-height: normal">
@@ -124,18 +70,19 @@
                         <th>Tên Yêu Cầu</th>
                         <th>Nội Dung yêu cầu</th>
                         <th>Trạng Thái Yêu Cầu</th>
-                        <th>Ngày của trạng thái</th>
+                        <th>Ngày Của Trạng Thái</th>
+                        <th style="display: none">Ngày của trạng thái origin</th>
                         <th>Cập Nhật</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                     @foreach($ycs as $yc)
                         <tr id="yc_{{$yc->id}}" style="text-align: center">
                             <td style="line-height: normal;text-align: center; width: 100px">
                                 @if($disable_xoa)
-                                <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto"
-                                       {{$yc->yc_loaingay->ngaytiepnhan <= $disable_xoa->denngay ? 'disabled':''}}
-                                       value="{{$yc->id}}">
+                                    <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto"
+                                           {{$yc->yc_loaingay->ngaytiepnhan <= $disable_xoa->denngay ? 'disabled':''}}
+                                           value="{{$yc->id}}">
                                 @else
                                     <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto" value="{{$yc->id}}">
                                 @endif
@@ -188,6 +135,19 @@
                                     {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}
                                 @else
                                     {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}
+                                @endif
+                            </td>
+
+                            <td style="line-height: normal; width: 200px;display: none">
+                                @if($yc->trang_thai==0)
+                                    {{$yc->yc_loaingay->ngaytiepnhan}}
+                                @elseif($yc->trang_thai==1)
+                                    {{$yc->yc_loaingay->ngaygiaoviec}}
+                                @elseif($yc->trang_thai==2)
+                                @elseif($yc->trang_thai==3)
+                                    {{$yc->yc_loaingay->ngayhoanthanh}}
+                                @else
+                                    {{$yc->yc_loaingay->ngayhostfix}}
                                 @endif
                             </td>
 
@@ -266,8 +226,16 @@
         }
     </script>
 
+    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
         $(document).ready(function() {
+            minDate = new DateTime($('#tungay'), {
+                format: 'DD/MM/YYYY'
+            });
+            maxDate = new DateTime($('#denngay'), {
+                format:  'DD/MM/YYYY'
+            });
             var table = $('#table_yc').DataTable( {
                 pagingType: 'full_numbers',
                 dom: 'Plfrtip',
@@ -288,8 +256,6 @@
                         "sLast":     "Cuối"
                     },
                     searchPanes: {
-                        count: '{total} kết quả',
-                        countFiltered: '{shown} / {total}',
                         title: {
                             _:''
                         },
@@ -306,15 +272,182 @@
                         searchPanes: {
                             show: true
                         },
-                        targets: [ 1, 2, 5],
+                        targets: [ 1, 2, 5,6]
+                    },{
+                        searchPanes: {
+                            show: false
+                        },
+                        targets: [ 7]
                     },
                 ],
-
                 searchPanes: {
                     cascadePanes: true,
                     orderable: false,
                     viewCount: false,
                     initCollapsed: true,
+                    panes: [
+                        {
+                            header: 'Từ Ngày',
+                            options: [
+                                @php
+                                    $arr = [];
+                                @endphp
+                                @foreach($ycs as $yc)
+                                    @if ($yc->trang_thai==0)
+                                        @if (in_array($yc->yc_loaingay->ngaytiepnhan,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaytiepnhan
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==1)
+                                        @if (in_array($yc->yc_loaingay->ngaygiaoviec,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaygiaoviec
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==2)
+                                        @if (in_array($yc->yc_loaingay->ngaygiaoviec,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaygiaoviec
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==3)
+                                        @if (in_array($yc->yc_loaingay->ngayhoanthanh,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngayhoanthanh
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==4)
+                                        @if (in_array($yc->yc_loaingay->ngayhostfix,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngayhostfix
+                                            @endphp
+                                        @endif
+                                    @endif
+                                    {
+                                        label:
+                                            @if($yc->trang_thai==0)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==1)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==2)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==3)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}'
+                                            @else
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}'
+                                            @endif,
+                                        value: function(rowData, rowIdx) {
+                                                @if($yc->trang_thai==0)
+                                                    ngay = '{{$yc->yc_loaingay->ngaytiepnhan}}';
+                                                @elseif($yc->trang_thai==1)
+                                                    ngay ='{{$yc->yc_loaingay->ngaygiaoviec}}';
+                                                @elseif($yc->trang_thai==2)
+                                                    ngay ='{{$yc->yc_loaingay->ngaygiaoviec}}';
+                                                @elseif($yc->trang_thai==3)
+                                                    ngay ='{{$yc->yc_loaingay->ngayhoanthanh}}';
+                                                @else
+                                                    ngay ='{{$yc->yc_loaingay->ngayhostfix}}';
+                                                @endif
+                                            return new Date ( rowData[7] ) >= new Date (ngay);
+                                        },
+                                        // className: 'tokyo'
+                                    },
+                                @endforeach
+
+                    ]
+                        },
+                        {
+                            header: 'Đến Ngày',
+                            options: [
+                                @php
+                                    $arr = [];
+                                @endphp
+                                @foreach($ycs as $yc)
+                                    @if ($yc->trang_thai==0)
+                                        @if (in_array($yc->yc_loaingay->ngaytiepnhan,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaytiepnhan
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==1)
+                                        @if (in_array($yc->yc_loaingay->ngaygiaoviec,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaygiaoviec
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==2)
+                                        @if (in_array($yc->yc_loaingay->ngaygiaoviec,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngaygiaoviec
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==3)
+                                        @if (in_array($yc->yc_loaingay->ngayhoanthanh,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngayhoanthanh
+                                            @endphp
+                                        @endif
+                                    @elseif ($yc->trang_thai==4)
+                                        @if (in_array($yc->yc_loaingay->ngayhostfix,$arr))
+                                            @continue
+                                        @else
+                                            @php
+                                                $arr[]=$yc->yc_loaingay->ngayhostfix
+                                            @endphp
+                                        @endif
+                                    @endif
+                                    {
+                                        label:
+                                            @if($yc->trang_thai==0)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==1)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==2)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                            @elseif($yc->trang_thai==3)
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}'
+                                            @else
+                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}'
+                                            @endif,
+                                        value: function(rowData, rowIdx) {
+                                                @if($yc->trang_thai==0)
+                                                    ngay = '{{$yc->yc_loaingay->ngaytiepnhan}}';
+                                                @elseif($yc->trang_thai==1)
+                                                    ngay ='{{$yc->yc_loaingay->ngaygiaoviec}}';
+                                                @elseif($yc->trang_thai==2)
+                                                    ngay ='{{$yc->yc_loaingay->ngaygiaoviec}}';
+                                                @elseif($yc->trang_thai==3)
+                                                    ngay ='{{$yc->yc_loaingay->ngayhoanthanh}}';
+                                                @else
+                                                    ngay ='{{$yc->yc_loaingay->ngayhostfix}}';
+                                                @endif
+                                            return new Date ( rowData[7] ) <= new Date (ngay);
+                                        },
+                                    },
+                                @endforeach
+
+                    ]
+                        },
+                        ],
                     dtOpts: {
                         select: {
                             style: 'multi'
@@ -324,24 +457,7 @@
                 "scrollY": "500px",
                 "scrollCollapse": true,
             } );
-            table.searchPanes.container().prependTo(table.table().container());
-            table.searchPanes.resizePanes();
         } );
 
-
-        $(document).ready(function() {
-            // Create date inputs
-            minDate = new DateTime($('#tungay'));
-            maxDate = new DateTime($('#denngay'));
-
-            // DataTables initialisation
-            // var table = $('#example').DataTable();
-
-            // Refilter the table
-            $('#tungay, #denngay').on('change', function () {
-                table.draw();
-            });
-        });
     </script>
-
 @endsection

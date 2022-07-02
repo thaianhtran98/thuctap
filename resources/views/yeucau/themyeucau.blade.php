@@ -4,12 +4,16 @@
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="/template/select-picker-master/dist/picker.css"/>
+    <script src="/template/select-picker-master/dist/picker.min.js"></script>
     <script>
         var donvi = sessionStorage.getItem('donvi');
         var ct = sessionStorage.getItem('ct');
         sessionStorage.clear();
         sessionStorage.setItem('ok',0);
     </script>
+    <script src="/template/js/popper.min.js"></script>
 
 @endsection
 @section('content')
@@ -73,9 +77,9 @@
                         <label for="menu">Chương Trình</label><font color="red"> (*)</font>
                         <div class="row" style="line-height: 25px;">
                             <div class="col-md-10">
-                                <select class="form-control" name="id_loai_chuong_trinh" id="id_loai_chuong_trinh" >
+                                <select class="form-control"  name="id_loai_chuong_trinh" id="id_loai_chuong_trinh" >
                                     @foreach($cts as $ct)
-                                        <option value="{{$ct->id}}">{{$ct->ten_chuong_trinh}}</option>
+                                        <option data-tokens="{{$ct->id}}" value="{{$ct->id}}">{{$ct->ten_chuong_trinh}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -231,7 +235,15 @@
             @csrf
     </div>
 
-<script>
+
+    <script>
+        $(document).ready(function(){
+            $('#id_loai_chuong_trinh').picker({search : true});
+            $('#id_don_vi').picker({search : true});
+        });
+    </script>
+
+    <script>
     function them_yeu_cau(){
         console.log($('#noi_dung_yc').val());
         var id_don_vi = document.getElementById('id_don_vi').value;

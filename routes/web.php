@@ -52,6 +52,7 @@ Route::get('/danhsachyeucau', [\App\Http\Controllers\YeucauController::class, 'l
 Route::get('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'add_yc']);
 Route::post('/themyeucau', [\App\Http\Controllers\YeucauController::class, 'store_yc']);
 Route::post('/addtamyc', [\App\Http\Controllers\YeucauController::class, 'store_tam_yc']);
+Route::post('/search_yc_with_date', [\App\Http\Controllers\YeucauController::class, 'search_yc_with_date']);
 Route::post('/capnhat_pagethem/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'update_pagethem']);
 Route::get('/yc/edit/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'edit_yeucau']);
 Route::post('/yc/capnhatyeucau/{yeucauton}', [\App\Http\Controllers\YeucauController::class, 'store_edit_yeucau']);

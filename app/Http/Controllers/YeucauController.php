@@ -149,5 +149,18 @@ class YeucauController extends Controller
                 'error'=> false,
             ]);
     }
+//
+//    public function search_yc_with_date(Request $request){
+//        $result =  $this->yeucauservice->search_yc_with_date($request);
+//        if ($result==false)
+//            return response()->json([
+//                'error'=> true,
+//            ]);
+//        else
+//            return response()->json([
+//                'error'=> false,
+//                'ycs'=>$result
+//            ]);
+//    }
 
 }

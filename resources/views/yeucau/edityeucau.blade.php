@@ -6,6 +6,10 @@
     {{--    <script type="text/javascript" src="/template/js/"></script>--}}
     <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+
+    <link rel="stylesheet" href="/template/select-picker-master/dist/picker.css"/>
+    <script src="/template/select-picker-master/dist/picker.min.js"></script>
     <script>
         sessionStorage.clear();
         sessionStorage.setItem('ok',1);
@@ -319,6 +323,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#id_loai_chuong_trinh').picker({search : true});
+            $('#id_don_vi').picker({search : true});
+            $('#ten_thuoc_tinh').picker({search : true});
+        });
+    </script>
 
     <script>
         function cap_nhat_yeu_cau(){
