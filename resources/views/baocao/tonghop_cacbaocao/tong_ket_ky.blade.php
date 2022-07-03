@@ -25,14 +25,14 @@
                 <tr>
                     <td style="text-align:center;width: 1%;">{{$key+1}}</td>
                     <td style="width: 20%; text-align: left;">{{$dv->ten_don_vi}}</td>
-                    @foreach($luyke_ky as $luyke)
+                    @foreach($luyke_ky as $key => $luyke)
                         @if($dv->id == $luyke->id)
                             @if($dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam))
                             <td style="width: 10%; text-align: right;">
-        {{ $dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam)->luy_ke_hang_tuan}}</td>
+                                {{ $dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam)->luy_ke_hang_tuan}}</td>
                             @else
                             <td style="width: 10%; text-align: right;">
-        {{$luyke->so_yc_trong_tuan + $dv->luyke_donvi[0]->luy_ke_hang_tuan}}</td>
+                                {{$luyke->so_yc_trong_tuan + $dv->luyke_donvi[0]->luy_ke_hang_tuan}}</td>
                             @endif
                             <td style="width: 10%; text-align: right;">{{$luyke->so_yc_trong_tuan}}</td>
 
@@ -98,14 +98,14 @@
                         @endif
                     @endforeach
                     @if($have==0)
-                        <td style="width: 10%; text-align: right;">{{ $dv->luyke_donvi[0]->luy_ke_hang_tuan}}</td>
+                        <td style="width: 10%; text-align: right;">{{$dv->luyke_donvi[0]->luy_ke_hang_tuan}}</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <input type="text"  style="display:none;" name="id_don_vi_chotky" value="{{$dv->id}}">
-                        <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$dv->luyke_donvi[0]->luy_ke_hang_tuan}}">
+{{--                        <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$dv->luyke_donvi[0]->luy_ke_hang_tuan}}">--}}
                         <input type="text"  style="display:none;" name="tuan_chotky" value="{{$ky_dang_baocao->tuan}}">
                         <input type="text"  style="display:none;" name="nam_chotky" value="{{$ky_dang_baocao->nam}}">
                     @endif

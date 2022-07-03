@@ -13,9 +13,9 @@
 
 @endsection
 @section('content')
-    @include('alert')
 <div class="m-t-50 m-r-20 m-l-20">
         <div class="row">
+            @include('alert')
 
             <div class="col-md-4">
                 <label style="font-size: 20px;color: #007bff">

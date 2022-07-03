@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 //Đơn vị
 Route::get('/', [\App\Http\Controllers\MainController::class, 'index']);
+Route::get('/lich_su_thao_tac', [\App\Http\Controllers\MainController::class, 'lich_su_thao_tac']);
 Route::get('/danhsachdonvi', [\App\Http\Controllers\MainController::class, 'list_dv']);
 Route::get('/themdonvi', [\App\Http\Controllers\MainController::class, 'add_dv']);
 Route::post('/themdonvi', [\App\Http\Controllers\MainController::class, 'store_dv']);

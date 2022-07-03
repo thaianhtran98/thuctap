@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\donvi;
+use App\Models\lich_su_thao_tac;
 use App\Service\DonviService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,14 @@ class MainController extends Controller
         return view('donvi.themdonvi',[
             'title'=>'Thêm Đơn Vị',
             'donvi'=>$this->donviservice->getdonvi(),
+        ]);
+    }
+
+    public function lich_su_thao_tac(){
+        $lstc = lich_su_thao_tac::get();
+        return view('lich_su_thao_tac',[
+            'title'=>'Lịch Sử Thao Tác',
+            'lstc'=>$lstc,
         ]);
     }
 

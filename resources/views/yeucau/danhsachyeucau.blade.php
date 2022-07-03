@@ -43,21 +43,6 @@
                     </button>
                 </a>
 
-{{--                <div class="row" style="float: left; margin-left: 25%;margin-right: auto;margin-bottom: -50px;width: 50%">--}}
-{{--                    <div class=" col-6 form-group" >--}}
-{{--                        <label for="menu">Từ Ngày </label><font color="red"> (*)</font>--}}
-{{--                        <input type="text" name="tungay" id="tungay" autocomplete="off"--}}
-{{--                               class="form-control" placeholder="dd/mm/yyyy">--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-6 form-group" >--}}
-{{--                        <label for="menu">Đến Ngày</label><font color="red"> (*)</font>--}}
-{{--                        <input type="text" name="denngay" id="denngay" autocomplete="off"--}}
-{{--                               class="form-control" placeholder="dd/mm/yyyy">--}}
-{{--                    </div>--}}
-
-{{--                </div>--}}
-
                 <table id="table_yc" class="table table-bordered nowrap hover" style="width:100%;">
                     <thead style="background: #0c84ff;color: white">
                     <tr style="text-align: center">
@@ -210,17 +195,12 @@
 
                 for ($i = 0; $i < $iddel.length; $i++) {
                     if ($iddel[$i].checked === true && $iddel[$i].disabled === false) {
-                        removeRow($iddel[$i].value, '/yc/destroy');
-                        document.getElementById('thanhcong').innerText = 'Xóa thành công yêu cầu';
-                        document.getElementById('yc_'+$iddel[$i].value).remove();
-                        document.getElementById('thanhcong').style.display = 'block';
-                        setTimeout(function(){
-                            document.getElementById('thanhcong').style.display = 'none';
-                        }, 1500);
+                        removeRow($iddel[$i].value, '/yc/destroy')
                     }
                 }
-                document.getElementById('button_del').style.display = 'none';
-                location.reload();
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
 
             }
         }

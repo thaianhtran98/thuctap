@@ -1,11 +1,9 @@
 @extends('main')
 @section('content')
     @include('alert')
-
     <div class="m-t-50 m-r-20 m-l-20">
         <div class="row" >
             <div class="col-md-3" style="margin-left: 2%">
-{{--                {{$ky_hientai->nam}}--}}
             </div>
             <div class="col-md-1">
                 <label for="menu">Năm</label>
@@ -24,7 +22,8 @@
                     @foreach($ky as $k)
                         @if($ky_dang_baocao->nam== DateTime::createFromFormat('Y-m-d',$k->tungay)->format('Y'))
                             <option {{$k->id ==$ky_dang_baocao->id ? 'selected':''}} value="{{$k->id}}">
-                                Kỳ {{$k->tuan}}: Từ {{DateTime::createFromFormat('Y-m-d',$k->tungay)->format('d/m/Y')}} đến {{DateTime::createFromFormat('Y-m-d',$k->denngay)->format('d/m/Y')}}
+                                Kỳ {{$k->tuan}}: Từ {{DateTime::createFromFormat('Y-m-d',$k->tungay)->format('d/m/Y')}}
+                                đến {{DateTime::createFromFormat('Y-m-d',$k->denngay)->format('d/m/Y')}}
                             </option>
                         @endif
                     @endforeach
@@ -48,26 +47,24 @@
         </div>
         <hr>
 
-        {{--        Các yêu cầu phát sinh--}}
         @include('baocao.tonghop_cacbaocao.tong_ket_ky')
-
 
         <hr>
 
-{{--        Các yêu cầu phát sinh--}}
+        Các yêu cầu phát sinh
         @include('baocao.tonghop_cacbaocao.cac_yc_phat_sinh')
 
         <hr>
 
-{{--Các yêu cầu đang code--}}
+Các yêu cầu đang code
         @include('baocao.tonghop_cacbaocao.cac_yc_dangcode')
 
         <hr>
-{{--Các yêu cầu đã hoàn thành--}}
+Các yêu cầu đã hoàn thành
         @include('baocao.tonghop_cacbaocao.cac_yc_hoanthanh')
 
         <hr>
-{{--Các yêu cầu đã hostfixx--}}
+Các yêu cầu đã hostfixx
         @include('baocao.tonghop_cacbaocao.cac_yc_hostfix')
 
     </div>

@@ -19,4 +19,9 @@ class chitietyeucau extends Model
         return $this->hasOne(nguoithuchien::class, 'id', 'id_nguoithuchien');
     }
 
+    public function ct_chucvu(){
+        return $this->hasOne(chucvu::class, 'id', 'id_chucvu');
+    }
+
+
 }

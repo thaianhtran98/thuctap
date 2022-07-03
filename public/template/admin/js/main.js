@@ -14,7 +14,7 @@ function removeRow(id,url){
                 if(result.error === true){
                     return false;
                 }else {
-                    return true
+                    return true;
                 }
             }
         })

@@ -33,7 +33,7 @@
     </thead>
     <tbody style="text-align: center">
     @foreach($ky as $key => $k)
-        <tr>
+        <tr id="ky_{{$k->id}}">
             <td style="line-height: normal;text-align: center; width: 100px">
                 <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto"
                     {{$k->chot==1 ? 'disabled':''}}   value="{{$k->id}}">
@@ -114,7 +114,9 @@
 
             for ($i = 0; $i < $iddel.length; $i++) {
                 if ($iddel[$i].checked === true && $iddel[$i].disabled === false) {
-                    removeRow($iddel[$i].value, '/ky/destroy');
+                    if(removeRow($iddel[$i].value, '/ky/destroy')){
+                        document.getElementById('ky_'+$iddel[$i].value).remove();
+                    }
                 }
             }
             return  location.reload()

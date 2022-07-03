@@ -2,10 +2,10 @@
     <table id="table_cv" class="table table-bordered" style="width:100%">
         <thead style="background: #0c84ff;color: white">
         <tr style="text-align: center">
-            <th style="line-height: normal">
-                <input type="checkbox" name="del_all_cv" onclick="delall_cv()" style="height: 20px;width: 20px; float: left">
-                Xóa
-            </th>
+{{--            <th style="line-height: normal">--}}
+{{--                <input type="checkbox" name="del_all_cv" onclick="delall_cv()" style="height: 20px;width: 20px; float: left">--}}
+{{--                Xóa--}}
+{{--            </th>--}}
             <th>Tên Chức Vụ</th>
             <th>Tình Trạng Hoạt Động</th>
         </tr>
@@ -13,10 +13,10 @@
         <tbody id="list_cv">
         @foreach($cvs as $cv)
             <tr>
-                <td style="line-height: normal">
-                    <input type="checkbox" name="del_id_cv[]" onclick="showbutton_cv()" style="height: 20px;width: 20px"
-                           value="{{$cv->id}}">
-                </td>
+{{--                <td style="line-height: normal">--}}
+{{--                    <input type="checkbox" name="del_id_cv[]" onclick="showbutton_cv()" style="height: 20px;width: 20px"--}}
+{{--                           value="{{$cv->id}}">--}}
+{{--                </td>--}}
                 <td ondblclick="showedit_cv{{$cv->id}}()">
                     <a id="ten_cv_{{$cv->id}}" style="display: block">{{$cv->ten_chuc_vu}}</a>
                     <input id="edit_ten_cv_{{$cv->id}}" style="display: none;border: 1px solid rgba(4,4,19,0.93);"

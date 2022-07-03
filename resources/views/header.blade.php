@@ -152,8 +152,8 @@
                         <button class="button_header">
                             Danh Mục Quản Lý
                         </button>
-                        <ul class="my-sub-menu" id="menu_yeucau">
-                            <li id="donvi" style="display: inline;width: 25%;">
+                        <ul class="my-sub-menu" id="menu_yeucau" style="text-align: left">
+                            <li id="donvi" style="display: inline;width: 25%;text-align: left">
                                 <a href="/themdonvi">
                                     <button class="button_header">
                                         Đơn Vị
@@ -161,7 +161,7 @@
                                 </a>
                             </li>
 
-                            <li style="display: inline;width: 25%;">
+                            <li style="display: inline;width: 25%;text-align: left">
                                 <a href="/themnhanvien">
                                     <button class="button_header">
                                         Nhân Viên
@@ -169,10 +169,18 @@
                                 </a>
                             </li>
 
-                            <li style="display: inline;width: 25%;">
+                            <li style="display: inline;width: 25%;text-align: left">
                                 <a href="/themloaichuongtrinh">
                                     <button class="button_header">
                                         Loại Chương Trình
+                                    </button>
+                                </a>
+                            </li>
+
+                            <li style="display: inline;width: 25%;text-align: left">
+                                <a href="/lich_su_thao_tac">
+                                    <button class="button_header">
+                                        Lịch Sử Thao Tác
                                     </button>
                                 </a>
                             </li>
@@ -184,14 +192,14 @@
                             Báo Cáo
                         </button>
                         <ul class="my-sub-menu" id="menu_yeucau">
-                            <li id="donvi" style="display: inline;width: 25%;">
+                            <li id="donvi" style="display: inline;width: 25%;text-align: left">
                                 <a href="/baocao">
                                     <button class="button_header">
                                         Báo cáo
                                     </button>
                                 </a>
                             </li>
-                            <li id="donvi" style="display: inline;width: 25%;">
+                            <li id="donvi" style="display: inline;width: 25%;text-align: left">
                                 <a href="/kybaocao">
                                     <button class="button_header">
                                         Kỳ Báo Cáo
@@ -211,6 +219,17 @@
                 </ul>
 
             </div>
+            <button class="btn btn-primary" style="float: left; margin-left: 300px;margin-right: auto;" onclick="reload()" >
+                    <span>
+                        <i class="fas fa-redo-alt"></i>
+                    </span>
+            </button>
+
         </nav>
     </div>
 </div>
+<script>
+    function reload(){
+        location.reload();
+    }
+</script>

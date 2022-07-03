@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\donvi;
 use App\Models\ky;
 use App\Models\kybaocao;
+use App\Models\lich_su_thao_tac;
 use App\Models\loaingay;
 use App\Models\luyke;
 use App\Models\yeucauton;
@@ -24,6 +25,7 @@ class BaocaoService
 
     public function create($request){
         try {
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
             if ($request->input('chot'))
                 $chot = (integer)$request->input('tuan');
             else
@@ -37,12 +39,110 @@ class BaocaoService
                 'denngay'=>$denngay[2] . '/' . $denngay[1] . '/' . $denngay[0],
                 'chot'=>$chot,
             ]);
+
+            lich_su_thao_tac::create([
+                'id_nv'=>0,
+                'thao_tac'=>'Thêm kỳ báo cáo mới',
+                'mo_ta'=>'Tuần : ' . $request->input('tuan')
+                    . '<br> Năm: '.$request->input('nam')
+                    . '<br> Từ ngày: '.$request->input('tungay')
+                    . '<br> Đến ngày: '.$request->input('denngay'),
+            ]);
+
+
             Session::flash('success', 'Thêm  thành công kỳ: tuần ' . $request->input('tuan') . ' năm ' . $request->input('nam') );
         } catch (\Exception $err) {
             Session::flash('error', $err->getMessage());
             return false;
         }
         return true;
+    }
+
+
+    public function getnam(){
+        return ky::DISTINCT()->select('nam')->get();
+    }
+
+
+    public function chot_ky($ky,$request){
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+       if($ky->chot==0){
+           $id_don_vi = $request->input('id_dv');
+           $luy_ke_hang_tuan = $request->input('luyke');
+           $tuan = $request->input('tuan');
+           $nam = $request->input('nam');
+           $luyke_donvi =luyke::where('tuan',$tuan[0])->where('nam',$nam[0])->first();
+           if ($luyke_donvi){
+               foreach ($id_don_vi as $key => $dv){
+                    $luyke_donvi->id_don_vi=(integer)$dv;
+                    $luyke_donvi->luy_ke_hang_tuan=(integer)$luy_ke_hang_tuan[$key];
+                    $luyke_donvi->tuan=(integer)$tuan[$key];
+                    $luyke_donvi->nam=(integer)$nam[$key];
+                   $luyke_donvi->save();
+               }
+           }else{
+               foreach ($id_don_vi as $key => $dv){
+                   luyke::create([
+                       'id_don_vi'=>(integer)$dv,
+                       'luy_ke_hang_tuan'=>(integer)$luy_ke_hang_tuan[$key],
+                       'tuan'=>(integer)$tuan[$key],
+                       'nam'=>(integer)$nam[$key],
+                   ]);
+               }
+           }
+
+           lich_su_thao_tac::create([
+               'id_nv'=>0,
+               'thao_tac'=>'Chốt kỳ',
+               'mo_ta'=>' Chốt kỳ'
+                   . '<br>  Tuần : ' . $request->input('tuan')
+                   . '<br> Năm: '.$request->input('nam'),
+           ]);
+
+           $ky->chot = 1;
+           $ky->save();
+       }else{
+           $ky->chot = 0;
+           $ky->save();
+
+           lich_su_thao_tac::create([
+               'id_nv'=>0,
+               'thao_tac'=>'Hủy chốt',
+               'mo_ta'=>' Hủy chốt kỳ'
+                   . '<br>  Tuần : ' . $request->input('tuan')
+                   . '<br> Năm: '.$request->input('nam'),
+           ]);
+
+       }
+       return true;
+    }
+
+    public function destroy_ky($request){
+        try {
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $id = $request->input('id');
+            $ky = ky::where('id', $id)->first();
+
+            if (luyke::where('tuan',$ky->tuan)->where('nam',$ky->nam)->first()){
+                Session::flash('error', 'Không được xóa kỳ đã chốt');
+                return false;
+            }
+
+            if ($ky) {
+                lich_su_thao_tac::create([
+                    'id_nv'=>0,
+                    'thao_tac'=>'Xóa kỳ báo cáo',
+                    'mo_ta'=>'Xóa kỳ'
+                        . '<br>  Tuần : ' . $ky->tuan
+                        . '<br> Năm: '. $ky->nam,
+                ]);
+                ky::where('id',$id)->delete();
+            }
+            return true;
+        } catch (\Exception $err) {
+            Session::flash('error', 'Xóa thất bại');
+            return false;
+        }
     }
 
     public function get_yc_tiepnhan($ky){
@@ -106,85 +206,6 @@ class BaocaoService
             ->orderByDesc('uu_tien')
             ->get();
         return $dv;
-    }
-
-
-//    public function get_luyke_don_vi(){
-//        $donvi = donvi::where('hoat_dong',1)->get();
-//        $id_dv = [];
-//
-//        foreach ($donvi as $dv){
-//            $id_dv[] = $dv->id;
-//        }
-//
-//
-//        $luyke = luyke::whereIN('id_don_vi',$id_dv)
-//            ->orderByDesc('tuan')
-//            ->orderByDesc('nam')
-//            ->paginate(count($id_dv));
-//        return $luyke;
-//    }
-
-
-    public function getnam(){
-        return ky::DISTINCT()->select('nam')->get();
-    }
-
-
-    public function chot_ky($ky,$request){
-       if($ky->chot==0){
-           $id_don_vi = $request->input('id_dv');
-           $luy_ke_hang_tuan = $request->input('luyke');
-           $tuan = $request->input('tuan');
-           $nam = $request->input('nam');
-           $luyke_donvi =luyke::where('tuan',$tuan[0])->where('nam',$nam[0])->first();
-           if ($luyke_donvi){
-               foreach ($id_don_vi as $key => $dv){
-                    $luyke_donvi->id_don_vi=(integer)$dv;
-                    $luyke_donvi->luy_ke_hang_tuan=(integer)$luy_ke_hang_tuan[$key];
-                    $luyke_donvi->tuan=(integer)$tuan[$key];
-                    $luyke_donvi->nam=(integer)$nam[$key];
-                   $luyke_donvi->save();
-               }
-           }else{
-               foreach ($id_don_vi as $key => $dv){
-                   luyke::create([
-                       'id_don_vi'=>(integer)$dv,
-                       'luy_ke_hang_tuan'=>(integer)$luy_ke_hang_tuan[$key],
-                       'tuan'=>(integer)$tuan[$key],
-                       'nam'=>(integer)$nam[$key],
-                   ]);
-               }
-           }
-
-           $ky->chot = 1;
-           $ky->save();
-       }else{
-           $ky->chot = 0;
-           $ky->save();
-
-       }
-       return true;
-    }
-
-    public function destroy_ky($request){
-        try {
-            $id = $request->input('id');
-            $ky = ky::where('id', $id)->first();
-
-            if (luyke::where('tuan',$ky->tuan)->where('nam',$ky->nam)->first()){
-                Session::flash('error', 'Không được xóa kỳ đã chốt');
-                return false;
-            }
-
-            if ($ky) {
-                ky::where('id',$id)->delete();
-            }
-            return true;
-        } catch (\Exception $err) {
-            Session::flash('error', 'Xóa thất bại');
-            return false;
-        }
     }
 
 

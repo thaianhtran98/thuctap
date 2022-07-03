@@ -117,7 +117,15 @@ class YeucauController extends Controller
     }
 
     public function destroy(Request $request){
-        return $this->yeucauservice->destroy($request);
+        $result= $this->yeucauservice->destroy($request);
+        if ($result===false)
+            return response()->json([
+                'error'=> true,
+            ]);
+        else
+            return response()->json([
+                'error'=> false,
+            ]);
     }
 
     public function destroy_yck(Request $request){
