@@ -118,7 +118,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#table_tongket').DataTable( {
+        var table_tongket =  $('#table_tongket').DataTable( {
             pagingType: 'full_numbers',
             "language": {
                 "sProcessing":   "Đang xử lý...",
@@ -142,6 +142,9 @@
             "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "515px",
             "scrollCollapse": true,
+            lengthChange: true,
+            buttons: [ 'excel', 'pdf' ]
         } );
+        table_tongket.buttons().container().appendTo( '#table_tongket_wrapper .col-md-6:eq(0)' );
     } );
 </script>

@@ -4,13 +4,6 @@
     <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    {{--    <script>--}}
-    {{--        var donvi = sessionStorage.getItem('donvi');--}}
-    {{--        var ct = sessionStorage.getItem('ct');--}}
-    {{--        sessionStorage.clear();--}}
-    {{--        sessionStorage.setItem('ok',0);--}}
-    {{--    </script>--}}
-
 @endsection
 
 @section('content')
@@ -32,9 +25,7 @@
     @include('alert')
 
     <div class="m-t-50 m-r-10 m-l-10">
-
         <hr>
-
         <div class="row">
             <div class="col-md-12">
                 <a href="/themyeucau">
@@ -43,7 +34,7 @@
                     </button>
                 </a>
 
-                <table id="table_yc" class="table table-bordered nowrap hover" style="width:100%;">
+                <table id="table_yc" class="table table-bordered nowrap" style="width:100%;">
                     <thead style="background: #0c84ff;color: white">
                     <tr style="text-align: center">
                         <th style="line-height: normal">
@@ -210,15 +201,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
         $(document).ready(function() {
-            minDate = new DateTime($('#tungay'), {
-                format: 'DD/MM/YYYY'
-            });
-            maxDate = new DateTime($('#denngay'), {
-                format:  'DD/MM/YYYY'
-            });
-            var table = $('#table_yc').DataTable( {
+            var table_yc = $('#table_yc').DataTable( {
                 pagingType: 'full_numbers',
-                dom: 'Plfrtip',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
                     "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
@@ -260,6 +244,8 @@
                         targets: [ 7]
                     },
                 ],
+                dom: 'Plfrtip',
+                // dom: 'Bfrtip',
                 searchPanes: {
                     cascadePanes: true,
                     orderable: false,
@@ -436,7 +422,10 @@
                 },
                 "scrollY": "500px",
                 "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
             } );
+            table_yc.buttons().container().appendTo( '#table_yc_wrapper .col-md-6:eq(0)' );
         } );
 
     </script>

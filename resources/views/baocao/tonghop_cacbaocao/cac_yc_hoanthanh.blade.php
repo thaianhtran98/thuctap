@@ -20,25 +20,25 @@
                 <tr>
                     <td style=text-align:center;>{{$key+1}}</td>
                     <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                    @if(strlen($yc->ten_yeu_cau)<50)
+{{--                    @if(strlen($yc->ten_yeu_cau)<50)--}}
                         <td  style="line-height: normal;width: 20%;text-align: left">
                             {{$yc->ten_yeu_cau}}
                         </td>
-                    @else
-                        <td  style="line-height: normal;width: 20%;text-align: left">
-                            {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                        </td>
-                    @endif
+{{--                    @else--}}
+{{--                        <td  style="line-height: normal;width: 20%;text-align: left">--}}
+{{--                            {!! substr($yc->ten_yeu_cau,0,50) !!}...--}}
+{{--                        </td>--}}
+{{--                    @endif--}}
 
-                    @if(strlen($yc->noi_dung_yc)<50)
+{{--                    @if(strlen($yc->noi_dung_yc)<50)--}}
                         <td style="line-height: normal; width: 30%;text-align: left">
                             {{$yc->noi_dung_yc}}
                         </td>
-                    @else
-                        <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                            {!! substr($yc->noi_dung_yc,0,50) !!}...
-                        </td>
-                    @endif
+{{--                    @else--}}
+{{--                        <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">--}}
+{{--                            {!! substr($yc->noi_dung_yc,0,50) !!}...--}}
+{{--                        </td>--}}
+{{--                    @endif--}}
                     <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                     <td>
                         {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}

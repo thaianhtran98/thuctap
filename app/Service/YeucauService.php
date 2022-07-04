@@ -364,7 +364,7 @@ class YeucauService
 
             lich_su_thao_tac::create([
                 'id_nv'=>0,
-                'thao_tac'=>'Cập nhật yêu cầu: ' . (string)$request->input('ten_yeu_cau'),
+                'thao_tac'=>'Cập nhật yêu cầu',
                 'mo_ta'=>'Tên yêu cầu: ' . (string)$request->input('ten_yeu_cau')
                     . '<br> Thuộc Đơn vị: '. $yeucauton->yc_dv->ten_don_vi
                     . '<br> Thuộc chương trình: '.$yeucauton->yc_ct->ten_chuong_trinh
@@ -408,8 +408,9 @@ class YeucauService
 
             lich_su_thao_tac::create([
                 'id_nv'=>0,
-                'thao_tac'=>'Thêm yêu cầu con cho yêu cầu: ' . $yeucauton->ten_yeu_cau,
-                'mo_ta'=>'Tên yêu cầu con: '.$request->input('ten_thuoc_tinh')
+                'thao_tac'=>'Thêm yêu cầu con cho yêu cầu' ,
+                'mo_ta'=>'<br>Tên yêu cầu cha: '. $yeucauton->ten_yeu_cau
+                    . '<br> Tên yêu cầu con: '.$request->input('ten_thuoc_tinh')
                     . '<br> Kiểu yêu cầu con: '.$request->input('kieu_thuoc_tinh')
                     . '<br> Nội dung yêu cầu con: '.$request->input('noi_dung_thuoc_tinh'),
             ]);
@@ -436,8 +437,8 @@ class YeucauService
 
             lich_su_thao_tac::create([
                 'id_nv'=>0,
-                'thao_tac'=>'Cập nhật yêu cầu con cho yêu cầu: ' . $yeucauton->ten_yeu_cau,
-                'mo_ta'=>'Tên yêu cầu: ' . (string)$request->input('ten_yeu_cau')
+                'thao_tac'=>'Cập nhật yêu cầu con cho yêu cầu',
+                'mo_ta'=>'<br>Tên yêu cầu cha: '. $yeucauton->ten_yeu_cau
                     . '<br> Tên yêu cầu con: '.$request->input('ten_thuoc_tinh')
                     . '<br> Kiểu yêu cầu con: '.$request->input('kieu_thuoc_tinh')
                     . '<br> Nội dung yêu cầu con: '.$request->input('noi_dung_thuoc_tinh'),
@@ -486,8 +487,9 @@ class YeucauService
                 $ten_yc = yeucauton::where('id',$yccon->id)->first();
                 lich_su_thao_tac::create([
                     'id_nv'=>0,
-                    'thao_tac'=>'Xóa yêu cầu con của '. $ten_yc->ten_yeu_cau,
-                    'mo_ta'=>'Tên yêu cầu con: ' . $ten_yc_con
+                    'thao_tac'=>'Xóa yêu cầu con',
+                    'mo_ta'=>'<br>Tên yêu cầu cha: '. $ten_yc->ten_yeu_cau
+                        . '<br> Tên yêu cầu con: '. $ten_yc_con
                         . '<br> Nội dung yêu cầu con: '.$yccon->noi_dung_thuoc_tinh,
                 ]);
                 thuoctinhyeucau::where('id', $id)->delete();

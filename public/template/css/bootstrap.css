@@ -2580,13 +2580,13 @@ fieldset:disabled a.btn {
 
 .btn-secondary {
     color: #fff;
-    background-color: #6c757d;
+    background-color: #0c84ff;
     border-color: #6c757d;
 }
 
 .btn-secondary:hover {
     color: #fff;
-    background-color: #5a6268;
+    background-color: #004f9d;
     border-color: #545b62;
 }
 
@@ -5986,8 +5986,8 @@ a.close.disabled {
 .modal-dialog-centered::before {
     display: block;
     height: calc(100vh - 1rem);
-    height: -webkit-min-content;
-    height: -moz-min-content;
+    /*height: -webkit-min-content;*/
+    /*height: -moz-min-content;*/
     height: min-content;
     content: "";
 }

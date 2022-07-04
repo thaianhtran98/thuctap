@@ -21,25 +21,25 @@
                 <tr>
                     <td style=text-align:center;>{{$key+1}}</td>
                     <td style="width: 20%;">{{$yc->yc_dv->ten_don_vi}}</td>
-                    @if(strlen($yc->ten_yeu_cau)<50)
+{{--                    @if(strlen($yc->ten_yeu_cau)<50)--}}
                         <td  style="line-height: normal;width: 20%;text-align: left">
                             {{$yc->ten_yeu_cau}}
                         </td>
-                    @else
-                        <td  style="line-height: normal;width: 20%;text-align: left">
-                            {!! substr($yc->ten_yeu_cau,0,50) !!}...
-                        </td>
-                    @endif
+{{--                    @else--}}
+{{--                        <td  style="line-height: normal;width: 20%;text-align: left">--}}
+{{--                            {!! substr($yc->ten_yeu_cau,0,50) !!}...--}}
+{{--                        </td>--}}
+{{--                    @endif--}}
 
-                    @if(strlen($yc->noi_dung_yc)<50)
+{{--                    @if(strlen($yc->noi_dung_yc)<50)--}}
                         <td style="line-height: normal; width: 30%;text-align: left">
                             {{$yc->noi_dung_yc}}
                         </td>
-                    @else
-                        <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">
-                            {!! substr($yc->noi_dung_yc,0,50) !!}...
-                        </td>
-                    @endif
+{{--                    @else--}}
+{{--                        <td style="line-height: normal; width: 30%;text-align: left" title="{{$yc->noi_dung_yc}}">--}}
+{{--                            {!! substr($yc->noi_dung_yc,0,50) !!}...--}}
+{{--                        </td>--}}
+{{--                    @endif--}}
                     <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                     <td>
                         {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
@@ -54,7 +54,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#table_dangcode').DataTable( {
+        var table_dangcode = $('#table_dangcode').DataTable( {
             pagingType: 'full_numbers',
             "language": {
                 "sProcessing":   "Đang xử lý...",
@@ -78,6 +78,9 @@
             "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "515px",
             "scrollCollapse": true,
+            lengthChange: true,
+            buttons: [ 'excel', 'pdf' ]
         } );
+        table_dangcode.buttons().container().appendTo( '#table_dangcode_wrapper .col-md-6:eq(0)' );
     } );
 </script>

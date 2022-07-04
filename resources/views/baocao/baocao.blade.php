@@ -1,5 +1,10 @@
 @extends('main')
 @section('content')
+    <style>
+        div.dataTables_wrapper div.dataTables_filter{
+            margin-top: 0px;
+        }
+    </style>
     @include('alert')
     <div class="m-t-50 m-r-20 m-l-20">
         <div class="row" >
@@ -20,8 +25,8 @@
                 <label for="menu">Kỳ</label>
                 <select id="ky" name="ky" class="form-control">
                     @foreach($ky as $k)
-                        @if($ky_dang_baocao->nam== DateTime::createFromFormat('Y-m-d',$k->tungay)->format('Y'))
-                            <option {{$k->id ==$ky_dang_baocao->id ? 'selected':''}} value="{{$k->id}}">
+                        @if($ky_dang_baocao->nam == DateTime::createFromFormat('Y-m-d',$k->tungay)->format('Y') )
+                            <option {{$k->id == $ky_dang_baocao->id ? 'selected':''}} value="{{$k->id}}">
                                 Kỳ {{$k->tuan}}: Từ {{DateTime::createFromFormat('Y-m-d',$k->tungay)->format('d/m/Y')}}
                                 đến {{DateTime::createFromFormat('Y-m-d',$k->denngay)->format('d/m/Y')}}
                             </option>
@@ -51,20 +56,20 @@
 
         <hr>
 
-        Các yêu cầu phát sinh
+{{--        Các yêu cầu phát sinh--}}
         @include('baocao.tonghop_cacbaocao.cac_yc_phat_sinh')
 
         <hr>
 
-Các yêu cầu đang code
+{{--Các yêu cầu đang code--}}
         @include('baocao.tonghop_cacbaocao.cac_yc_dangcode')
 
         <hr>
-Các yêu cầu đã hoàn thành
+{{--Các yêu cầu đã hoàn thành--}}
         @include('baocao.tonghop_cacbaocao.cac_yc_hoanthanh')
 
         <hr>
-Các yêu cầu đã hostfixx
+{{--Các yêu cầu đã hostfixx--}}
         @include('baocao.tonghop_cacbaocao.cac_yc_hostfix')
 
     </div>
@@ -72,7 +77,7 @@ Các yêu cầu đã hostfixx
 @section('footer')
     <script>
         $(document).ready(function() {
-            $('#table_tiepnhan').DataTable( {
+            var table_tiepnhan = $('#table_tiepnhan').DataTable( {
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
@@ -96,10 +101,46 @@ Các yêu cầu đã hostfixx
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "515px",
                 "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'excel', 'pdf']
             } );
+            table_tiepnhan.buttons().container().appendTo( '#table_tiepnhan_wrapper .col-md-6:eq(0)' );
+        } );
+
+
+
+        $(document).ready(function() {
+            var table_hoanthanh =  $('#table_hoanthanh').DataTable( {
+                pagingType: 'full_numbers',
+                "language": {
+                    "sProcessing":   "Đang xử lý...",
+                    "sZeroRecords":  "Không tìm có kết quả",
+                    "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                    "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
+                    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "Tìm:",
+                    "sUrl":          "",
+                    "sLengthMenu":   "Xem _MENU_ Mục",
+                    "oPaginate": {
+                        "sFirst":    "Đầu",
+                        "sPrevious": "<",
+                        "sNext":     ">",
+                        "sLast":     "Cuối"
+                    }
+                },
+                "processing": true, // tiền xử lý trước
+                "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
+                "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                "scrollY": "515px",
+                "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'excel', 'pdf']
+            } );
+            table_hoanthanh.buttons().container().appendTo( '#table_hoanthanh_wrapper .col-md-6:eq(0)' );
         } );
         $(document).ready(function() {
-            $('#table_hoanthanh').DataTable( {
+            var table_hostfix = $('#table_hostfix').DataTable( {
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
@@ -123,10 +164,13 @@ Các yêu cầu đã hostfixx
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "515px",
                 "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'excel', 'pdf']
             } );
+            table_hostfix.buttons().container().appendTo( '#table_hostfix_wrapper .col-md-6:eq(0)' );
         } );
         $(document).ready(function() {
-            $('#table_hostfix').DataTable( {
+            var table_giaoviec = $('#table_giaoviec').DataTable( {
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
@@ -150,10 +194,15 @@ Các yêu cầu đã hostfixx
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "515px",
                 "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'excel', 'pdf']
             } );
+            table_giaoviec.buttons().container().appendTo( '#table_giaoviec_wrapper .col-md-6:eq(0)' );
         } );
+
+
         $(document).ready(function() {
-            $('#table_giaoviec').DataTable( {
+            var table_bc = $('#table_bc').DataTable( {
                 pagingType: 'full_numbers',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
@@ -177,34 +226,10 @@ Các yêu cầu đã hostfixx
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "515px",
                 "scrollCollapse": true,
+                lengthChange: true,
+                buttons: [ 'excel', 'pdf']
             } );
-        } );
-        $(document).ready(function() {
-            $('#table_bc').DataTable( {
-                pagingType: 'full_numbers',
-                "language": {
-                    "sProcessing":   "Đang xử lý...",
-                    "sZeroRecords":  "Không tìm có kết quả",
-                    "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-                    "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
-                    "sInfoFiltered": "(được lọc từ _MAX_ mục)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "Tìm:",
-                    "sUrl":          "",
-                    "sLengthMenu":   "Xem _MENU_ Mục",
-                    "oPaginate": {
-                        "sFirst":    "Đầu",
-                        "sPrevious": "<",
-                        "sNext":     ">",
-                        "sLast":     "Cuối"
-                    }
-                },
-                "processing": true, // tiền xử lý trước
-                "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
-                "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
-                "scrollY": "515px",
-                "scrollCollapse": true,
-            } );
+            table_bc.buttons().container().appendTo( '#table_bc_wrapper .col-md-6:eq(0)' );
         } );
     </script>
 
