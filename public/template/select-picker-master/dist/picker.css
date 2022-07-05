@@ -76,15 +76,15 @@
   cursor: pointer;
   margin-right: 0;
   margin-bottom: 0;
-  width: 109%;
+  width: 100%;
 }
 .picker .pc-select .pc-list {
   position: absolute;
   margin-left: 19px;
   text-align: left;
   left: 0;
-  top: calc(100% + 5px);
-  width: calc(99%);
+  top: calc(95% + 5px);
+  width: calc(90% + 4px);
   border: 1px solid #ced4da;
   z-index: 11;
   background-color: #ffffff;

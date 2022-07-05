@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 //Đơn vị
-Route::get('/', [\App\Http\Controllers\MainController::class, 'index']);
 Route::get('/lich_su_thao_tac', [\App\Http\Controllers\MainController::class, 'lich_su_thao_tac']);
 Route::get('/danhsachdonvi', [\App\Http\Controllers\MainController::class, 'list_dv']);
 Route::get('/themdonvi', [\App\Http\Controllers\MainController::class, 'add_dv']);
@@ -72,3 +71,4 @@ Route::get('/xembaocao/{ky}',[\App\Http\Controllers\BaocaoController::class,'xem
 Route::post('/load_ky/',[\App\Http\Controllers\BaocaoController::class,'load_ky']);
 Route::post('/chot_ky/{ky}',[\App\Http\Controllers\BaocaoController::class,'chot_ky']);
 Route::delete('/ky/destroy',[\App\Http\Controllers\BaocaoController::class,'destroy']);
+Route::get('/', [\App\Http\Controllers\BaocaoController::class,'index']);

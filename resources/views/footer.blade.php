@@ -186,7 +186,7 @@
     $(document).ready(function (){
         if(location.href.indexOf('yeucau')>0 || location.href.indexOf('yc')>0){
             document.getElementById('header_yeucau').style.backgroundColor = '#004f9d';
-        }else if (location.href.indexOf('baocao')>0){
+        }else if (location.href.indexOf('baocao')>0 || document.getElementById('title_head').innerText == 'Báo Cáo' ){
             document.getElementById('header_baocao').style.backgroundColor = '#004f9d';
         }else{
             document.getElementById('header_danhmuc').style.backgroundColor = '#004f9d';

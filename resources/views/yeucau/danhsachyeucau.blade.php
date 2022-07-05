@@ -27,13 +27,12 @@
     <div class="m-t-50 m-r-10 m-l-10">
         <hr>
         <div class="row">
+            <a href="/themyeucau">
+                <button class="btn btn-primary" style="float: left; margin-left: 10px;margin-right: auto;margin-bottom: -50px;z-index: 100000;position: relative" id="show-add-dv" >
+                    Thêm Yêu Cầu
+                </button>
+            </a>
             <div class="col-md-12">
-                <a href="/themyeucau">
-                    <button class="btn btn-primary" style="float: left; margin-left: 8px;margin-right: auto;margin-bottom: -50px" id="show-add-dv" >
-                        Thêm Yêu Cầu
-                    </button>
-                </a>
-
                 <table id="table_yc" class="table table-bordered nowrap" style="width:100%;">
                     <thead style="background: #0c84ff;color: white">
                     <tr style="text-align: center">
@@ -197,12 +196,13 @@
         }
     </script>
 
-    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+{{--    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>--}}
     <script>
         $(document).ready(function() {
-            var table_yc = $('#table_yc').DataTable( {
+            $('#table_yc').DataTable( {
                 pagingType: 'full_numbers',
+                dom: 'Plfrtip',
                 "language": {
                     "sProcessing":   "Đang xử lý...",
                     "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
@@ -244,8 +244,6 @@
                         targets: [ 7]
                     },
                 ],
-                dom: 'Plfrtip',
-                // dom: 'Bfrtip',
                 searchPanes: {
                     cascadePanes: true,
                     orderable: false,
@@ -422,10 +420,8 @@
                 },
                 "scrollY": "500px",
                 "scrollCollapse": true,
-                lengthChange: true,
-                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
             } );
-            table_yc.buttons().container().appendTo( '#table_yc_wrapper .col-md-6:eq(0)' );
+
         } );
 
     </script>

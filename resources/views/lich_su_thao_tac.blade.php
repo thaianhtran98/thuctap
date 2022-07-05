@@ -31,19 +31,20 @@
                     <tbody id="tbody">
                     @foreach($lstc as $key => $ls)
                         <tr>
-                            <td style="text-align: center;width: 50px;line-height: 150px;">
+                            <td style="text-align: center;width: 50px;">
                                 {{$key+1}}
                             </td>
-                            <td  style="line-height: 150px;" >
-                                {{$ls->id_nv}}
+                            <td  style="" >
+                                Admin<br>
+                                ID nhân viên: {{$ls->id_nv}}
                             </td>
-                            <td style="text-align: center;line-height: 150px;">
+                            <td style="text-align: center;">
                                 {{DateTime::createFromFormat('Y-m-d H:i:s',$ls->created_at)->format('d/m/Y H:i:s')}}
                             </td>
                             <td style="text-align: center; display: none">
                                 {{$ls->created_at}}
                             </td>
-                            <td  style="line-height: 150px;" >
+                            <td  style="" >
                                 {{$ls->thao_tac}}
                             </td>
                             <td >
