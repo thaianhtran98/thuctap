@@ -245,13 +245,13 @@
 
     <script>
     function them_yeu_cau(){
-        console.log($('#noi_dung_yc').val());
+        // console.log($('#noi_dung_yc').val());
         var id_don_vi = document.getElementById('id_don_vi').value;
         var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
         var noi_dung_yc = document.getElementById('noi_dung_yc').value;
         var trang_thai = document.getElementById('trang_thai').value;
-        console.log(trang_thai);
+        // console.log(trang_thai);
         var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
         var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
         var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
@@ -408,8 +408,6 @@
                 }
             }
         }
-
-
 
 
         $("#ngaytiepnhan").datepicker({
@@ -680,7 +678,9 @@
                 document.getElementById(sessionStorage.getItem(name)+'_id_nhom').onchange = function () {
                     sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),document.getElementById(sessionStorage.getItem(name)+'_id_nhom').value);
                 };
+                @if(count($chucvues)!=0)
                 sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),{{$chucvues[0]->id}});
+                @endif
             } else {
                 let li_rm = document.querySelector('#nv_id' + sessionStorage.getItem(name))
                 li_rm.remove();

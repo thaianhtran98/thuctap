@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('nam');
             $table->date('tungay');
             $table->date('denngay');
+            $table->integer('chot');
             $table->timestamps();
         });
     }
