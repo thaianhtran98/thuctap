@@ -138,7 +138,9 @@
                         removeRow($iddel[$i].value, '/ct/destroy');
                     }
                 }
-                location.reload();
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
             }
         }
 

@@ -228,7 +228,9 @@
                     removeRow($iddel[$i].value, '/nv/destroy');
                 }
             }
-            location.reload();
+            setTimeout(function(){
+                location.reload();
+            }, 500);
         }
     }
 </script>

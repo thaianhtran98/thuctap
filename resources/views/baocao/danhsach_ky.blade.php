@@ -119,8 +119,9 @@
                     }
                 }
             }
-            return  location.reload()
-
+            setTimeout(function(){
+                location.reload();
+            }, 500);
         }
     }
 </script>
