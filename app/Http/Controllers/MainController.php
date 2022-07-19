@@ -41,7 +41,7 @@ class MainController extends Controller
 
     public function add_dv(){
         return view('donvi.themdonvi',[
-            'title'=>'Thêm Đơn Vị',
+            'title'=>'Đơn Vị',
             'donvi'=>$this->donviservice->getdonvi(),
         ]);
     }

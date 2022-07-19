@@ -1,8 +1,8 @@
 @extends('main')
 @section('head')
-    <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/thuctap1/public/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script>
         // var donvi = sessionStorage.getItem('donvi');
@@ -33,8 +33,8 @@
                                     <br>
                                 @else
                                     <input type="number" class="form-control" id="nam" name="nam"
-                                           placeholder="Nhập năm" min="{{DateTime::createFromFormat('Y-m-d',$ky[count($ky)-1]->denngay)->format('Y')}}"
-                                           value="{{DateTime::createFromFormat('Y-m-d',$ky[count($ky)-1]->denngay)->format('Y')}}">
+                                           placeholder="Nhập năm" min="{{DateTime::createFromFormat('Y-m-d H:i:s',$ky[count($ky)-1]->denngay)->format('Y')}}"
+                                           value="{{DateTime::createFromFormat('Y-m-d H:i:s',$ky[count($ky)-1]->denngay)->format('Y')}}">
                                     <br>
                                 @endif
                             </div>
@@ -88,8 +88,9 @@
     <script>
         @if(count($ky_exist)!=0)
         sessionStorage.setItem('ngaybatdau_kymoi','{{$ky[count($ky)-1]->denngay}}');
-        var ngaybatdau_kymoi = '{{DateTime::createFromFormat('Y-m-d',$ky[count($ky)-1]->denngay)->format('d/m/Y')}}';
+        var ngaybatdau_kymoi = '{{DateTime::createFromFormat('Y-m-d H:i:s',$ky[count($ky)-1]->denngay)->format('d/m/Y')}}';
         @endif
+
         var get_day_of_month = (year, month) => {
             return new Date(year, month, 0).getDate();
         };
@@ -136,16 +137,29 @@
                 }else {
                     document.getElementById('tungay').value =   tungay + '/'+ tuthang + '/' + ngaybatdau_kymoi.substr(6,4);
                 }
+                document.getElementById('tungay').classList.remove("hasDatepicker");
+                $("#tungay").datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    minDate: new Date(
+                        document.getElementById('tungay').value.substr(6, 4),
+                        document.getElementById('tungay').value.substr(3, 2)-1,
+                        Number(document.getElementById('tungay').value.substr(0, 2)) + 1)
+                });
             }else{
                 document.getElementById('tungay').value = day + '/' + month + '/' + year;
             }
-            $("#tungay").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
-                'alias': 'date',
+
+
+
+
+            var tungay_inputmsk = document.getElementById('tungay');
+            Inputmask({
+                inputFormat: "dd/mm/yyyy",
+                alias: "datetime",
+                min: "01/01/2019",
                 "oncomplete": function () {
                     let elementrm = document.getElementById('denngay');
                     elementrm.classList.remove("hasDatepicker");
-
                     $("#denngay").datepicker({
                         dateFormat: 'dd/mm/yy', minDate: new Date(
                             document.getElementById('tungay').value.substr(6, 4),
@@ -153,7 +167,7 @@
                             Number(document.getElementById('tungay').value.substr(0, 2)) + 1)
                     });
                 }
-            });
+            }).mask(tungay_inputmsk);
         });
 
         $("#denngay").datepicker({
@@ -183,23 +197,26 @@
                 }
                 document.getElementById('denngay').value = day + '/' + month + '/' + year;
             }
-            $("#denngay").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
-                'alias': 'date',
+
+            var denngay_inputmask = document.getElementById('denngay');
+            Inputmask({
+                inputFormat: "dd/mm/yyyy",
+                alias: "datetime",
+                // max:24,
+                min: "01/01/2019",
                 "oncomplete": function () {
                     if (document.getElementById('denngay').value <= document.getElementById('tungay').value) {
                         document.getElementById('denngay').value = '';
                         alert('Vui lòng nhập lại');
                     }
                 }
-            });
+            }).mask(denngay_inputmask);
         });
 
 
         document.querySelector('#denngay').addEventListener('mouseover', (event) => {
             let denngay = document.getElementById('denngay');
             denngay.classList.remove("hasDatepicker");
-
             $("#denngay").datepicker({
                 dateFormat: 'dd/mm/yy', minDate: new Date(
                     document.getElementById('tungay').value.substr(6, 4),

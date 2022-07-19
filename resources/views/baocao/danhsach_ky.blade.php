@@ -48,10 +48,10 @@
                 {{$k->tuan}}
             </td>
             <td>
-                {{DateTime::createFromFormat('Y-m-d',$k->tungay)->format('d/m/Y')}}
+                {{DateTime::createFromFormat('Y-m-d H:i:s',$k->tungay)->format('d/m/Y')}}
             </td>
             <td>
-                {{DateTime::createFromFormat('Y-m-d',$k->denngay)->format('d/m/Y')}}
+                {{DateTime::createFromFormat('Y-m-d H:i:s',$k->denngay)->format('d/m/Y')}}
             </td>
             @if($k->chot == 0)
                 <td>
@@ -63,7 +63,7 @@
                 </td>
             @endif
             <td>
-                <a href="/xembaocao/{{$k->id}}">
+                <a href="{{route('xembaocao_ky',$k->id)}}">
                     <button class="btn btn-primary">
                         Xem báo cáo
                     </button>
@@ -114,7 +114,7 @@
 
             for ($i = 0; $i < $iddel.length; $i++) {
                 if ($iddel[$i].checked === true && $iddel[$i].disabled === false) {
-                    if(removeRow($iddel[$i].value, '/ky/destroy')){
+                    if(removeRow($iddel[$i].value, '{{route('destroy_ky')}}')){
                         document.getElementById('ky_'+$iddel[$i].value).remove();
                     }
                 }
@@ -151,6 +151,7 @@
             "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
             // "order": [[ 0, 'a' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "500px",
+            'scrollX': true,
             "scrollCollapse": true,
         } );
     } );

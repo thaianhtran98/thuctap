@@ -3,7 +3,7 @@
     <div class="m-r-10 m-l-10 m-t-50" style="align-content: center">
         @include('alert')
         <div class="row" style="display: flex;justify-content: center;align-items: center;">
-            @include('nhanvien.giaodienthemnhomnv')
+            @include('nhanvien.giaodienthemcv')
             @include('nhanvien.giaodienthemnv')
         </div>
 {{--        <label style="font-size: 20px;color: #007bff;">Danh Mục Quản Lý > Nhân Viên</label>--}}

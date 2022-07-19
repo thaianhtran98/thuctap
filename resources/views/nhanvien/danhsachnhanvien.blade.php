@@ -26,7 +26,7 @@
                 <td style="text-align: center">
                     <div id="parent_active_{{$nv->id}}">
                     </div>
-                    {!!  \App\Http\Helper\Helper::active($nv->hoat_dong,$nv->id,"/nv/change/".$nv->id) !!}
+                    {!!  \App\Http\Helper\Helper::active($nv->hoat_dong,$nv->id,route('change_active_nv',$nv->id)) !!}
                 </td>
             </tr>
         @endforeach
@@ -43,8 +43,8 @@
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             @foreach($nvs as $dv)
-            document.getElementById('ten_dv_{{$dv->id}}').style.display = 'block';
-            document.getElementById('edit_ten_dv_{{$dv->id}}').style.display = 'none';
+                document.getElementById('ten_dv_{{$dv->id}}').style.display = 'block';
+                document.getElementById('edit_ten_dv_{{$dv->id}}').style.display = 'none';
             @endforeach
         }
     });
@@ -76,6 +76,7 @@
                 "aLengthMenu": [[10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "500px",
+                'scrollX': true,
                 "scrollCollapse": true,
             } );
         } );
@@ -144,7 +145,7 @@
                 type: 'POST',
                 datatype: 'JSON',
                 data: {ten_nv, hoat_dong},
-                url: '/themnhanvien',
+                url: '{{route('store_nv')}}',
                 success:function (result){
                     if(result.error === false){
                         location.reload();
@@ -174,8 +175,8 @@
                     ten_dv.style.display = 'block';
                     ten_dv.innerHTML = edit_ten.value;
                     ten_change = edit_ten.value;
-                    console.log(ten_change)
-                    edit_ten_dv('/nv/edit_nv/{{$nv->id}}', ten_change);
+                    // console.log(ten_change)
+                    edit_ten_dv('{{route('edit_nv',$nv->id)}}', ten_change);
                     // location.reload();
                 }
             );

@@ -35,9 +35,10 @@ class BaocaoService
             ky::create([
                 'tuan'=>(integer)$request->input('tuan'),
                 'nam'=>(integer)$request->input('nam'),
-                'tungay'=>$tungay[2] . '/' . $tungay[1] . '/' . $tungay[0],
-                'denngay'=>$denngay[2] . '/' . $denngay[1] . '/' . $denngay[0],
+                'tungay'=>$tungay[2] . '/' . $tungay[1] . '/' . $tungay[0] . ' 00:00:00',
+                'denngay'=>$denngay[2] . '/' . $denngay[1] . '/' . $denngay[0] . ' 23:59:59',
                 'chot'=>$chot,
+                'da_chot'=>0,
             ]);
 
             lich_su_thao_tac::create([
@@ -71,14 +72,14 @@ class BaocaoService
            $luy_ke_hang_tuan = $request->input('luyke');
            $tuan = $request->input('tuan');
            $nam = $request->input('nam');
-           $luyke_donvi =luyke::where('tuan',$tuan[0])->where('nam',$nam[0])->first();
+           $luyke_donvi = luyke::where('tuan',$tuan[0])->where('nam',$nam[0])->first();
            if ($luyke_donvi){
                foreach ($id_don_vi as $key => $dv){
                     $luyke_donvi->id_don_vi=(integer)$dv;
                     $luyke_donvi->luy_ke_hang_tuan=(integer)$luy_ke_hang_tuan[$key];
                     $luyke_donvi->tuan=(integer)$tuan[$key];
                     $luyke_donvi->nam=(integer)$nam[$key];
-                   $luyke_donvi->save();
+                    $luyke_donvi->save();
                }
            }else{
                foreach ($id_don_vi as $key => $dv){
@@ -95,10 +96,13 @@ class BaocaoService
                'id_nv'=>0,
                'thao_tac'=>'Chốt kỳ',
                'mo_ta'=>' Chốt kỳ'
-                   . '<br>  Tuần : ' . $request->input('tuan')
-                   . '<br> Năm: '.$request->input('nam'),
+                   . '<br>  Tuần : ' . $request->input('tuan')[0]
+                   . '<br> Năm: '.$request->input('nam')[0],
            ]);
 
+           if ($ky->da_chot == 0){
+               $ky->da_chot = 1;
+           }
            $ky->chot = 1;
            $ky->save();
        }else{
@@ -109,8 +113,8 @@ class BaocaoService
                'id_nv'=>0,
                'thao_tac'=>'Hủy chốt',
                'mo_ta'=>' Hủy chốt kỳ'
-                   . '<br>  Tuần : ' . $request->input('tuan')
-                   . '<br> Năm: '.$request->input('nam'),
+                   . '<br>  Tuần : ' . $request->input('tuan')[0]
+                   . '<br> Năm: '.$request->input('nam')[0],
            ]);
 
        }
@@ -199,7 +203,6 @@ class BaocaoService
 
 
     public function get_luyke_ky($ky){
-
         $dv = DB::table('luyke_hang_tuan_cac_dv')
             ->where('tuan',$ky->tuan)
             ->where('nam',$ky->nam)

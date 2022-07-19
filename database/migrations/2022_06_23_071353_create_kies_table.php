@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->integer('tuan');
             $table->integer('nam');
-            $table->date('tungay');
-            $table->date('denngay');
+            $table->dateTime('tungay');
+            $table->dateTime('denngay');
             $table->integer('chot');
+            $table->integer('da_chot');
             $table->timestamps();
         });
     }

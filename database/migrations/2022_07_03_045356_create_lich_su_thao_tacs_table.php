@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_nv');
             $table->string('thao_tac');
-            $table->string('mo_ta');
+            $table->longText('mo_ta');
             $table->timestamps();
         });
     }

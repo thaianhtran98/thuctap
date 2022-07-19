@@ -1,6 +1,6 @@
 <div class="row">
     <label style="font-size: 20px;color: #007bff">
-        Báo cáo lũy kế của các đơn vị trong kỳ {{$ky_dang_baocao->tuan}} - {{$ky_dang_baocao->nam}}: Từ  {{DateTime::createFromFormat('Y-m-d',$ky_dang_baocao->tungay)->format('d/m/Y')}}  đến {{DateTime::createFromFormat('Y-m-d',$ky_dang_baocao->denngay)->format('d/m/Y')}}
+        Báo cáo lũy kế của các đơn vị trong kỳ {{$ky_dang_baocao->tuan}} - {{$ky_dang_baocao->nam}}: Từ  {{DateTime::createFromFormat('Y-m-d H:i:s',$ky_dang_baocao->tungay)->format('d/m/Y')}}  đến {{DateTime::createFromFormat('Y-m-d H:i:s',$ky_dang_baocao->denngay)->format('d/m/Y')}}
     </label>
 
     <div class="col-md-12">
@@ -26,13 +26,15 @@
                     <td style="text-align:center;width: 1%;">{{$key+1}}</td>
                     <td style="width: 20%; text-align: left;">{{$dv->ten_don_vi}}</td>
                     @foreach($luyke_ky as $key => $luyke)
-                        @if($dv->id == $luyke->id)
+                        @if($dv->id == $luyke->id_don_vi)
                             @if($dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam))
                             <td style="width: 10%; text-align: right;">
                                 {{ $dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam)->luy_ke_hang_tuan}}</td>
+                                <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{ $dv->luyke_donvi_tuan($ky_dang_baocao->tuan,$ky_dang_baocao->nam)->luy_ke_hang_tuan}}">
                             @else
                             <td style="width: 10%; text-align: right;">
                                 {{$luyke->so_yc_trong_tuan + $dv->luyke_donvi[0]->luy_ke_hang_tuan}}</td>
+                                <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$luyke->so_yc_trong_tuan + $dv->luyke_donvi[0]->luy_ke_hang_tuan}}">
                             @endif
                             <td style="width: 10%; text-align: right;">{{$luyke->so_yc_trong_tuan}}</td>
 
@@ -91,7 +93,7 @@
                             @endphp
 
                             <input type="text"  style="display:none;" name="id_don_vi_chotky" value="{{$dv->id}}">
-                            <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$luyke->so_yc_trong_tuan + $dv->luyke_donvi[0]->luy_ke_hang_tuan}}">
+
                             <input type="text"  style="display:none;" name="tuan_chotky" value="{{$ky_dang_baocao->tuan}}">
                             <input type="text"  style="display:none;" name="nam_chotky" value="{{$ky_dang_baocao->nam}}">
                             @break
@@ -105,7 +107,7 @@
                         <td style="width: 10%; text-align: right;">0</td>
                         <td style="width: 10%; text-align: right;">0</td>
                         <input type="text"  style="display:none;" name="id_don_vi_chotky" value="{{$dv->id}}">
-{{--                        <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$dv->luyke_donvi[0]->luy_ke_hang_tuan}}">--}}
+                        <input type="text"  style="display:none;" name="luy_ke_hang_tuan_chotky" value="{{$dv->luyke_donvi[0]->luy_ke_hang_tuan}}">
                         <input type="text"  style="display:none;" name="tuan_chotky" value="{{$ky_dang_baocao->tuan}}">
                         <input type="text"  style="display:none;" name="nam_chotky" value="{{$ky_dang_baocao->nam}}">
                     @endif
@@ -141,6 +143,7 @@
             "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
             "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "515px",
+            'scrollX': true,
             "scrollCollapse": true,
             lengthChange: true,
             buttons: [ 'excel', 'pdf' ]

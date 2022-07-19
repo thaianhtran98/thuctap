@@ -17,7 +17,7 @@
             document.getElementById('thongbaothatbai').style.visibility = 'visible';
             setTimeout(function(){
                 document.getElementById('thongbaothatbai').style.visibility = 'hidden';
-            }, 5000);
+            }, 10000);
         })
     </script>
 @endif
@@ -31,7 +31,7 @@
             document.getElementById('thongbaothanhcong').style.visibility = 'visible';
             setTimeout(function(){
                 document.getElementById('thongbaothanhcong').style.visibility = 'hidden';
-            }, 5000);
+            }, 10000);
         })
     </script>
 @endif

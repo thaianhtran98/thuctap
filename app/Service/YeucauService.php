@@ -40,39 +40,7 @@ class YeucauService
                 where('id_loai_chuong_trinh', (integer)$request->input('id_loai_chuong_trinh'))->
                 where('id_don_vi', (integer)$request->input('id_don_vi'))->first();
 
-                if ($request->input('ngayhoanthanhdukien') != '' && $request->input('ngaygiaoviec') == '') {
-                    $ngaytiepnhan = explode('/', $request->input('ngaytiepnhan'));
-                    $ngayhoanthanhdukien = explode('/', $request->input('ngayhoanthanhdukien'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                    ]);
-                } elseif ($request->input('ngayhoanthanhdukien') == '' && $request->input('ngaygiaoviec') != '') {
-                    $ngaytiepnhan = explode('/', $request->input('ngaytiepnhan'));
-                    $ngaygiaoviec = explode('/', $request->input('ngaygiaoviec'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                    ]);
-                } elseif ($request->input('ngayhoanthanhdukien') != '' && $request->input('ngaygiaoviec') != '') {
-                    $ngaytiepnhan = explode('/', $request->input('ngaytiepnhan'));
-                    $ngaygiaoviec = explode('/', $request->input('ngaygiaoviec'));
-                    $ngayhoanthanhdukien = explode('/', $request->input('ngayhoanthanhdukien'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                        'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                    ]);
-                } else {
-                    $ngaytiepnhan = explode('/', $request->input('ngaytiepnhan'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                    ]);
-                }
+                $this->add_loaingay_yc($yc->id,$request->input('ngaytiepnhan'), $request->input('ngaygiaoviec'),$request->input('ngayhoanthanhdukien'),'','');
 
                 // add nhân viên
                 $nv_id = $request->input('nv_id');
@@ -90,7 +58,6 @@ class YeucauService
                         $nv_cv .= '<br>' . $nv->ten_nguoi_thuc_hien . ' chức vụ ' . $cv->ten_chuc_vu ;
                     }
                 }
-
 
                 if ( (integer)$request->input('trang_thai') ==0){
                     $trangthai ='Tiếp nhận';
@@ -134,41 +101,9 @@ class YeucauService
 
             loaingay::where('id_yc',$yeucauton->id)->delete();
 
-            if($request->input('ngayhoanthanhdukien')!='' && $request->input('ngaygiaoviec')==''){
-                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
-                loaingay::create([
-                    'id_yc' => $yeucauton->id,
-                    'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                    'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                ]);
-            }elseif ($request->input('ngayhoanthanhdukien')=='' && $request->input('ngaygiaoviec')!=''){
-                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
-                loaingay::create([
-                    'id_yc' => $yeucauton->id,
-                    'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                    'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                ]);
-            }elseif ($request->input('ngayhoanthanhdukien')!='' && $request->input('ngaygiaoviec')!=''){
-                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
-                $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
-                loaingay::create([
-                    'id_yc' => $yeucauton->id,
-                    'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                    'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                    'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                ]);
-            }
-            else{
-                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                loaingay::create([
-                    'id_yc' => $yeucauton->id,
-                    'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                ]);
-            }
+            $this->add_loaingay_yc($yeucauton->id,$request->input('ngaytiepnhan'), $request->input('ngaygiaoviec'),$request->input('ngayhoanthanhdukien'),'','');
 
+//            return $ngaytiepnhan;
             // add nhân viên
             $nv_id = $request->input('nv_id');
             $cv_id = $request->input('cv_id');
@@ -220,7 +155,7 @@ class YeucauService
         try {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             if(yeucauton::where('ten_yeu_cau',$request->input('ten_yeu_cau'))->where('id_loai_chuong_trinh',(integer)$request->input('id_loai_chuong_trinh'))->where('id_don_vi',(integer)$request->input('id_don_vi'))->first()){
-                Session::flash('error', 'Đã tồn tại yêu cầu '.$request->input('ten_yeu_cau'));
+                Session::flash('error', 'Đã tồn tại yêu cầu'.$request->input('ten_yeu_cau'));
                 return false;
             }else{
                 yeucauton::create([
@@ -233,43 +168,7 @@ class YeucauService
                 $yc = yeucauton::where('ten_yeu_cau',$request->input('ten_yeu_cau'))->
                 where('id_loai_chuong_trinh',(integer)$request->input('id_loai_chuong_trinh'))->
                 where('id_don_vi',(integer)$request->input('id_don_vi'))->first();
-
-                if($request->input('ngayhoanthanhdukien')!='' && $request->input('ngaygiaoviec')==''){
-                    $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                    $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                    ]);
-                }elseif ($request->input('ngayhoanthanhdukien')=='' && $request->input('ngaygiaoviec')!=''){
-                    $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                    $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                    ]);
-                }elseif ($request->input('ngayhoanthanhdukien')!='' && $request->input('ngaygiaoviec')!=''){
-                    $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                    $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
-                    $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                        'ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0],
-                        'ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0],
-                    ]);
-                }
-                else{
-                    $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                    loaingay::create([
-                        'id_yc' => $yc->id,
-                        'ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0],
-                    ]);
-                }
-
-//                Session::flash('success', 'Thêm  thành công yêu cầu ' . $request->input('ten_yeu_cau'));
+                $this->add_loaingay_yc($yc->id,$request->input('ngaytiepnhan'), $request->input('ngaygiaoviec'),$request->input('ngayhoanthanhdukien'),'','');
                 return $yc;
             }
         } catch (\Exception $err) {
@@ -278,9 +177,66 @@ class YeucauService
         }
     }
 
+    public function add_loaingay_yc($id_yc ,$ngaytiepnhan ='', $ngaygiaoviec='', $ngayhoanthanhdukien='', $ngayhoanthanh='', $ngayhostfix=''){
+        $loaingay = loaingay::where('id_yc',$id_yc)->first();
+
+        if (!$loaingay){
+            loaingay::create([
+                'id_yc' => $id_yc,
+            ]);
+            $loaingay = loaingay::where('id_yc',$id_yc)->first();
+        }
+
+        if ($ngaytiepnhan!=''){
+            $ngaytiepnhan = explode(' ',$ngaytiepnhan);
+            $ngay_ngaytiepnhan = explode('/',$ngaytiepnhan[0]);
+            $time_ngaytiepnhan = $ngaytiepnhan[1];
+            $loaingay->ngaytiepnhan = $ngay_ngaytiepnhan[2] . '/' . $ngay_ngaytiepnhan[1] . '/' . $ngay_ngaytiepnhan[0] .' '. $time_ngaytiepnhan;
+        }else{
+            $loaingay->ngaytiepnhan = null;
+        }
+
+        if ($ngaygiaoviec!=''){
+            $ngaygiaoviec = explode(' ',$ngaygiaoviec);
+            $ngay_ngaygiaoviec = explode('/',$ngaygiaoviec[0]);
+            $time_ngaygiaoviec = $ngaygiaoviec[1];
+            $loaingay->ngaygiaoviec = $ngay_ngaygiaoviec[2] . '/' . $ngay_ngaygiaoviec[1] . '/' . $ngay_ngaygiaoviec[0] .' '. $time_ngaygiaoviec;
+        }else{
+            $loaingay->ngaygiaoviec = null;
+        }
+
+        if ($ngayhoanthanh!=''){
+            $ngayhoanthanh = explode(' ',$ngayhoanthanh);
+            $ngay_ngayhoanthanh = explode('/',$ngayhoanthanh[0]);
+            $time_ngayhoanthanh = $ngayhoanthanh[1];
+            $loaingay->ngayhoanthanh = $ngay_ngayhoanthanh[2] . '/' . $ngay_ngayhoanthanh[1] . '/' . $ngay_ngayhoanthanh[0] .' '. $time_ngayhoanthanh;
+        }else{
+            $loaingay->ngayhoanthanh = null;
+        }
+
+        if ($ngayhostfix!=''){
+            $ngayhostfix = explode(' ',$ngayhostfix);
+            $ngay_ngayhostfix = explode('/',$ngayhostfix[0]);
+            $time_ngayhostfix = $ngayhostfix[1];
+            $loaingay->ngayhostfix = $ngay_ngayhostfix[2] . '/' . $ngay_ngayhostfix[1] . '/' . $ngay_ngayhostfix[0] .' '. $time_ngayhostfix;
+        }else{
+            $loaingay->ngayhostfix = null;
+        }
+
+        if($ngayhoanthanhdukien!=''){
+            $ngay_ngayhoanthanhdukien = explode('/',$ngayhoanthanhdukien);
+//            $ngay_ngayhoanthanhdukien = explode('/',$ngayhoanthanhdukien[0]);
+//            $time_ngayhoanthanhdukien = $ngayhoanthanhdukien[1];
+            $loaingay->ngayhoanthanhdukien = $ngay_ngayhoanthanhdukien[2] . '/' . $ngay_ngayhoanthanhdukien[1] . '/' . $ngay_ngayhoanthanhdukien[0];
+        }else{
+            $loaingay->ngayhoanthanhdukien = null;
+        }
+
+        $loaingay->save();
+    }
+
     public function update_yc($yeucauton,$request){
         try{
-
             if ( $yeucauton->trang_thai ==0){
                 $trangthaihientai ='Tiếp Nhận';
             }elseif ($yeucauton->trang_thai ==1){
@@ -302,40 +258,14 @@ class YeucauService
             $yeucauton->save();
 
 
-            if ($request->input('ngaytiepnhan')!=''){
-                $ngaytiepnhan=explode('/',$request->input('ngaytiepnhan'));
-                loaingay::where('id_yc', $yeucauton->id)
-                    ->update(['ngaytiepnhan' => $ngaytiepnhan[2] . '/' . $ngaytiepnhan[1] . '/' . $ngaytiepnhan[0]]);
-            }
-
-            if ($request->input('ngaygiaoviec')!=''){
-                $ngaygiaoviec=explode('/',$request->input('ngaygiaoviec'));
-                loaingay::where('id_yc', $yeucauton->id)
-                    ->update(['ngaygiaoviec' => $ngaygiaoviec[2] . '/' . $ngaygiaoviec[1] . '/' . $ngaygiaoviec[0]]);
-            }
-
-            if ($request->input('ngayhoanthanh')!=''){
-                $ngayhoanthanh=explode('/',$request->input('ngayhoanthanh'));
-                loaingay::where('id_yc', $yeucauton->id)
-                    ->update(['ngayhoanthanh' => $ngayhoanthanh[2] . '/' . $ngayhoanthanh[1] . '/' . $ngayhoanthanh[0]]);
-            }
-
-            if ($request->input('ngayhostfix')!=''){
-                $ngayhostfix=explode('/',$request->input('ngayhostfix'));
-                loaingay::where('id_yc', $yeucauton->id)
-                    ->update(['ngayhostfix' => $ngayhostfix[2] . '/' . $ngayhostfix[1] . '/' . $ngayhostfix[0]]);
-            }
-
-            if ($request->input('ngayhoanthanhdukien')!=''){
-                $ngayhoanthanhdukien=explode('/',$request->input('ngayhoanthanhdukien'));
-                loaingay::where('id_yc', $yeucauton->id)
-                    ->update(['ngayhoanthanhdukien' => $ngayhoanthanhdukien[2] . '/' . $ngayhoanthanhdukien[1] . '/' . $ngayhoanthanhdukien[0]]);
-            }
+            $this->add_loaingay_yc($yeucauton->id,$request->input('ngaytiepnhan'),$request->input('ngaygiaoviec'),$request->input('ngayhoanthanhdukien')
+                ,$request->input('ngayhoanthanh'),$request->input('ngayhostfix'));
 
             // add nhân viên
             $nv_id = $request->input('nv_id');
             $cv_id = $request->input('cv_id');
             $nv_cv = '';
+            chitietyeucau::where('id_yc',$yeucauton->id)->delete();
             if ($nv_id != null) {
                 foreach ($nv_id as $key => $nv_id) {
                     chitietyeucau::create([
@@ -343,6 +273,7 @@ class YeucauService
                         'id_nguoithuchien' => (integer)$nv_id,
                         'id_chucvu' => (integer)$cv_id[$key],
                     ]);
+
                     $nv = nguoithuchien::where('id',$nv_id)->first();
                     $cv = chucvu::where('id',$cv_id[$key])->first();
                     $nv_cv .= '<br>' . $nv->ten_nguoi_thuc_hien . ' chức vụ ' . $cv->ten_chuc_vu ;
@@ -391,11 +322,10 @@ class YeucauService
             date_default_timezone_set("Asia/Ho_Chi_Minh");
             $thuoctinh = thuoctinhyeucau::where('id_yc',$request->input('id_yc'))
                 ->where('ten_thuoc_tinh',$request->input('ten_thuoc_tinh'))
+                ->where('noi_dung_thuoc_tinh',$request->input('noi_dung_thuoc_tinh'))
                 ->first();
             if($thuoctinh){
-                if($thuoctinh->noi_dung_thuoc_tinh == (string)$request->input('noi_dung_thuoc_tinh')){
-                    return false;
-                }
+                return false;
             }
             thuoctinhyeucau::create([
                 'id_yc' => (integer)$request->input('id_yc'),
@@ -417,6 +347,7 @@ class YeucauService
 
             return thuoctinhyeucau::where('id_yc',$request->input('id_yc'))
                 ->where('ten_thuoc_tinh',$request->input('ten_thuoc_tinh'))
+                ->where('noi_dung_thuoc_tinh',$request->input('noi_dung_thuoc_tinh'))
                 ->first();
         }catch (\Exception $err){
             return false;
@@ -461,7 +392,7 @@ class YeucauService
             if ($yc) {
                 lich_su_thao_tac::create([
                     'id_nv'=>0,
-                    'thao_tac'=>'Xóa yêu cầu: ' . $yc->ten_yeu_cau,
+                    'thao_tac'=>'Xóa yêu cầu',
                     'mo_ta'=>'Tên yêu cầu: ' .  $yc->ten_yeu_cau,
                 ]);
 
@@ -484,7 +415,7 @@ class YeucauService
             $yccon = thuoctinhyeucau::where('id', $id)->first();
             if ($yccon) {
                 $ten_yc_con = $yccon->ten_thuoc_tinh;
-                $ten_yc = yeucauton::where('id',$yccon->id)->first();
+                $ten_yc = yeucauton::where('id',$yccon->id_yc)->first();
                 lich_su_thao_tac::create([
                     'id_nv'=>0,
                     'thao_tac'=>'Xóa yêu cầu con',
@@ -520,7 +451,7 @@ class YeucauService
     }
 
     public function get_min_ngaytiepnhan(){
-        return ky::where('chot',1)->orderByDesc('denngay')->first();
+        return ky::where('da_chot',1)->orderByDesc('denngay')->first();
     }
 
 }

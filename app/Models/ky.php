@@ -15,5 +15,6 @@ class ky extends Model
         'tungay',
         'denngay',
         'chot',
+        'da_chot',
     ];
 }

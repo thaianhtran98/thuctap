@@ -25,10 +25,10 @@
                 <label for="menu">Kỳ</label>
                 <select id="ky" name="ky" class="form-control">
                     @foreach($ky as $k)
-                        @if($ky_dang_baocao->nam == DateTime::createFromFormat('Y-m-d',$k->tungay)->format('Y') )
-                            <option {{$k->id == $ky_dang_baocao->id ? 'selected':''}} value="{{$k->id}}">
-                                Kỳ {{$k->tuan}}: Từ {{DateTime::createFromFormat('Y-m-d',$k->tungay)->format('d/m/Y')}}
-                                đến {{DateTime::createFromFormat('Y-m-d',$k->denngay)->format('d/m/Y')}}
+                        @if($ky_dang_baocao->nam == DateTime::createFromFormat('Y-m-d H:i:s',$k->tungay)->format('Y') )
+                            <option {{$k->id == $ky_dang_baocao->id ? 'selected':''}} value="{{route('xembaocao_ky',$k->id)}}">
+                                Kỳ {{$k->tuan}}: Từ {{DateTime::createFromFormat('Y-m-d H:i:s',$k->tungay)->format('d/m/Y')}}
+                                đến {{DateTime::createFromFormat('Y-m-d H:i:s',$k->denngay)->format('d/m/Y')}}
                             </option>
                         @endif
                     @endforeach
@@ -99,6 +99,7 @@
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                'scrollX': true,
                 "scrollY": "515px",
                 "scrollCollapse": true,
                 lengthChange: true,
@@ -106,8 +107,6 @@
             } );
             table_tiepnhan.buttons().container().appendTo( '#table_tiepnhan_wrapper .col-md-6:eq(0)' );
         } );
-
-
 
         $(document).ready(function() {
             var table_hoanthanh =  $('#table_hoanthanh').DataTable( {
@@ -132,6 +131,7 @@
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                'scrollX': true,
                 "scrollY": "515px",
                 "scrollCollapse": true,
                 lengthChange: true,
@@ -139,6 +139,7 @@
             } );
             table_hoanthanh.buttons().container().appendTo( '#table_hoanthanh_wrapper .col-md-6:eq(0)' );
         } );
+
         $(document).ready(function() {
             var table_hostfix = $('#table_hostfix').DataTable( {
                 pagingType: 'full_numbers',
@@ -162,6 +163,7 @@
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                'scrollX': true,
                 "scrollY": "515px",
                 "scrollCollapse": true,
                 lengthChange: true,
@@ -169,6 +171,7 @@
             } );
             table_hostfix.buttons().container().appendTo( '#table_hostfix_wrapper .col-md-6:eq(0)' );
         } );
+
         $(document).ready(function() {
             var table_giaoviec = $('#table_giaoviec').DataTable( {
                 pagingType: 'full_numbers',
@@ -192,6 +195,7 @@
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                'scrollX': true,
                 "scrollY": "515px",
                 "scrollCollapse": true,
                 lengthChange: true,
@@ -224,6 +228,7 @@
                 "processing": true, // tiền xử lý trước
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
+                'scrollX': true,
                 "scrollY": "515px",
                 "scrollCollapse": true,
                 lengthChange: true,
@@ -237,7 +242,7 @@
         $(document).ready(function() {
             $('#nam').bind('change',
                 function change_nam(){
-                    var url = '/load_ky/';
+                    var url = '{{route('load_ky')}}';
                     var nam = document.getElementById('nam').value;
                     $.ajax({
                         // cache: false,
@@ -268,16 +273,15 @@
 
 
         function xembaocao(){
-            window.location = '/xembaocao/'+document.getElementById('ky').value;
+            window.location = document.getElementById('ky').value;
         }
 
         function chot(id){
-            var url = '/chot_ky/'+id;
+            var url = '{{route('chot_ky')}}';
             var id_don_vi = document.getElementsByName('id_don_vi_chotky');
             var luy_ke_hang_tuan = document.getElementsByName('luy_ke_hang_tuan_chotky');
             var t = document.getElementsByName('tuan_chotky');
             var n = document.getElementsByName('nam_chotky');
-
             var id_dv=[];
             var luyke=[];
             var tuan=[];
@@ -288,12 +292,17 @@
                 luyke.push(luy_ke_hang_tuan[i].value);
                 tuan.push(t[i].value);
                 nam.push(n[i].value);
+                // console.log(id_don_vi[i].value);
+                // console.log(luy_ke_hang_tuan[i].value);
+                // console.log(t[i].value);
+                // console.log(n[i].value);
             }
+
 
             $.ajax({
                 type: 'POST',
                 datatype: 'JSON',
-                data: {id_dv,luyke,tuan,nam},
+                data: {id,id_dv,luyke,tuan,nam},
                 url: url,
                 success:function (result){
                     if (result.error === true){

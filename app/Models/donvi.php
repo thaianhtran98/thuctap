@@ -18,8 +18,8 @@ class donvi extends Model
 
     public function luyke_donvi(){
         return $this->hasMany(luyke::class, 'id_don_vi', 'id')
-            ->orderByDesc('tuan')
-            ->orderByDesc('nam');
+            ->orderByDesc('id');
+//            ->orderByDesc('nam');
     }
 
     public function luyke_donvi_tuan($tuan,$nam){

@@ -1,4 +1,6 @@
+<style>
 
+</style>
 <div>
      <table id="table_dv" class="table table-bordered" style="width:100%">
          <thead style="background: #0c84ff;color: white;width: 100%">
@@ -39,7 +41,7 @@
                  <td style="text-align: center">
                      <div id="parent_active_{{$dv->id}}">
                      </div>
-                     {!!  \App\Http\Helper\Helper::active($dv->hoat_dong,$dv->id,"/dv/change/".$dv->id) !!}
+                     {!!  \App\Http\Helper\Helper::active($dv->hoat_dong,$dv->id,route('change_active_dv',$dv->id)) !!}
                  </td>
              </tr>
          @endforeach
@@ -75,8 +77,9 @@
                  },
                  "processing": true, // tiền xử lý trước
                  "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
-                 "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
+                 "order": [[ 2, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                  "scrollY": "500px",
+                 'scrollX': true,
                  "scrollCollapse": true,
              } );
          } );
@@ -114,8 +117,10 @@
                      ten_change = document.getElementById('ten_dv_{{$dv->id}}').innerText;
                      luyke_change = document.getElementById('luyke_dv_{{$dv->id}}').innerText;
                      uutien_change = edit_uutien.value;
-                     edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
-                     location.reload();
+                     edit_ten_dv('{{route('edit_dv',$dv->id)}}',ten_change,luyke_change,uutien_change);
+                     setTimeout(function(){
+                         location.reload();
+                     }, 500);
                     }
                 );
 
@@ -137,7 +142,7 @@
                         ten_change = edit_ten.value;
                         uutien_change = document.getElementById('dv_uu_tien_{{$dv->id}}').innerText;
                         luyke_change = document.getElementById('luyke_dv_{{$dv->id}}').innerText;
-                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
+                        edit_ten_dv('{{route('edit_dv',$dv->id)}}',ten_change,luyke_change,uutien_change);
                     }
                 );
             });
@@ -158,7 +163,7 @@
                         ten_change = document.getElementById('ten_dv_{{$dv->id}}').innerText;
                         luyke_change = edit_luyke.value;
                         uutien_change = document.getElementById('dv_uu_tien_{{$dv->id}}').innerText;
-                        edit_ten_dv('/dv/edit_dv/{{$dv->id}}',ten_change,luyke_change,uutien_change);
+                        edit_ten_dv('{{route('edit_dv',$dv->id)}}',ten_change,luyke_change,uutien_change);
                     }
                 );
             });

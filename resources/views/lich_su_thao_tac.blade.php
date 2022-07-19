@@ -1,19 +1,16 @@
 @extends('main')
 @section('head')
-    <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-{{--    <style>--}}
-{{--        div.dataTables_wrapper div.dataTables_filter{--}}
-{{--            margin-top: 0px;--}}
-{{--        }--}}
-{{--    </style>--}}
 @endsection
 
 @section('content')
 
+    <style>
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right;
+            margin-top: -33px;
+        }
+    </style>
     <div class="m-t--50 m-r-10 m-l-10">
         <div class="row">
             <div class="col-md-12">
@@ -99,6 +96,7 @@
                 "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "515px",
+                'scrollX': true,
                 "scrollCollapse": true,
                 columnDefs: [
                     {

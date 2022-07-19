@@ -154,7 +154,7 @@
                         </button>
                         <ul class="my-sub-menu" id="menu_yeucau" style="text-align: left">
                             <li id="donvi" style="display: inline;width: 25%;text-align: left">
-                                <a href="/themdonvi">
+                                <a href="{{route('themdonvi')}}">
                                     <button class="button_header">
                                         Đơn Vị
                                     </button>
@@ -162,15 +162,15 @@
                             </li>
 
                             <li style="display: inline;width: 25%;text-align: left">
-                                <a href="/themnhanvien">
+                                <a href="{{route('themnhanvien')}}">
                                     <button class="button_header">
-                                        Nhân Viên
+                                        Nhân Viên & Chức Vụ
                                     </button>
                                 </a>
                             </li>
 
                             <li style="display: inline;width: 25%;text-align: left">
-                                <a href="/themloaichuongtrinh">
+                                <a href="{{route('themloaichuongtrinh')}}">
                                     <button class="button_header">
                                         Loại Chương Trình
                                     </button>
@@ -178,7 +178,8 @@
                             </li>
 
                             <li style="display: inline;width: 25%;text-align: left">
-                                <a href="/lich_su_thao_tac">
+{{--                                <a href="/lich_su_thao_tac">--}}
+                                <a href="{{route('lich_su_thao_tac')}}">
                                     <button class="button_header">
                                         Lịch Sử Thao Tác
                                     </button>
@@ -193,14 +194,14 @@
                         </button>
                         <ul class="my-sub-menu" id="menu_yeucau">
                             <li id="donvi" style="display: inline;width: 25%;text-align: left">
-                                <a href="/baocao">
+                                <a href="{{route('baocao')}}">
                                     <button class="button_header">
                                         Báo cáo
                                     </button>
                                 </a>
                             </li>
                             <li id="donvi" style="display: inline;width: 25%;text-align: left">
-                                <a href="/kybaocao">
+                                <a href="{{route('kybaocao')}}">
                                     <button class="button_header">
                                         Kỳ Báo Cáo
                                     </button>
@@ -210,7 +211,7 @@
                     </li>
 
                     <li id="header_yeucau" style="display: inline;width: 33%;text-align: center">
-                        <a href="/danhsachyeucau">
+                        <a href="{{route('danhsachyeucau')}}">
                             <button class="button_header">
                                 Yêu Cầu
                             </button>

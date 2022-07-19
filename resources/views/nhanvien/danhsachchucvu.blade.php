@@ -25,12 +25,11 @@
                 <td style="text-align: center">
                     <div id="parent_active_cv_{{$cv->id}}">
                         @if($cv->hoat_dong==1)
-                        <span id="cv-yes-{{$cv->id}}" class="btn btn-success btn-xs" onclick="change_active_cv(1, '/cv/change/{{$cv->id}}')">Yes</span>
+                            <span id="cv-yes-{{$cv->id}}" class="btn btn-success btn-xs" onclick="change_active_cv(1, '{{route('change_active_cv',$cv->id)}}')">Yes</span>
                         @else
-                        <span id="cv-no-{{$cv->id}}" class="btn btn-danger btn-xs" onclick="change_active_cv(0, '/cv/change/{{$cv->id}}')">No</span>
+                            <span id="cv-no-{{$cv->id}}" class="btn btn-danger btn-xs" onclick="change_active_cv(0, '{{route('change_active_cv',$cv->id)}}')">No</span>
                         @endif
                     </div>
-                </td>
             </tr>
         @endforeach
         </tbody>
@@ -45,6 +44,37 @@
                 @endforeach
             }
         });
+
+
+        function change_active_cv(active,url){
+            $.ajax({
+                type: 'POST',
+                datatype: 'JSON',
+                data: { active },
+                url: url,
+                success:function (result){
+                    if(result.error === true){
+                    }else {
+                        if(result.active_cv==1){
+                            var parent_id= 'parent_active_cv_'+result.id_cv;
+                            var id='cv-no-'+result.id_cv;
+                            var child = document.getElementById(id);
+                            child.parentNode.removeChild(child);
+                            var replace="<span id='cv-yes-"+result.id_cv+"' class='btn btn-success btn-xs' onclick=change_active_cv("+ result.active_cv +",'"+url+"')>Yes</span>";
+                            document.getElementById(parent_id).innerHTML=replace;
+                        }else {
+                            var id='cv-yes-'+result.id_cv;
+                            var parent_id= 'parent_active_cv_'+result.id_cv;
+                            var parent= document.getElementById(parent_id);
+                            var child = document.getElementById(id);
+                            child.parentNode.removeChild(child);
+                            var replace="<span id='cv-no-"+result.id_cv + "' class='btn btn-danger btn-xs' onclick=change_active_cv("+ result.active_cv +",'"+ url +"')>No</span>";
+                            parent.innerHTML=replace;
+                        }
+                    }
+                }
+            })
+        }
     </script>
 </div>
 
@@ -74,6 +104,7 @@
             "aLengthMenu": [[10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
             "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "500px",
+            'scrollX': true,
             "scrollCollapse": true,
         } );
     } );
@@ -96,8 +127,7 @@
                 ten_dv.innerHTML = edit_ten.value;
                 ten_change = edit_ten.value;
                 console.log(ten_change)
-                edit_ten_cv('/cv/edit_cv/{{$cv->id}}', ten_change);
-                // location.reload();
+                edit_ten_cv('{{route('edit_cv',$cv->id)}}', ten_change);
             }
         );
     });
@@ -109,83 +139,6 @@
             datatype: 'JSON',
             data: {ten},
             url: url,
-        })
-    }
-
-    function delall_cv() {
-        var $iddel = document.getElementsByName('del_id_cv[]');
-        var $delall = document.getElementsByName('del_all_cv');
-        if ($delall[0].checked === true) {
-            document.getElementById('button_del_cv').style.display = 'block';
-            for ($i = 0; $i < $iddel.length; $i++) {
-                $iddel[$i].checked = true;
-            }
-        } else {
-            document.getElementById('button_del_cv').style.display = 'none';
-            for ($i = 0; $i < $iddel.length; $i++) {
-                $iddel[$i].checked = false;
-            }
-        }
-    }
-
-    function showbutton_cv() {
-        var $iddel = document.getElementsByName('del_id_cv[]');
-
-        for ($i = 0; $i < $iddel.length; $i++) {
-            if ($iddel[$i].checked === true) {
-                return document.getElementById('button_del_cv').style.display = 'block';
-            } else {
-                document.getElementById('button_del_cv').style.display = 'none';
-            }
-        }
-    }
-
-    function delid_cv() {
-        if (confirm('Dữ liệu xóa không thể khôi phục. Bạn có muốn xóa không?')) {
-            var $iddel = document.getElementsByName('del_id_cv[]');
-            for ($i = 0; $i < $iddel.length; $i++) {
-                if ($iddel[$i].checked === true) {
-                    removeRow($iddel[$i].value, '/cv/destroy');
-                }
-            }
-            setTimeout(function(){
-                location.reload();
-            }, 500);
-        }
-    }
-
-
-    function change_active_cv(active,url){
-        // console.log(url);
-        $.ajax({
-            type: 'POST',
-            datatype: 'JSON',
-            data: { active },
-            url: url,
-            success:function (result){
-                if(result.error === true){
-                    alert('Lỗi');
-                }else {
-                    if(result.active_cv==1){
-                        var parent_id= 'parent_active_cv_'+result.id_cv;
-                        var id='cv-no-'+result.id_cv;
-                        var child = document.getElementById(id);
-                        var url_no = '/cv/change/'+result.id_cv;
-                        child.parentNode.removeChild(child);
-                        var replace="<span id='cv-yes-"+result.id_cv+"' class='btn btn-success btn-xs' onclick=change_active_cv("+result.active_cv+",'"+url_no+"')>Yes</span>";
-                        document.getElementById(parent_id).innerHTML=replace;
-                    }else {
-                        var id='cv-yes-'+result.id_cv;
-                        var parent_id= 'parent_active_cv_'+result.id_cv;
-                        var parent= document.getElementById(parent_id);
-                        var child = document.getElementById(id);
-                        var url_yes = '/cv/change/'+result.id_cv;
-                        child.parentNode.removeChild(child);
-                        var replace="<span id='cv-no-"+result.id_cv + "' class='btn btn-danger btn-xs' onclick=change_active_cv("+result.active_cv+",'"+url_yes+"')>No</span>";
-                        parent.innerHTML=replace;
-                    }
-                }
-            }
         })
     }
 

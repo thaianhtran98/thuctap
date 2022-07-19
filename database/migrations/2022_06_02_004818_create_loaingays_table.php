@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('loaingays', function (Blueprint $table) {
+            $table->id();
             $table->integer('id_yc');
-            $table->date('ngaytiepnhan')->nullable();
-            $table->date('ngaygiaoviec')->nullable();
-            $table->date('ngayhoanthanh')->nullable();
-            $table->date('ngayhostfix')->nullable();
-            $table->date('ngayhoanthanhdukien')->nullable();
+            $table->dateTime('ngaytiepnhan')->nullable();
+            $table->dateTime('ngaygiaoviec')->nullable();
+            $table->dateTime('ngayhoanthanh')->nullable();
+            $table->dateTime('ngayhostfix')->nullable();
+            $table->dateTime('ngayhoanthanhdukien')->nullable();
             $table->timestamps();
         });
     }

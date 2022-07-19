@@ -80,7 +80,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {ten, luyke, uutien},
-            url: '/themdv_ajax',
+            url: '{{route('themdonvi_ajax')}}',
             success:function (result){
                 if(result.error === false){
                     $('#id_don_vi').append($('<option>', {
@@ -95,6 +95,7 @@
                     setTimeout(function(){
                         document.getElementById('thanhcong').style.display = 'none';
                     }, 1500);
+
                 }else {
                     document.getElementById('thatbai').innerText = 'Tên đơn vị đã tồn tại hoặc không phù hợp';
                     document.getElementById('thatbai').style.display = 'block';
@@ -102,6 +103,9 @@
                         document.getElementById('thatbai').style.display = 'none';
                     }, 1500);
                 }
+                document.getElementById('ten_dv').value = '';
+                document.getElementById('luyke_dv').value = '';
+                document.getElementById('uutien_dv').value = '';
             }
         })
     }

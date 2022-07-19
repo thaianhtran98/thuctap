@@ -76,7 +76,8 @@ class BaocaoController extends Controller
             ]);
     }
 
-    public function chot_ky(ky $ky,Request $request){
+    public function chot_ky(Request $request){
+        $ky = ky::where('id',$request->input('id'))->first();
         $result= $this->baocaoservice->chot_ky($ky,$request);
 
         if ($result===false)

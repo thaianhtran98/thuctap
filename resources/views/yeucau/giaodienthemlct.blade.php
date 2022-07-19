@@ -43,7 +43,7 @@
     //
 
     function add_ct(){
-        console.log(document.getElementById('ten_ct').value)
+        // console.log(document.getElementById('ten_ct').value)
         add(document.getElementById('ten_ct').value);
     }
 
@@ -52,7 +52,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {ten},
-            url: '/themloaichuongtrinh_ajax',
+            url: '{{route('store_ct_ajax')}}',
             success:function (result){
                 if(result.error === false){
                     $('#id_loai_chuong_trinh').append($('<option>', {
@@ -67,12 +67,14 @@
                     setTimeout(function(){
                         document.getElementById('thanhcong').style.display = 'none';
                     }, 1500);
+                    document.getElementById('ten_ct').value = ''
                 }else {
                     document.getElementById('thatbai').innerText = 'Tên chương trình đã tồn tại hoặc không phù hợp';
                     document.getElementById('thatbai').style.display = 'block';
                     setTimeout(function(){
                         document.getElementById('thatbai').style.display = 'none';
                     }, 1500);
+                    document.getElementById('ten_ct').value = ''
                 }
             }
         })

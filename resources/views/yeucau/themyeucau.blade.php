@@ -1,20 +1,20 @@
 @extends('main')
 @section('head')
-    <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/thuctap1/public/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-    <link rel="stylesheet" href="/template/select-picker-master/dist/picker.css"/>
-    <script src="/template/select-picker-master/dist/picker.min.js"></script>
+    <link rel="stylesheet" href="/thuctap1/public/template/select-picker-master/dist/picker.css"/>
+    <script src="/thuctap1/public/template/select-picker-master/dist/picker.min.js"></script>
     <script>
         var donvi = sessionStorage.getItem('donvi');
         var ct = sessionStorage.getItem('ct');
+        var ngaytiepnhan = sessionStorage.getItem('ngaytiepnhan');
         sessionStorage.clear();
         sessionStorage.setItem('ok',0);
     </script>
-    <script src="/template/js/popper.min.js"></script>
-
+    <script src="/thuctap1/public/template/js/popper.min.js"></script>
 @endsection
 @section('content')
     <div class="row">
@@ -160,7 +160,6 @@
                             </div>
                             <hr>
                             <ul id="danhsachchon">
-
                             </ul>
                         </div>
                     </div>
@@ -171,10 +170,30 @@
 
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
-                        <input type="text" name="ngaytiepnhan" id="ngaytiepnhan" autocomplete="off"
-                               class="form-control" placeholder="dd/mm/yyyy">
+                        <div class="row" style="line-height: 25px;">
+                            <div class="col-md-11">
+                                <label for="menu">Ngày Tiếp Nhận</label><font color="red"> (*)</font>
+                                <input type="text" name="ngaytiepnhan" id="ngaytiepnhan" autocomplete="off"
+                                       class="form-control" placeholder="dd/mm/yyyy">
+{{--                                <input type="text" id="giotiepnhan" name="giotiepnhan"  class="form-control"required>--}}
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px" >
+                                <button type="button" onclick="neo_ngaytiepnhan()">
+                                    <span id="neo_ngaytiepnhan" style="font-size: 20px;color: black;margin-top: 10px">
+                                        <i class="fas fa-anchor"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
+
+{{--                    <script>--}}
+{{--                        var  giotiepnhan = document.getElementById('giotiepnhan');--}}
+{{--                        Inputmask("datetime", {--}}
+{{--                            inputFormat: "HH:MM",--}}
+{{--                            max: 24--}}
+{{--                        }).mask(giotiepnhan);--}}
+{{--                    </script>--}}
 
                     <div class="form-group" id="form_ngaygiaoviec" style="display: none">
                         <label for="menu">Ngày Giao Việc</label>
@@ -226,7 +245,7 @@
                         <button onclick="luu_lai_yeu_cau()" id="cap_nhat" class="btn btn-primary m-t-50 m-l-10" style="float: right ; display: none">Thêm Yêu Cầu</button>
                     </div>
                     <div>
-                        <a href="/danhsachyeucau">
+                        <a href="{{route('danhsachyeucau')}}">
                             <button class="btn btn-primary m-t-50 m-l-10" style="float: right">Quay Về Danh Sách Yêu Cầu</button>
                         </a>
                     </div>
@@ -236,22 +255,20 @@
     </div>
 
 
-    <script>
-        $(document).ready(function(){
-            $('#id_loai_chuong_trinh').picker({search : true});
-            $('#id_don_vi').picker({search : true});
-        });
-    </script>
+{{--    <script>--}}
+{{--        $(document).ready(function(){--}}
+{{--            $('#id_loai_chuong_trinh').picker({search : true});--}}
+{{--            $('#id_don_vi').picker({search : true});--}}
+{{--        });--}}
+{{--    </script>--}}
 
     <script>
     function them_yeu_cau(){
-        // console.log($('#noi_dung_yc').val());
         var id_don_vi = document.getElementById('id_don_vi').value;
         var id_loai_chuong_trinh = document.getElementById('id_loai_chuong_trinh').value;
         var ten_yeu_cau = document.getElementById('ten_yeu_cau').value;
         var noi_dung_yc = document.getElementById('noi_dung_yc').value;
         var trang_thai = document.getElementById('trang_thai').value;
-        // console.log(trang_thai);
         var ngaytiepnhan = document.getElementById('ngaytiepnhan').value;
         var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien').value;
         var ngaygiaoviec = document.getElementById('ngaygiaoviec').value;
@@ -266,14 +283,14 @@
             }
         @endforeach
         if (ten_yeu_cau!=='' && noi_dung_yc!==''){
-            if(trang_thai!=0 && nv_id.length !=0){
+            if(trang_thai!=0 && nv_id.length !=0 && cv_id.length !=0){
                 $.ajax({
                     type: 'POST',
                     datatype: 'JSON',
                     data: {id_don_vi, id_loai_chuong_trinh,
                         ngayhoanthanhdukien,ngaygiaoviec,
                         ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
-                    url: '/themyeucau',
+                    url: '{{route('themyeucau_store')}}',
                     success:function (result){
                         if(result.error === false){
                             location.reload();
@@ -289,7 +306,7 @@
                     data: {id_don_vi, id_loai_chuong_trinh,
                         ngayhoanthanhdukien,ngaygiaoviec,
                         ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
-                    url: '/themyeucau',
+                    url: '{{route('themyeucau_store')}}',
                     success:function (result){
                         if(result.error === false){
                             location.reload();
@@ -300,14 +317,12 @@
                 })
             }
             else {
-                alert('Vui lòng chọn nhân viên thực hiện yêu cầu')
+                alert('Vui lòng chọn nhân viên thực hiện yêu cầu hoặc nhập chức vụ cho nhân viên')
             }
         }else {
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
     }
-
-
 
     function luu_lai_yeu_cau(){
         var id_don_vi = document.getElementById('id_don_vi').value;
@@ -321,30 +336,38 @@
         var id_yc = sessionStorage.getItem('yc_id');
         var nv_id = [];
         var cv_id = [];
-        @foreach($nvs as $nv)
-        if(sessionStorage.getItem('nv_{{$nv->id}}')){
-            nv_id.push(sessionStorage.getItem('nv_{{$nv->id}}'));
-        }
-        if(sessionStorage.getItem('chucvu_{{$nv->id}}')){
-            cv_id.push(sessionStorage.getItem('chucvu_{{$nv->id}}'))
-        }
-        @endforeach
-        if (ten_yeu_cau!='' && noi_dung_yc!=''){
-            $.ajax({
-                type: 'POST',
-                datatype: 'JSON',
-                data: {id_don_vi, id_loai_chuong_trinh,
-                    ngayhoanthanhdukien,ngaygiaoviec,
-                    ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai,nv_id,cv_id},
-                url: '/capnhat_pagethem/'+id_yc,
-                success:function (result){
-                    if(result.error === false){
-                        location.reload();
-                    }else {
-                        location.reload();
-                    }
+        if (document.getElementById('trang_thai').value > 0){
+            @foreach($nvs as $nv)
+                if(sessionStorage.getItem('nv_{{$nv->id}}')){
+                    nv_id.push(sessionStorage.getItem('nv_{{$nv->id}}'));
                 }
-            })
+                if(sessionStorage.getItem('chucvu_{{$nv->id}}')){
+                    cv_id.push(sessionStorage.getItem('chucvu_{{$nv->id}}'))
+                }
+            @endforeach
+        }
+        if (ten_yeu_cau!='' && noi_dung_yc!=''){
+            if(trang_thai!=0 && nv_id.length !=0 && cv_id.length !=0 || trang_thai==0) {
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'JSON',
+                    data: {
+                        id_don_vi, id_loai_chuong_trinh, id_yc,
+                        ngayhoanthanhdukien, ngaygiaoviec,
+                        ngaytiepnhan, ten_yeu_cau, noi_dung_yc, trang_thai, nv_id, cv_id
+                    },
+                    url: '{{route('update_pagethem')}}',
+                    success: function (result) {
+                        if (result.error === false) {
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    }
+                })
+            } else {
+                alert('Vui lòng chọn nhân viên thực hiện yêu cầu hoặc nhập chức vụ cho nhân viên')
+            }
         }else {
             alert('Tên yêu cầu hoặc nội dung yêu cầu không được trống')
         }
@@ -355,7 +378,7 @@
 {{--    Xử lý ngày tháng năm và bấm enter--}}
     <script>
         @if($min_ngaytiepnhan)
-            sessionStorage.setItem('min_ngaytiepnhan','{{DateTime::createFromFormat('Y-m-d',$min_ngaytiepnhan->denngay)->format('d/m/Y')}}');
+            sessionStorage.setItem('min_ngaytiepnhan','{{DateTime::createFromFormat('Y-m-d H:i:s',$min_ngaytiepnhan->denngay)->format('d/m/Y')}}');
         @endif
 
 
@@ -375,7 +398,8 @@
             return new Date(year, month, 0).getDate();
         };
 
-        // console.log(sessionStorage.getItem('min_ngaytiepnhan').substr(3,2))
+
+        var min_date = '';
 
         if(sessionStorage.getItem('min_ngaytiepnhan')){
             if(sessionStorage.getItem('min_ngaytiepnhan').substr(6,4)>year &&
@@ -407,61 +431,58 @@
                     month='0'+month;
                 }
             }
+            min_date = day + '/' +month + '/' +year;
         }
 
-
         $("#ngaytiepnhan").datepicker({
-            dateFormat: 'dd/mm/yy', minDate: new Date(
-                year, month-1, day)
+            dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
+                year, month-1, day),
         });
 
+
         $(document).ready(function () {
-            document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year;
-            $("#ngaytiepnhan").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
-                'alias': 'date',
-                "oncomplete": function () {
+            var ngaytiepnhan = document.getElementById("ngaytiepnhan");
+            document.getElementById('ngaytiepnhan').value = day + '/' + month + '/' + year + '000000';
+            if (min_date != ''){
+                min_input_ngaytiepnhan = min_date
+            }else {
+                min_input_ngaytiepnhan = "01/01/2019";
+            }
+            Inputmask({
+                inputFormat: "dd/mm/yyyy HH:MM:ss",
+                alias: "datetime",
+                max:24,
+                min: min_input_ngaytiepnhan,
+                'oncomplete': function () {
                     let elementrm = document.getElementById('ngayhoanthanhdukien');
                     elementrm.classList.remove("hasDatepicker");
 
                     $("#ngayhoanthanhdukien").datepicker({
-                        dateFormat: 'dd/mm/yy', minDate: new Date(
+                        dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                             document.getElementById('ngaytiepnhan').value.substr(6, 4),
                             document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                             Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
                     });
+
+                    if(sessionStorage.getItem('ngaytiepnhan')){
+                        sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+                    }
+
                 }
-            });
+            }).mask(ngaytiepnhan);
         });
 
+
         $("#ngayhoanthanhdukien").datepicker({
-            dateFormat: 'dd/mm/yy', minDate: new Date(
+            dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                 document.getElementById('ngaytiepnhan').value.substr(6, 4),
                 document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                 Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
         });
 
 
-        $(document).ready(function () {
-            $("#ngaytiepnhan_test").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
-                'alias': 'date',
-                "oncomplete": function () {
-                    let elementrm = document.getElementById('ngayhoanthanhdukien');
-                    elementrm.classList.remove("hasDatepicker");
-
-                    $("#ngayhoanthanhdukien").datepicker({
-                        dateFormat: 'dd/mm/yy', minDate: new Date(
-                            document.getElementById('ngaytiepnhan').value.substr(6, 4),
-                            document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
-                            Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
-                    });
-                }
-            });
-        });
-
         $("#ngaygiaoviec").datepicker({
-            dateFormat: 'dd/mm/yy', minDate: new Date(
+            dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                 document.getElementById('ngaytiepnhan').value.substr(6, 4),
                 document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                 Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)))
@@ -474,13 +495,13 @@
             ngaygiaoviec.classList.remove('hasDatepicker')
 
             $("#ngayhoanthanhdukien").datepicker({
-                dateFormat: 'dd/mm/yy', minDate: new Date(
+                dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                     document.getElementById('ngaytiepnhan').value.substr(6, 4),
                     document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                     Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
             });
             $("#ngaygiaoviec").datepicker({
-                dateFormat: 'dd/mm/yy', minDate: new Date(
+                dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                     document.getElementById('ngaytiepnhan').value.substr(6, 4),
                     document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                     Number(document.getElementById('ngaytiepnhan').value.substr(0, 2))),
@@ -489,6 +510,10 @@
                     document.getElementById('ngayhoanthanhdukien').value.substr(3, 2)-1,
                     Number(document.getElementById('ngayhoanthanhdukien').value.substr(0, 2))),
             });
+            if(sessionStorage.getItem('ngaytiepnhan')){
+                sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+            }
+
         })
 
         document.querySelector('#ngaygiaoviec').addEventListener('mouseover', (event) => {
@@ -497,21 +522,21 @@
             ngaydukien.classList.remove("hasDatepicker");
             ngaygiaoviec.classList.remove('hasDatepicker')
             $("#ngayhoanthanhdukien").datepicker({
-                dateFormat: 'dd/mm/yy', minDate: new Date(
+                dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                     document.getElementById('ngaytiepnhan').value.substr(6, 4),
                     document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                     Number(document.getElementById('ngaytiepnhan').value.substr(0, 2)) + 1)
             });
             if(ngaydukien.value==='') {
                 $("#ngaygiaoviec").datepicker({
-                    dateFormat: 'dd/mm/yy', minDate: new Date(
+                    dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                         document.getElementById('ngaytiepnhan').value.substr(6, 4),
                         document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                         Number(document.getElementById('ngaytiepnhan').value.substr(0, 2))),
                 });
             }else {
                 $("#ngaygiaoviec").datepicker({
-                    dateFormat: 'dd/mm/yy', minDate: new Date(
+                    dateFormat: 'dd/mm/yy 00:00:00', minDate: new Date(
                         document.getElementById('ngaytiepnhan').value.substr(6, 4),
                         document.getElementById('ngaytiepnhan').value.substr(3, 2)-1,
                         Number(document.getElementById('ngaytiepnhan').value.substr(0, 2))),
@@ -521,12 +546,19 @@
                         Number(document.getElementById('ngayhoanthanhdukien').value.substr(0, 2))),
                 });
             }
+            if(sessionStorage.getItem('ngaytiepnhan')){
+                sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+            }
+
         })
 
         $(document).ready(function () {
-            $("#ngaygiaoviec").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
-                'alias': 'date',
+            var ngaygiaoviec = document.getElementById('ngaygiaoviec');
+            Inputmask({
+                inputFormat: "dd/mm/yyyy HH:MM:ss",
+                alias: "datetime",
+                max:24,
+                min: "01/01/2019",
                 "oncomplete": function () {
                     if (document.getElementById('ngaytiepnhan').value > document.getElementById('ngaygiaoviec').value ||
                         document.getElementById('ngayhoanthanhdukien').value < document.getElementById('ngaygiaoviec').value) {
@@ -534,41 +566,17 @@
                         alert('Ngày dự kiện hoàn thành phải lớn hơn ngày tiếp nhận');
                     }
                 }
-            });
+            }).mask(ngaygiaoviec);
         });
-
-        document.querySelector('#trang_thai').addEventListener('change', (event) => {
-            if (document.getElementById('trang_thai').value > 0) {
-                document.getElementById('form_ngaygiaoviec').style.display = 'block';
-                document.getElementById('addnv').style.display = 'block';
-                document.getElementById('nv_selected').style.display = 'block';
-                let d = new Date();
-                let year = d.getFullYear();
-                let month = d.getMonth() + 1;
-                let day = d.getDate();
-                if (Number(day) < 10) {
-                    day = '0' + day;
-                }
-                if (Number(month) < 10) {
-                    month = '0' + month;
-                }
-                document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year;
-            } else {
-                var id_yc = sessionStorage.getItem('yc_id');
-                document.getElementById('ngaygiaoviec').value = '';
-                sessionStorage.clear();
-                sessionStorage.setItem('ok',1);
-                sessionStorage.setItem('yc_id',id_yc);
-                document.getElementById('form_ngaygiaoviec').style.display = 'none';
-                document.getElementById('addnv').style.display = 'none';
-                document.getElementById('nv_selected').style.display = 'none';
-            }
-        })
 
         //
         $(document).ready(function () {
-            $("#ngayhoanthanhdukien").inputmask("99/99/9999", {
-                "placeholder": "dd/mm/yyyy",
+            var ngayhoanthanhdukien = document.getElementById('ngayhoanthanhdukien');
+            Inputmask({
+                inputFormat: "dd/mm/yyyy",
+                alias: "datetime",
+                // max:24,
+                min: "01/01/2019",
                 "oncomplete": function () {
                     console.log(document.getElementById('ngaytiepnhan').value);
                     if (document.getElementById('ngayhoanthanhdukien').value < document.getElementById('ngaytiepnhan').value) {
@@ -576,9 +584,8 @@
                         alert('Ngày dự kiện hoàn thành phải lớn hơn ngày tiếp nhận');
                     }
                 }
-            });
+            }).mask(ngayhoanthanhdukien);
         });
-        // $("#timeStartPicker").mask("99:99:99");
 
         $('#id_don_vi').keypress(function (event) {
             if (event.keyCode == 13 || event.which == 13) {
@@ -617,6 +624,15 @@
             }
         });
 
+        document.querySelector('#them').addEventListener('mouseover', (event) => {
+            if(sessionStorage.getItem('ngaytiepnhan')){
+                sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+            }});
+
+        document.querySelector('#cap_nhat').addEventListener('mouseover', (event) => {
+            if(sessionStorage.getItem('ngaytiepnhan')){
+                sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+            }});
     </script>
 
 {{--  Add thành viên vào dự án  --}}
@@ -679,7 +695,7 @@
                     sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),document.getElementById(sessionStorage.getItem(name)+'_id_nhom').value);
                 };
                 @if(count($chucvues)!=0)
-                sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),{{$chucvues[0]->id}});
+                    sessionStorage.setItem('chucvu_'+sessionStorage.getItem(name),{{$chucvues[0]->id}});
                 @endif
             } else {
                 let li_rm = document.querySelector('#nv_id' + sessionStorage.getItem(name))
@@ -698,18 +714,64 @@
             sessionStorage.removeItem('chucvu_'+song_id);
             document.getElementById(song_id).checked = false;
         }
+
+        document.querySelector('#trang_thai').addEventListener('change', (event) => {
+            if (document.getElementById('trang_thai').value > 0) {
+                document.getElementById('form_ngaygiaoviec').style.display = 'block';
+                document.getElementById('addnv').style.display = 'block';
+                document.getElementById('nv_selected').style.display = 'block';
+                let d = new Date();
+                let year = d.getFullYear();
+                let month = d.getMonth() + 1;
+                let day = d.getDate();
+                if (Number(day) < 10) {
+                    day = '0' + day;
+                }
+                if (Number(month) < 10) {
+                    month = '0' + month;
+                }
+
+                if (document.getElementById('ngaytiepnhan').value!=''){
+                    document.getElementById('ngaygiaoviec').value = document.getElementById('ngaytiepnhan').value;
+                }else if (sessionStorage.getItem('ngaytiepnhan')){
+                    document.getElementById('ngaygiaoviec').value = ngaytiepnhan + '000000';
+                }else if (min_date!=''){
+                    document.getElementById('ngaygiaoviec').value = min_date + '000000';
+                }else {
+                    document.getElementById('ngaygiaoviec').value = day + '/' + month + '/' + year + '000000';
+                }
+            } else {
+                // var id_yc = sessionStorage.getItem('yc_id');
+                document.getElementById('ngaygiaoviec').value = '';
+                // sessionStorage.clear();
+                // sessionStorage.setItem('ok',0);
+                // if (id_yc)
+                //     sessionStorage.setItem('yc_id',id_yc);
+                document.getElementById('form_ngaygiaoviec').style.display = 'none';
+                document.getElementById('addnv').style.display = 'none';
+                document.getElementById('nv_selected').style.display = 'none';
+            }
+        })
+
     </script>
 
     <script>
-        if(donvi){
-            sessionStorage.setItem('donvi',donvi);
-            document.getElementById('neo_donvi').style.color = 'dodgerblue';
-            document.getElementById('id_don_vi').value = donvi;
-        }if(ct){
-            document.getElementById('neo_ct').style.color = 'dodgerblue';
-            sessionStorage.setItem('ct',ct);
-            document.getElementById('id_loai_chuong_trinh').value = ct;
-        }
+        $(document).ready(function () {
+            if(donvi){
+                sessionStorage.setItem('donvi',donvi);
+                document.getElementById('neo_donvi').style.color = 'dodgerblue';
+                document.getElementById('id_don_vi').value = donvi;
+            }if(ct){
+                document.getElementById('neo_ct').style.color = 'dodgerblue';
+                sessionStorage.setItem('ct',ct);
+                document.getElementById('id_loai_chuong_trinh').value = ct;
+            }if(ngaytiepnhan){
+                document.getElementById('neo_ngaytiepnhan').style.color = 'dodgerblue';
+                sessionStorage.setItem('ngaytiepnhan',ngaytiepnhan);
+                document.getElementById('ngaytiepnhan').value = ngaytiepnhan;
+            }
+        })
+
         function neo_donvi(){
             var donvi = document.getElementById('neo_donvi');
             if(donvi.style.color === 'dodgerblue'){
@@ -720,6 +782,7 @@
                 donvi.style.color = 'dodgerblue';
             }
         }
+
         function neo_ct(){
             var ct = document.getElementById('neo_ct');
             if(ct.style.color === 'dodgerblue'){
@@ -731,15 +794,28 @@
             }
         }
 
+        function neo_ngaytiepnhan(){
+            var ngaytiepnhan = document.getElementById('neo_ngaytiepnhan');
+            if(ngaytiepnhan.style.color === 'dodgerblue'){
+                sessionStorage.removeItem('ngaytiepnhan');
+                ngaytiepnhan.style.color = 'black';
+            }else{
+                sessionStorage.setItem('ngaytiepnhan',document.getElementById('ngaytiepnhan').value);
+                ngaytiepnhan.style.color = 'dodgerblue';
+            }
+        }
+
         document.querySelector('#id_don_vi').addEventListener('change', (event) => {
             if(sessionStorage.getItem('donvi')){
                 sessionStorage.setItem('donvi',document.getElementById('id_don_vi').value);
             }
         })
+
         document.querySelector('#id_loai_chuong_trinh').addEventListener('change', (event) => {
             if(sessionStorage.getItem('ct')){
                 sessionStorage.setItem('ct',document.getElementById('id_loai_chuong_trinh').value);
             }
         })
+
     </script>
 @endsection

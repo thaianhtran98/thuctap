@@ -25,7 +25,7 @@
                 <td style="text-align: center">
                     <div id="parent_active_{{$ct->id}}">
                     </div>
-                    {!!  \App\Http\Helper\Helper::active($ct->hoat_dong,$ct->id,"/ct/change/".$ct->id) !!}
+                    {!!  \App\Http\Helper\Helper::active($ct->hoat_dong,$ct->id, route('change_active_ct',$ct->id)) !!}
                 </td>
             </tr>
         @endforeach
@@ -63,6 +63,7 @@
                 "aLengthMenu": [[ 10, 20, 50], [ 10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
                 "order": [[ 1, 'desc' ]], //sắp xếp giảm dần theo cột thứ 1
                 "scrollY": "500px",
+                'scrollX': true,
                 "scrollCollapse": true,
             } );
         } );
@@ -93,7 +94,7 @@
                     ten_dv.style.display = 'block';
                     ten_dv.innerHTML = edit_ten.value;
                     ten_change = edit_ten.value;
-                    edit_ten_dv('/ct/edit_ct/{{$ct->id}}', ten_change);
+                    edit_ten_dv('{{route('edit_ct',$ct->id)}}', ten_change);
                 }
             );
         });

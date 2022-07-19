@@ -58,6 +58,15 @@ class DonviService
                 'hoat_dong' => 1,
             ]);
 
+            $id_don_vi = donvi::where('ten_don_vi',(string)$request->input('ten'))->first();
+
+            luyke::create([
+                'id_don_vi' => (integer)$id_don_vi->id,
+                'luy_ke_hang_tuan' => (integer)$request->input('luyke'),
+                'tuan' => 0,
+                'nam' => 0,
+            ]);
+
             lich_su_thao_tac::create([
                 'id_nv'=>0,
                 'thao_tac'=>'Thêm đơn vị mới',
@@ -74,11 +83,11 @@ class DonviService
     }
 
     public function getdonvi(){
-        return donvi::orderByDesc('uu_tien')->get();
+        return donvi::orderBy('uu_tien')->get();
     }
 
     public function getdonviactive(){
-        return donvi::where('hoat_dong',1)->orderByDesc('uu_tien')->get();
+        return donvi::where('hoat_dong',1)->orderBy('uu_tien')->get();
     }
 
     public function change_active($donvi){
@@ -114,6 +123,9 @@ class DonviService
     public function edit($donvi,$request){
         try {
             date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $luyke = luyke::where('id_don_vi',$donvi->id)
+                ->where('tuan',0)
+                ->first();
             if ($donvi->ten_don_vi != $request->input('ten')){
                 lich_su_thao_tac::create([
                     'id_nv'=>0,
@@ -129,7 +141,8 @@ class DonviService
                     'mo_ta'=>'Tên đơn vị: ' .$donvi->ten_don_vi .'<br>Lũy kế đầu kỳ: '. $donvi->luy_ke_dau_ky . ' -> '. (integer)$request->input('luyke'),
                 ]);
                 $donvi->luy_ke_dau_ky = $request->input('luyke');
-
+                $luyke->luy_ke_hang_tuan = $request->input('luyke');
+                $luyke->save();
             }
             elseif ($donvi->uu_tien != $request->input('uutien')){
                 lich_su_thao_tac::create([

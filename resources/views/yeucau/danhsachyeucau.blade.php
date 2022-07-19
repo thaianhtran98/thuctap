@@ -1,9 +1,15 @@
 @extends('main')
 @section('head')
-    <script type="text/javascript" src="/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
-    <script type="text/javascript" src="/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/template/admin/ui/jquery-ui.css"/>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/Inputmask/dist/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="/thuctap1/public/template/admin/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/thuctap1/public/template/admin/ui/jquery-ui.css"/>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <style>
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right;
+            margin-top: -33px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -27,7 +33,7 @@
     <div class="m-t-50 m-r-10 m-l-10">
         <hr>
         <div class="row">
-            <a href="/themyeucau">
+            <a href="{{route('themyeucau')}}">
                 <button class="btn btn-primary" style="float: left; margin-left: 10px;margin-right: auto;margin-bottom: -50px;z-index: 100000;position: relative" id="show-add-dv" >
                     Thêm Yêu Cầu
                 </button>
@@ -53,7 +59,7 @@
                     <tbody id="tbody">
                     @foreach($ycs as $yc)
                         <tr id="yc_{{$yc->id}}" style="text-align: center">
-                            <td style="line-height: normal;text-align: center; width: 100px">
+                            <td style="line-height: normal;text-align: center; width: 10%">
                                 @if($disable_xoa)
                                     <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto"
                                            {{$yc->yc_loaingay->ngaytiepnhan <= $disable_xoa->denngay ? 'disabled':''}}
@@ -62,32 +68,32 @@
                                     <input type="checkbox" name="del_id[]" onclick="showbutton()" style="height: 20px;width: 20px;margin: auto" value="{{$yc->id}}">
                                 @endif
                             </td>
-                            <td style="line-height: normal;width: 400px">
+                            <td style="line-height: normal;width: 20%">
                                 {{$yc->yc_dv->ten_don_vi}}
                             </td>
                             <td  style="line-height: normal;width: 10%">
                                 {{$yc->yc_ct->ten_chuong_trinh}}
                             </td>
                             @if(strlen($yc->ten_yeu_cau)<50)
-                                <td style="line-height: normal;width: 300px;text-align: left">
+                                <td style="line-height: normal;width: 10%;text-align: left">
                                     {{$yc->ten_yeu_cau}}
                                 </td>
                             @else
-                                <td  style="line-height: normal;width: 300px;text-align: left">
+                                <td  style="line-height: normal;width: 10%;text-align: left " title="{{$yc->noi_dung_yc}}">
                                     {!! substr($yc->ten_yeu_cau,0,50) !!}...
                                 </td>
                             @endif
 
                             @if(strlen($yc->noi_dung_yc)<50)
-                                <td style="line-height: normal; width: 500px;text-align: left">
+                                <td style="line-height: normal; width: 20%;text-align: left">
                                     {{$yc->noi_dung_yc}}
                                 </td>
                             @else
-                                <td style="line-height: normal; width: 500px;text-align: left" title="{{$yc->noi_dung_yc}}">
+                                <td style="line-height: normal; width: 20%;text-align: left" title="{{$yc->noi_dung_yc}}">
                                     {!! substr($yc->noi_dung_yc,0,50) !!}...
                                 </td>
                             @endif
-                            <td style="line-height: normal; width: 200px">
+                            <td style="line-height: normal; width: 5%">
                                 @if($yc->trang_thai==0)
                                     Tiếp Nhận
                                 @elseif($yc->trang_thai==1 || $yc->trang_thai==2 )
@@ -99,22 +105,22 @@
                                 @endif
                             </td>
 
-                            <td style="line-height: normal; width: 200px">
+                            <td style="line-height: normal; width: 10%">
                                 @if($yc->trang_thai==0)
-                                    {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y H:i:s')}}
                                 @elseif($yc->trang_thai==1)
-                                    {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}}
                                 @elseif($yc->trang_thai==2)
-                                    {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}}
                                 @elseif($yc->trang_thai==3)
-                                    {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y H:i:s')}}
                                 @else
-                                    {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}
+                                    {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y H:i:s')}}
                                 @endif
                             </td>
 
-                            <td style="line-height: normal; width: 200px;display: none">
-                                @if($yc->trang_thai==0)
+                            <td style="line-height: normal; width: 20%;display: none">
+                                @if($yc->trang_5thai==0)
                                     {{$yc->yc_loaingay->ngaytiepnhan}}
                                 @elseif($yc->trang_thai==1)
                                     {{$yc->yc_loaingay->ngaygiaoviec}}
@@ -126,8 +132,8 @@
                                 @endif
                             </td>
 
-                            <td style="width: 100px">
-                                <a href="/yc/edit/{{$yc->id}}">
+                            <td style="width: 5%">
+                                <a href="{{route('edit_yeucau',$yc->id)}}">
                                 <span style="color: #0a58ca">
                                     <i class="fas fa-edit"></i>
                                 </span>
@@ -185,7 +191,7 @@
 
                 for ($i = 0; $i < $iddel.length; $i++) {
                     if ($iddel[$i].checked === true && $iddel[$i].disabled === false) {
-                        removeRow($iddel[$i].value, '/yc/destroy')
+                        removeRow($iddel[$i].value,'{{route('destroy_yeucau')}}')
                     }
                 }
                 setTimeout(function(){
@@ -299,15 +305,15 @@
                                     {
                                         label:
                                             @if($yc->trang_thai==0)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==1)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==2)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==3)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y H:i:s')}} '
                                             @else
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y H:i:s')}} '
                                             @endif,
                                         value: function(rowData, rowIdx) {
                                                 @if($yc->trang_thai==0)
@@ -380,15 +386,15 @@
                                     {
                                         label:
                                             @if($yc->trang_thai==0)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaytiepnhan)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==1)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==2)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}} '
                                             @elseif($yc->trang_thai==3)
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y H:i:s')}}'
                                             @else
-                                                '{{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y')}}'
+                                                '{{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhostfix)->format('d/m/Y H:i:s')}} '
                                             @endif,
                                         value: function(rowData, rowIdx) {
                                                 @if($yc->trang_thai==0)
@@ -406,7 +412,6 @@
                                         },
                                     },
                                 @endforeach
-
                     ]
                         },
                         ],
@@ -417,6 +422,7 @@
                     }
                 },
                 "scrollY": "500px",
+                'scrollX': true,
                 "scrollCollapse": true,
             } );
 

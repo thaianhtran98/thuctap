@@ -68,8 +68,9 @@ class YeucauController extends Controller
             ]);
     }
 
-    public function update_pagethem(yeucauton $yeucauton, Request $request)
+    public function update_pagethem(Request $request)
     {
+        $yeucauton = yeucauton::where('id',$request->input('id_yc'))->first();
         $result= $this->yeucauservice->luu_lai_yc($yeucauton,$request);
         if ($result==false)
             return response()->json([
@@ -146,7 +147,9 @@ class YeucauController extends Controller
         ]);
     }
 
-    public function store_edit_yeucau(Request $request,yeucauton $yeucauton){
+    public function store_edit_yeucau(Request $request){
+        $yeucauton = yeucauton::where('id',$request->input('id_yc'))->first();
+
         $result =  $this->yeucauservice->update_yc($yeucauton,$request);
         if ($result==false)
             return response()->json([

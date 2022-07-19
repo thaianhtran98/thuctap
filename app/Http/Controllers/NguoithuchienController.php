@@ -28,7 +28,7 @@ class NguoithuchienController extends Controller
 
     public function add_nv(){
         return view('nhanvien.themnhanvien',[
-            'title'=>'Nhân Viên',
+            'title'=>'Nhân Viên & Chức Vụ',
             'nvs'=>$this->nthservice->getnhanvien(),
             'cvs'=>$this->chucvuservice->getchucvu()
         ]);

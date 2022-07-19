@@ -41,7 +41,7 @@
 {{--                    @endif--}}
                     <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                     <td>
-                        {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y')}}
+                        {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngayhoanthanh)->format('d/m/Y H:i:s')}}
                     </td>
                 </tr>
             @endforeach

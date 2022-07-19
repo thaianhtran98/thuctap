@@ -124,14 +124,28 @@
             var html = '<input type="text"  class="form-control"  id="noi_dung_thuoc_tinh" placeholder="dd/mm/yyyy" required>';
             noidung.innerHTML=html;
             $(document).ready(function () {
-                $("#noi_dung_thuoc_tinh").inputmask("99/99/9999", {
-                    "placeholder": "dd/mm/yyyy",
-                    'alias': 'date',
-                });
+                // $("#noi_dung_thuoc_tinh").inputmask("99/99/9999", {
+                //     "placeholder": "dd/mm/yyyy",
+                //     'alias': 'date',
+                // });
+                var noi_dung_thuoc_tinh = document.getElementById('noi_dung_thuoc_tinh');
+                Inputmask({
+                    inputFormat: "dd/mm/yyyy",
+                    alias: "datetime",
+                    // max:24,
+                    min: "01/01/2019",
+                    "oncomplete": function () {
+                        console.log(document.getElementById('ngaytiepnhan').value);
+                        if (document.getElementById('ngayhoanthanhdukien').value < document.getElementById('ngaytiepnhan').value) {
+                            document.getElementById('ngayhoanthanhdukien').value = '';
+                            alert('Ngày dự kiện hoàn thành phải lớn hơn ngày tiếp nhận');
+                        }
+                    }
+                }).mask(ngayhoanthanhdukien);
             });
 
             $("#noi_dung_thuoc_tinh").datepicker({
-                dateFormat: 'dd/mm/yy',
+                dateFormat: 'dd/mm/yy 00:00:00',
             });
 
             $('#kieu_thuoc_tinh').keypress(function (event) {
@@ -209,7 +223,7 @@
             type: 'DELETE',
             datatype: 'JSON',
             data: { id },
-            url: '/yck/destroy',
+            url: '{{route('destroy_yck')}}',
             success:function (result){
                 if(result.error === true){
                     document.getElementById('thatbai').innerText = 'Xóa thất bại'
@@ -251,7 +265,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {id_yc, ten_thuoc_tinh, kieu_thuoc_tinh, noi_dung_thuoc_tinh},
-            url: '/themthuoctinhyc',
+            url: '{{route('store_thuoctinh_yc')}}',
             success:function (result){
                 if(result.error === false){
                     document.getElementById('thanhcong').innerText = 'Thêm thành công yêu cầu ' + ten_thuoc_tinh;
@@ -357,7 +371,7 @@
                 data: {id_don_vi, id_loai_chuong_trinh,
                     ngayhoanthanhdukien,ngaygiaoviec,
                     ngaytiepnhan,ten_yeu_cau,noi_dung_yc,trang_thai},
-                url: '/addtamyc',
+                url: '{{route('store_tam_yc')}}',
                 success:function (result){
                     if(result.error == false){
                         document.getElementById('thanhcong').innerText = 'Lưu thành công yêu cầu chính ' + ten_yeu_cau;
@@ -448,15 +462,19 @@
             document.getElementById('kieu_thuoc_tinh').value = kieu;
             var html = '<input type="text"  class="form-control"  id="noi_dung_thuoc_tinh" placeholder="dd/mm/yyyy" required>';
             noidung.innerHTML=html;
+
+
             $(document).ready(function () {
-                $("#noi_dung_thuoc_tinh").inputmask("99/99/9999", {
-                    "placeholder": "dd/mm/yyyy",
-                    'alias': 'date',
-                });
+                var noi_dung_thuoc_tinh = document.getElementById('noi_dung_thuoc_tinh');
+                Inputmask({
+                    inputFormat: "dd/mm/yyyy HH:MM:ss",
+                    alias: "datetime",
+                    max:24,
+                }).mask(noi_dung_thuoc_tinh);
             });
 
             $("#noi_dung_thuoc_tinh").datepicker({
-                dateFormat: 'dd/mm/yy',
+                dateFormat: 'dd/mm/yy 00:00:00',
             });
 
             $('#kieu_thuoc_tinh').keypress(function (event) {

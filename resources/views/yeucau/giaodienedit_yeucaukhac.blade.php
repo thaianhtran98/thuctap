@@ -65,7 +65,7 @@
             type: 'POST',
             datatype: 'JSON',
             data: {id_yc,id_thuoc_tinh, ten_thuoc_tinh, kieu_thuoc_tinh, noi_dung_thuoc_tinh},
-            url: '/suathuoctinhyc',
+            url: '{{route('edit_thuoctinh_yc')}}',
             success:function (result){
                 if(result.error === false){
                     document.getElementById('thanhcong').innerText = 'Sửa thành công yêu cầu ' + ten_thuoc_tinh;
@@ -119,6 +119,7 @@
 
 
     var id_thuoc_tinh_edit = 0;
+
     function show_edit_yck(id,tenthuoctinh,kieuthuoctinh,noidungthuoctinh) {
         // if(sessionStorage.getItem('ok')!=1){
         //     if(confirm('Để thêm thuộc tính phải lưu lại yêu cầu này?')){
@@ -176,18 +177,21 @@
 
         }
         else if (kieu == '1'){
-            var html = '<input type="text"  class="form-control"  id="edit_noi_dung_thuoc_tinh" placeholder="dd/mm/yyyy" required>';
+            var html = '<input type="text"  class="form-control"  id="edit_noi_dung_thuoc_tinh" required>';
             noidung.innerHTML=html;
             document.getElementById('edit_noi_dung_thuoc_tinh').value = dulieu;
+
             $(document).ready(function () {
-                $("#edit_noi_dung_thuoc_tinh").inputmask("99/99/9999", {
-                    "placeholder": "dd/mm/yyyy",
-                    'alias': 'date',
-                });
+                var edit_noi_dung_thuoc_tinh = document.getElementById('edit_noi_dung_thuoc_tinh');
+                Inputmask({
+                    inputFormat: "dd/mm/yyyy HH:MM:ss",
+                    alias: "datetime",
+                    max:24,
+                }).mask(edit_noi_dung_thuoc_tinh);
             });
 
             $("#edit_noi_dung_thuoc_tinh").datepicker({
-                dateFormat: 'dd/mm/yy',
+                dateFormat: 'dd/mm/yy 00:00:00',
             });
 
             $('#edit_kieu_thuoc_tinh').keypress(function (event) {

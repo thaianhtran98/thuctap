@@ -42,7 +42,7 @@
 {{--                    @endif--}}
                     <td style="text-align: center">{{$yc->yc_ct->ten_chuong_trinh}}</td>
                     <td>
-                        {{DateTime::createFromFormat('Y-m-d',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y')}}
+                        {{DateTime::createFromFormat('Y-m-d H:i:s',$yc->yc_loaingay->ngaygiaoviec)->format('d/m/Y H:i:s')}}
                     </td>
                 </tr>
             @endforeach
@@ -77,6 +77,7 @@
             "aLengthMenu": [[ 10, 20, 50], [10, 20, 50]], // danh sách số trang trên 1 lần hiển thị bảng
             "order": [[ 0, 'asc' ]], //sắp xếp giảm dần theo cột thứ 1
             "scrollY": "515px",
+            'scrollX': true,
             "scrollCollapse": true,
             lengthChange: true,
             buttons: [ 'excel', 'pdf' ]
